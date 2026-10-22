@@ -73,3 +73,4 @@ The test suite uses mocked email and limiter providers and sends no real emails.
 ## Launch dependencies
 
 See `docs/IMPLEMENTATION-PLAN.md` and `docs/VALIDATION.md` for the feature checklist, checks, remaining source-copy discrepancies and external integration requirements. No deployment is performed automatically.
+# onegoodjune
