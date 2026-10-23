@@ -22,7 +22,7 @@ npm run build
 npm start
 ```
 
-The source routes live in `src/app/(site)` so Sanity Studio can use its own full-screen layout at `/studio`. Tailwind theme tokens and base rules are in `src/app/globals.css`; component styling is in Tailwind utilities. Shared heading styles in `src/components/site/primitives.tsx` use the supplied Songbird font at smaller sizes with generous line heights. Motion components handle reveals, hover movement, the staggered wordmark, and reading progress; they honor reduced-motion preferences.
+The source routes live in `src/app/(site)` so Sanity Studio can use its own full-screen layout at `/studio`. Tailwind theme tokens and base rules are in `src/app/globals.css`; component styling is in Tailwind utilities. The type scale, button styles, colour bar and page-intro primitives live in `src/components/site/primitives.tsx`. Fonts follow the brief: Songbird for display (normalised with `size-adjust: 50%` in `layout.tsx` because its cap height is 1.44em), Crimson Text for reading (Cardo fallback) and Zalando Sans for interface text. `MotionProvider` applies reduced-motion preferences globally; reveals, the hero colour bar and reading progress all respect it. See `docs/UI-UX-AUDIT.md` for the design system and colour rules.
 
 ## Content and assets
 
@@ -32,7 +32,7 @@ The source routes live in `src/app/(site)` so Sanity Studio can use its own full
 - `src/lib/site-config.ts`: links and asset paths, including the four team photograph slots and supplied SOG video/portrait.
 - `docs/ASSETS.md`: thematic photo and font sources.
 
-Set real social and waitlist URLs in `.env.local`. Without them, the UI honestly marks the relevant destinations as unavailable. School of Growth uses the Mainstack checkout supplied in the sales document; `NEXT_PUBLIC_ENROLLMENT_URL` can override it. No form pretends to collect a waitlist. Add approved team images to `public/images` and update `site.assets.team` in the documented order. Georgia remains the temporary body font fallback until body font files are supplied.
+Set real social and waitlist URLs in `.env.local`. Without them, the UI honestly marks the relevant destinations as unavailable. School of Growth uses the Mainstack checkout supplied in the sales document; `NEXT_PUBLIC_ENROLLMENT_URL` can override it. No form pretends to collect a waitlist. Add approved team images to `public/images` and update `site.assets.team` in the documented order.
 
 ## Sanity setup
 

@@ -3,6 +3,8 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import type { Post } from "@/sanity/types";
 import { imageUrl } from "@/sanity/images";
+import { label } from "@/components/site/primitives";
+import { cn } from "@/lib/utils";
 export function readingMinutes(text?: string) {
   return Math.max(
     1,
@@ -37,7 +39,7 @@ export function ArticleCard({
         }
       >
         <div
-          className={`relative overflow-hidden bg-ink/5 ${featured ? "aspect-[4/3]" : "aspect-[3/2]"}`}
+          className={`relative overflow-hidden bg-paper ${featured ? "aspect-[4/3]" : "aspect-[3/2]"}`}
         >
           {image ? (
             <Image
@@ -49,11 +51,11 @@ export function ArticleCard({
                   ? "(max-width: 768px) 100vw, 60vw"
                   : "(max-width: 768px) 100vw, 33vw"
               }
-              className="object-cover transition-transform duration-300 motion-safe:group-hover:scale-[1.02]"
+              className="object-cover transition-transform duration-500 ease-out-soft motion-safe:group-hover:scale-[1.03]"
             />
           ) : (
             <span
-              className="absolute inset-0 flex items-center justify-center font-heading text-[17px] leading-loose text-ink"
+              className="absolute inset-0 flex items-center justify-center font-heading text-[2rem] text-ink/15"
               aria-hidden="true"
             >
               ONEGOODJUNE
@@ -61,20 +63,20 @@ export function ArticleCard({
           )}
         </div>
         <div className={featured ? "" : "pt-6"}>
-          <p className="font-sans text-xs text-forest">
+          <p className={cn(label, "text-rust")}>
             {post.category?.title || "Publication"}
           </p>
           <h3
-            className={`mt-4 font-serif font-normal leading-snug tracking-tight transition-colors group-hover:text-forest ${featured ? "text-2xl md:text-3xl" : "text-2xl"}`}
+            className={`mt-3 font-serif font-semibold leading-[1.15] tracking-[-0.01em] transition-colors group-hover:text-forest ${featured ? "text-[2rem] md:text-[2.5rem]" : "text-[1.625rem]"}`}
           >
             {post.title}
           </h3>
           {post.excerpt && (
-            <p className="mt-4 text-base leading-[1.7] text-ink">
+            <p className="mt-3 font-serif text-lg leading-[1.6] text-ink/80">
               {post.excerpt}
             </p>
           )}
-          <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 font-sans text-xs leading-relaxed text-ink/80">
+          <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 font-sans text-xs leading-relaxed text-ink/70">
             <span>{post.author?.name || "Author to be confirmed"}</span>
             <span aria-hidden="true">·</span>
             <time dateTime={post.publishedAt}>

@@ -10,7 +10,13 @@ import {
 } from "@/components/editorial/article-card";
 import { RichText } from "@/components/editorial/rich-text";
 import { DraftNotice } from "@/components/editorial/draft-notice";
-import { Container, subheading } from "@/components/site/primitives";
+import {
+  ColorBar,
+  Container,
+  label,
+  subheading,
+} from "@/components/site/primitives";
+import { cn } from "@/lib/utils";
 import { pageMetadata } from "@/lib/metadata";
 import { site } from "@/lib/site-config";
 import type { Metadata } from "next";
@@ -83,26 +89,29 @@ async function Article({ params }: Props) {
                 ? `/read-pubs?category=${post.category.slug}`
                 : "/read-pubs"
             }
-            className="inline-flex min-h-11 items-center font-sans text-xs uppercase tracking-widest text-forest"
+            className={cn(label, "inline-flex min-h-11 items-center text-rust hover:text-ink")}
           >
             {post.category?.title || "Publication"}
           </a>
-          <h1 className="mt-5 font-serif text-4xl leading-[1.2] tracking-tight md:text-6xl">
+          <h1 className="mt-4 font-serif text-[2.5rem] font-semibold leading-[1.08] tracking-[-0.015em] md:text-[4rem]">
             {post.title}
           </h1>
           {post.excerpt && (
-            <p className="mx-auto mt-7 max-w-2xl text-lg leading-[1.75] text-ink">
+            <p className="mx-auto mt-7 max-w-2xl font-serif text-[1.375rem] italic leading-[1.5] text-ink/80 md:text-[1.5rem]">
               {post.excerpt}
             </p>
           )}
-          <div className="mt-8 flex flex-wrap justify-center gap-3 font-sans text-xs leading-relaxed">
-            <span>{post.author?.name || "Author to be confirmed"}</span>
+          <div className="mt-8 flex flex-wrap justify-center gap-3 font-sans text-[0.8125rem] leading-relaxed text-ink/75">
+            <span className="font-medium text-ink">
+              {post.author?.name || "Author to be confirmed"}
+            </span>
             <span>·</span>
             <time dateTime={post.publishedAt}>
               {articleDate(post.publishedAt)}
             </time>
             <span>· {readingMinutes(post.text)} min read</span>
           </div>
+          <ColorBar className="mx-auto mt-10 h-1 max-w-40" />
         </header>
         {image && (
           <figure>
@@ -131,7 +140,7 @@ async function Article({ params }: Props) {
               {post.tags.map((tag) => (
                 <span
                   key={tag._id}
-                  className="bg-ink/5 px-3 py-2 font-sans text-[10px] uppercase tracking-wider"
+                  className={cn(label, "bg-paper px-3 py-1.5 text-ink/75")}
                 >
                   {tag.title}
                 </span>
@@ -153,7 +162,10 @@ async function Article({ params }: Props) {
                 />
               )}
               <div>
-                <h2 className="text-2xl">{post.author.name}</h2>
+                <p className={cn(label, "text-rust")}>Written by</p>
+                <h2 className="mt-2 font-serif text-2xl font-semibold">
+                  {post.author.name}
+                </h2>
                 {post.author.bio && (
                   <p className="mt-3 text-lg leading-relaxed text-ink/80">
                     {post.author.bio}
@@ -183,7 +195,7 @@ export default function ArticlePage(props: Props) {
       <Suspense
         fallback={
           <Container className="py-24">
-            <p role="status" className="text-xl">
+            <p role="status" className="font-serif text-xl text-ink/70">
               Opening this story…
             </p>
           </Container>

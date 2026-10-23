@@ -16,22 +16,22 @@ export function RichText({ body }: { body: Post["body"] }) {
       components={{
         block: {
           normal: ({ children }) => (
-            <p className="my-7 text-lg leading-[1.85] md:text-[20px]">
+            <p className="my-6 font-serif text-[1.1875rem] leading-[1.8] md:text-[1.3125rem]">
               {children}
             </p>
           ),
           h2: ({ children }) => (
-            <h2 className="mb-7 mt-14 font-serif text-2xl leading-snug md:text-3xl">
+            <h2 className="mb-6 mt-14 font-serif text-[1.75rem] font-semibold leading-snug md:text-[2rem]">
               {children}
             </h2>
           ),
           h3: ({ children }) => (
-            <h3 className="mb-6 mt-12 font-serif text-2xl leading-snug">
+            <h3 className="mb-5 mt-12 font-serif text-[1.5rem] font-semibold leading-snug">
               {children}
             </h3>
           ),
           blockquote: ({ children }) => (
-            <blockquote className="my-12 border-l-2 border-forest pl-7 text-2xl leading-relaxed italic">
+            <blockquote className="my-12 border-l-4 border-orange pl-7 font-serif text-[1.625rem] italic leading-[1.5]">
               {children}
             </blockquote>
           ),
