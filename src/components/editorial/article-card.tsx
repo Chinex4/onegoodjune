@@ -49,32 +49,32 @@ export function ArticleCard({
                   ? "(max-width: 768px) 100vw, 60vw"
                   : "(max-width: 768px) 100vw, 33vw"
               }
-              className="object-cover transition-transform duration-700 motion-safe:group-hover:scale-105"
+              className="object-cover transition-transform duration-300 motion-safe:group-hover:scale-[1.02]"
             />
           ) : (
             <span
-              className="absolute inset-0 flex items-center justify-center font-serif text-4xl italic text-forest/40"
+              className="absolute inset-0 flex items-center justify-center font-heading text-[17px] leading-loose text-ink"
               aria-hidden="true"
             >
-              OneGoodJune
+              ONEGOODJUNE
             </span>
           )}
         </div>
         <div className={featured ? "" : "pt-6"}>
-          <p className="font-sans text-[10px] uppercase tracking-widest text-forest">
+          <p className="font-sans text-xs text-forest">
             {post.category?.title || "Publication"}
           </p>
           <h3
-            className={`mt-4 font-serif font-normal leading-snug tracking-tight transition-colors group-hover:text-forest ${featured ? "text-3xl md:text-4xl" : "text-2xl"}`}
+            className={`mt-4 font-serif font-normal leading-snug tracking-tight transition-colors group-hover:text-forest ${featured ? "text-2xl md:text-3xl" : "text-2xl"}`}
           >
             {post.title}
           </h3>
           {post.excerpt && (
-            <p className="mt-4 text-lg leading-relaxed text-ink/80">
+            <p className="mt-4 text-base leading-[1.7] text-ink">
               {post.excerpt}
             </p>
           )}
-          <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 font-sans text-[10px] leading-relaxed text-ink/70">
+          <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 font-sans text-xs leading-relaxed text-ink/80">
             <span>{post.author?.name || "Author to be confirmed"}</span>
             <span aria-hidden="true">·</span>
             <time dateTime={post.publishedAt}>

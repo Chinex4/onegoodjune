@@ -16,12 +16,12 @@ export function RichText({ body }: { body: Post["body"] }) {
       components={{
         block: {
           normal: ({ children }) => (
-            <p className="my-7 text-[21px] leading-[1.9] md:text-[23px]">
+            <p className="my-7 text-lg leading-[1.85] md:text-[20px]">
               {children}
             </p>
           ),
           h2: ({ children }) => (
-            <h2 className="mb-7 mt-14 font-serif text-3xl leading-snug md:text-4xl">
+            <h2 className="mb-7 mt-14 font-serif text-2xl leading-snug md:text-3xl">
               {children}
             </h2>
           ),
@@ -38,12 +38,12 @@ export function RichText({ body }: { body: Post["body"] }) {
         },
         list: {
           bullet: ({ children }) => (
-            <ul className="my-7 list-disc space-y-3 pl-6 text-xl leading-relaxed">
+            <ul className="my-7 list-disc space-y-3 pl-6 text-lg leading-relaxed">
               {children}
             </ul>
           ),
           number: ({ children }) => (
-            <ol className="my-7 list-decimal space-y-3 pl-6 text-xl leading-relaxed">
+            <ol className="my-7 list-decimal space-y-3 pl-6 text-lg leading-relaxed">
               {children}
             </ol>
           ),

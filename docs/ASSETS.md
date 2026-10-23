@@ -7,3 +7,10 @@
 - Icons: existing lucide-react dependency.
 
 Replace thematic photos with approved studio imagery when available. Sources above identify the original image endpoints; no reference-site proprietary assets were copied.
+
+## Client revision assets (October 23, 2026)
+
+- `public/images/sog-coach.jpg`: the founder portrait embedded in the supplied SOG Sales Copy.docx. Used on School of Growth and the fiction instructor section.
+- `public/media/sog-introduction.mp4`: supplied sogvideo.mp4, converted from HEVC to H.264/AAC with fast-start metadata. The entire 32.71-second clip and audio are retained. Baked-in black outer margins were trimmed; no picture content was removed. Final size approximately 3.98 MB (original 25.25 MB).
+- `public/images/sog-video-poster.jpg`: frame at four seconds from the supplied video.
+- Homepage stock images and simulated magazine cover were removed from the layout. No new stock or generated assets were added.

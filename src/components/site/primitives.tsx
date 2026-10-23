@@ -2,14 +2,14 @@ import { ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 export const shell =
   "mx-auto w-[calc(100%-2.75rem)] max-w-7xl sm:w-[calc(100%-5rem)] lg:w-[calc(100%-8rem)]";
-export const sectionSpace = "py-20 md:py-28";
+export const sectionSpace = "py-16 md:py-24";
 export const heading =
-  "font-heading text-[26px] leading-[1.95] tracking-[-0.045em] sm:text-[34px] lg:text-[44px]";
+  "font-heading text-[19px] leading-[1.9] tracking-[-0.04em] sm:text-[22px] lg:text-[25px]";
 export const subheading =
-  "font-heading text-[21px] leading-[1.9] tracking-[-0.04em] md:text-[26px]";
+  "font-heading text-[17px] leading-[1.9] tracking-[-0.035em] md:text-[20px]";
 export const label =
-  "font-sans text-[11px] leading-relaxed tracking-[0.12em] uppercase";
-export const prose = "text-lg leading-[1.8] md:text-xl";
+  "font-sans text-[13px] leading-relaxed tracking-[0.12em] uppercase";
+export const prose = "text-base leading-[1.75] md:text-lg";
 export function Container({
   children,
   className = "",
@@ -44,7 +44,7 @@ export function PageIntro({
       <Eyebrow className="mb-8 text-forest">{eyebrow}</Eyebrow>
       <h1 className={cn(heading, "max-w-4xl whitespace-pre-line")}>{title}</h1>
       {description && (
-        <p className="mt-8 max-w-2xl text-2xl leading-relaxed">{description}</p>
+        <p className="mt-8 max-w-2xl text-lg leading-relaxed">{description}</p>
       )}
       {children}
     </header>
@@ -60,7 +60,7 @@ export function TextLink({
   return (
     <a
       href={href}
-      className="group inline-flex min-h-11 items-center gap-8 border-b border-current py-3 font-sans text-xs transition-colors hover:text-forest"
+      className="group inline-flex min-h-11 items-center gap-8 border-b border-current py-3 font-sans text-[13px] transition-colors hover:text-forest"
     >
       {children}
       <ArrowUpRight

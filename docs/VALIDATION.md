@@ -42,3 +42,26 @@ Sanity was updated to the version 5 maintenance line (`^5.31.2`) and next-sanity
 ## Tooling
 
 The in-app browser execution tool was unavailable in this session. Browser checks used local Playwright/Chromium against the production server; temporary scripts and screenshots are outside the repository under `/tmp/ogj-browser-qa`. No deployment was performed.
+
+## October 23 client revision — latest checks
+
+This section supersedes the earlier School of Growth, instructor-image, enrollment and newsletter-embed limitations.
+
+- ESLint passed, including exclusion of installed skill tooling from the application lint scope.
+- All 14 automated tests passed. New checks cover the three SOG billing periods, all plan benefits, the four supplied testimonials and ten FAQs.
+- Production build and its TypeScript validation passed. Both sales routes are statically rendered outside the shared site layout.
+- A fresh production cache was used after detecting stale global CSS. The output now explicitly uses a white body background and Georgia reading font.
+- Homepage design source lint: 0 FAIL / 0 WARN. Real-browser design inspection at 1440, 768 and 390px: 0 FAIL after the documented client-directed image/type allowances. Remaining warnings are recorded in DESIGN-REVISION.md.
+- Home, School of Growth, Fiction Writing and Read Pubs: HTTP 200, no horizontal overflow, zero axe violations at 390, 768 and 1440px (12 page/viewport checks).
+- About, Contact, Submissions and Privacy: HTTP 200, no horizontal overflow at 320 and 1440px, no browser runtime errors.
+- Native menu: focus stays in the dialog; Escape closes it; focus returns to the trigger. Reduced-motion navigation also works.
+- Reduced-motion cold load: content opacity 1; scroll behavior auto; decorative progress bar hidden; no hydration/runtime errors. The previous conditional-render hydration issue is fixed.
+- SOG video: H.264/AAC, native controls, duration 32.706667 seconds; playback advanced with paused=false and error=null.
+- FAQ installment answer expands correctly.
+- All five SOG access links use the supplied Mainstack destination. External checkout returned HTTP 200 and title “Pay for School of Growth | OneGoodJune”. No purchase was submitted.
+- Supplied coach portrait replaces the former fiction instructor image notice. Other team portraits still require approved assets.
+- The blank Substack embed was removed in favor of a real subscription destination.
+- No Sanity project is configured, so live CMS publishing and real article layouts remain an integration check. No fictional publication content was added.
+- No Safari/Firefox, screen-reader certification, live email delivery or field Core Web Vitals claim is made.
+
+Browser verification used temporary Playwright/Chromium tooling in `/tmp/ogj-qa` because the in-app browser execution tool was unavailable. Final design and feature-check artifacts are in `.taste-skill`. The local development server remains available on port 3000. No deployment was performed.

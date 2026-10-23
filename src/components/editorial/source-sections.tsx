@@ -17,7 +17,7 @@ export function SourceParagraphs({ lines }: { lines: string[] }) {
     } else blocks.push(<p key={i}>{lines[i]}</p>);
   }
   return (
-    <div className="space-y-5 text-lg leading-[1.85] md:text-xl">{blocks}</div>
+    <div className="space-y-5 text-base leading-[1.8] md:text-lg">{blocks}</div>
   );
 }
 export function SourceSections({

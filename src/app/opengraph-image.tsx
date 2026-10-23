@@ -18,20 +18,20 @@ export default async function OpenGraphImage() {
         flexDirection: "column",
         justifyContent: "center",
         padding: 70,
-        background: "#e3df82",
-        color: "#181b14",
+        background: "#000000",
+        color: "#ffffff",
       }}
     >
       <div
         style={{
           display: "flex",
           fontFamily: "Songbird",
-          fontSize: 80,
+          fontSize: 66,
           letterSpacing: -6,
           marginBottom: 55,
         }}
       >
-        OneGoodJune
+        ONEGOODJUNE
       </div>
       <div style={{ display: "flex", fontSize: 30 }}>
         Raising the bar in faith-based African fiction.

@@ -24,7 +24,7 @@ export default function Contact() {
         />
         <div className="grid gap-14 py-16 md:grid-cols-[.7fr_1fr]">
           <Reveal>
-            <p className="max-w-sm text-2xl leading-relaxed">
+            <p className="max-w-sm text-lg leading-[1.75]">
               Fill out the contact form below and we&apos;ll be in touch as soon
               as possible.
             </p>

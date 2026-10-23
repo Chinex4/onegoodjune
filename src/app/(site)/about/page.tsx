@@ -28,7 +28,7 @@ export default function About() {
         <section className="grid gap-10 py-16 md:grid-cols-[.5fr_1fr]">
           <Eyebrow>Born out of necessity</Eyebrow>
           <Reveal>
-            <div className="max-w-3xl space-y-6 text-xl leading-[1.85]">
+            <div className="max-w-3xl space-y-6 text-base leading-[1.8] md:text-lg">
               {about.opening.slice(3).map((p) => (
                 <p key={p}>{p}</p>
               ))}
@@ -41,7 +41,7 @@ export default function About() {
           <Reveal>
             <h2 className={heading}>A Simple Quest</h2>
           </Reveal>
-          <p className="text-2xl leading-relaxed">{about.mission}</p>
+          <p className="text-lg leading-[1.75]">{about.mission}</p>
         </Container>
       </section>
       <Container className={sectionSpace}>
@@ -95,7 +95,7 @@ export default function About() {
       <section className="bg-lime py-20">
         <Container>
           <h2 className={heading}>Start your own adventure</h2>
-          <p className="my-7 text-2xl leading-relaxed">
+          <p className="my-7 text-lg leading-[1.75]">
             Read our literary publications or start building your creative life
           </p>
           <div className="flex flex-wrap gap-4">

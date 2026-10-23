@@ -51,3 +51,7 @@ References studied: [Communiqué](https://communiquehq.com), [SocialChain](https
 ## Verification
 
 See VALIDATION.md. Functional tests use synthetic test fixtures and mocked email/limiter responses, never real public articles or outbound test emails. Live service setup, real email delivery and authenticated Studio/draft workflows remain unverified until their configuration is supplied.
+
+## October 23 update
+
+The SOG sales copy, founder portrait, video and Mainstack enrollment URL have now been supplied and implemented; they supersede unresolved items 4–6 above for that program and the instructor portrait. Actual waitlist/social URLs and the other team portraits remain pending. Both sales routes use a separate layout. See DESIGN-REVISION.md.

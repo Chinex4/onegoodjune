@@ -4,12 +4,7 @@ import { redirect } from "next/navigation";
 import { getCategories, getMagazine } from "@/sanity/client";
 import { ArticleCard } from "@/components/editorial/article-card";
 import { DraftNotice } from "@/components/editorial/draft-notice";
-import {
-  Container,
-  PageIntro,
-  subheading,
-  Eyebrow,
-} from "@/components/site/primitives";
+import { Container, subheading } from "@/components/site/primitives";
 import { Reveal } from "@/components/site/reveal";
 import { pageMetadata } from "@/lib/metadata";
 export const metadata = pageMetadata(
@@ -48,12 +43,12 @@ async function Magazine({ searchParams }: { searchParams: Params }) {
       <DraftNotice />
       <nav
         aria-label="Publication categories"
-        className="my-8 flex flex-wrap gap-x-8 gap-y-1 border-b border-ink/20 pb-4"
+        className="my-8 flex flex-wrap gap-x-7 gap-y-1 bg-black px-6 py-3 text-white"
       >
         <Link
           href="/read-pubs"
           aria-current={!category ? "page" : undefined}
-          className={`inline-flex min-h-11 items-center text-lg ${!category ? "text-forest underline underline-offset-8" : "hover:text-forest"}`}
+          className={`inline-flex min-h-11 items-center font-sans text-sm ${!category ? "text-lime" : "hover:text-lime"}`}
         >
           All publications
         </Link>
@@ -62,7 +57,7 @@ async function Magazine({ searchParams }: { searchParams: Params }) {
             key={c._id}
             href={magazineLink(c.slug)}
             aria-current={category === c.slug ? "page" : undefined}
-            className={`inline-flex min-h-11 items-center text-lg ${category === c.slug ? "text-forest underline underline-offset-8" : "hover:text-forest"}`}
+            className={`inline-flex min-h-11 items-center font-sans text-sm ${category === c.slug ? "text-lime" : "hover:text-lime"}`}
           >
             {c.title}
           </Link>
@@ -73,7 +68,7 @@ async function Magazine({ searchParams }: { searchParams: Params }) {
           className="border-b border-ink/20 py-8 pb-14"
           aria-label="Featured article"
         >
-          <Eyebrow className="mb-7">Featured</Eyebrow>
+          <h2 className="mb-7 font-sans text-sm">Featured story</h2>
           <ArticleCard post={lead} featured />
         </section>
       )}
@@ -90,9 +85,9 @@ async function Magazine({ searchParams }: { searchParams: Params }) {
         </section>
       )}
       {!data.latest.length && !category ? (
-        <section className="my-12 border-y border-ink/15 py-16">
+        <section className="my-12 bg-neutral-100 p-7 md:p-12">
           <h2 className="font-serif text-3xl">The next story is on its way.</h2>
-          <p className="mt-5 max-w-xl text-xl leading-relaxed">
+          <p className="mt-5 max-w-xl text-base leading-[1.8]">
             Our literary publications will appear here once they are published.
             In the meantime, explore our submission guidelines or read the
             newsletter.
@@ -125,7 +120,7 @@ async function Magazine({ searchParams }: { searchParams: Params }) {
               ))}
             </div>
           ) : (
-            <p className="py-8 text-xl leading-relaxed">
+            <p className="py-8 text-base leading-[1.8]">
               No publications have been published in this selection yet.
             </p>
           )}
@@ -206,13 +201,22 @@ export default function Publications({
   searchParams: Params;
 }) {
   return (
-    <main id="main-content">
+    <main id="main-content" className="bg-white">
       <Container>
-        <PageIntro
-          eyebrow="The OneGoodJune literary magazine"
-          title="Read Pubs"
-          description="Stories. Essays. News. Craft. Archive."
-        />
+        <header className="grid items-end gap-8 pb-8 pt-10 md:grid-cols-[1fr_1fr] md:pb-10 md:pt-14">
+          <h1 className="font-heading text-[27px] leading-[1.9] tracking-[-0.045em] md:text-[39px]">
+            Read Pubs
+          </h1>
+          <div>
+            <p className="font-sans text-sm">
+              The ONEGOODJUNE literary magazine
+            </p>
+            <p className="mt-4 max-w-xl text-base leading-relaxed">
+              Fiction, poetry, essays, creative nonfiction and moving pieces on
+              industry shifts by contemporary faith-based voices in Africa.
+            </p>
+          </div>
+        </header>
         <Suspense
           fallback={
             <p className="py-20 text-xl" role="status">

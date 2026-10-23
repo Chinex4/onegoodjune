@@ -1,0 +1,27 @@
+{
+  "video": {
+    "currentTime": 0.976463,
+    "duration": 32.706667,
+    "paused": false,
+    "controls": true,
+    "error": null
+  },
+  "faq": true,
+  "checkoutLinks": [
+    "https://checkout.mainstack.com/onegj/sog",
+    "https://checkout.mainstack.com/onegj/sog",
+    "https://checkout.mainstack.com/onegj/sog",
+    "https://checkout.mainstack.com/onegj/sog",
+    "https://checkout.mainstack.com/onegj/sog"
+  ],
+  "focusInDialog": true,
+  "menuClosed": true,
+  "focusReturned": true,
+  "reduced": {
+    "progressHidden": "none",
+    "readable": "1",
+    "scrollBehavior": "auto"
+  },
+  "reducedMenu": true,
+  "errors": []
+}

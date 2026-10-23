@@ -91,7 +91,7 @@ async function Article({ params }: Props) {
             {post.title}
           </h1>
           {post.excerpt && (
-            <p className="mx-auto mt-7 max-w-2xl text-2xl leading-relaxed text-ink/80">
+            <p className="mx-auto mt-7 max-w-2xl text-lg leading-[1.75] text-ink">
               {post.excerpt}
             </p>
           )}

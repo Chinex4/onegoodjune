@@ -29,10 +29,10 @@ The source routes live in `src/app/(site)` so Sanity Studio can use its own full
 - `src/content/source-copy.json`: full original document extraction, unchanged.
 - `src/content/home.ts`: supplied homepage copy.
 - `src/content/pages.ts`: supplied internal-page copy and policy sections derived from the extraction.
-- `src/lib/site-config.ts`: links and asset paths, including the four missing team photograph slots.
+- `src/lib/site-config.ts`: links and asset paths, including the four team photograph slots and supplied SOG video/portrait.
 - `docs/ASSETS.md`: thematic photo and font sources.
 
-Set real social, waitlist and enrollment URLs in `.env.local`. Without them, the UI honestly marks the relevant destinations as unavailable. No form pretends to collect a waitlist. Add approved team images to `public/images` and update `site.assets.team` in the documented order. Georgia remains the temporary body font fallback until body font files are supplied.
+Set real social and waitlist URLs in `.env.local`. Without them, the UI honestly marks the relevant destinations as unavailable. School of Growth uses the Mainstack checkout supplied in the sales document; `NEXT_PUBLIC_ENROLLMENT_URL` can override it. No form pretends to collect a waitlist. Add approved team images to `public/images` and update `site.assets.team` in the documented order. Georgia remains the temporary body font fallback until body font files are supplied.
 
 ## Sanity setup
 
@@ -74,3 +74,5 @@ The test suite uses mocked email and limiter providers and sends no real emails.
 
 See `docs/IMPLEMENTATION-PLAN.md` and `docs/VALIDATION.md` for the feature checklist, checks, remaining source-copy discrepancies and external integration requirements. No deployment is performed automatically.
 # onegoodjune
+
+The October 23 revision uses the full SOG Sales Copy.docx transcription in `src/content/sog-source.json`. Both program pages live in the `(sales)` route group without shared navigation or footer. See [revision notes](docs/DESIGN-REVISION.md) for art direction, source handling and remaining configuration.

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { course } from "@/content/pages";
 import {
   Container,
@@ -19,7 +20,7 @@ export const metadata = pageMetadata(
 );
 export default function Fiction() {
   return (
-    <main id="main-content">
+    <main id="main-content" className="bg-white">
       <Container>
         <PageIntro
           eyebrow="A specialized fiction writing course"
@@ -44,7 +45,7 @@ export default function Fiction() {
             {course.modules.map((module, i) => (
               <li
                 key={module}
-                className="flex items-baseline gap-6 border-b border-ink/20 py-5 text-xl leading-relaxed"
+                className="flex items-baseline gap-6 border-b border-ink/20 py-5 text-base leading-[1.8]"
               >
                 <span className="font-sans text-[11px] text-forest">
                   {String(i + 1).padStart(2, "0")}
@@ -55,10 +56,10 @@ export default function Fiction() {
           </ol>
         </section>
       </Container>
-      <section className={`${sectionSpace} bg-straw`}>
+      <section className={`${sectionSpace} bg-neutral-100`}>
         <Container className="grid gap-12 md:grid-cols-2">
           <h2 className={heading}>Guaranteed Results</h2>
-          <div className="space-y-8 text-2xl leading-relaxed">
+          <div className="space-y-8 text-lg leading-relaxed">
             {course.results.map((result) => (
               <Reveal key={result}>
                 <p>{result}</p>
@@ -70,23 +71,27 @@ export default function Fiction() {
       <Container className="grid gap-14 py-20 md:grid-cols-2">
         <section>
           <Eyebrow>Who Is It For?</Eyebrow>
-          <p className="mt-6 text-2xl leading-relaxed">{course.audience}</p>
+          <p className="mt-6 text-lg leading-relaxed">{course.audience}</p>
         </section>
         <section>
           <Eyebrow>Writing Instructor</Eyebrow>
           <h2 className={`${subheading} mt-6`}>Esther Uzoamaka Okoloeze</h2>
-          <p className="mt-5 text-xl leading-relaxed">{course.instructor}</p>
-          <p className="mt-5 font-sans text-xs text-ink/70">
-            Instructor photograph to be supplied.
-          </p>
+          <Image
+            src={site.assets.sogCoach}
+            alt="Esther Uzoamaka Okoloeze, writing instructor"
+            width={300}
+            height={375}
+            className="my-7 h-auto w-60"
+          />
+          <p className="mt-5 text-base leading-[1.8]">{course.instructor}</p>
         </section>
       </Container>
-      <section className="bg-lime py-20">
+      <section className="bg-neutral-100 py-20">
         <Container className="grid gap-12 md:grid-cols-2">
           <div>
             <Eyebrow>Your Investment</Eyebrow>
             <h2 className={`${heading} mt-8`}>Waitlist Price</h2>
-            <p className="mt-6 text-4xl">$20 / #27,500</p>
+            <p className="mt-6 text-3xl">$20 / #27,500</p>
             <p className="mt-4 text-lg">
               Original Price:{" "}
               <span className="line-through">$109 / ₦150,000</span>
@@ -106,7 +111,7 @@ export default function Fiction() {
               {course.perks.map((perk) => (
                 <li
                   key={perk}
-                  className="border-t border-ink/20 pt-5 text-xl leading-relaxed"
+                  className="border-t border-ink/20 pt-5 text-base leading-[1.8]"
                 >
                   {perk.replace(/^▪︎ /, "")}
                 </li>
@@ -124,7 +129,7 @@ export default function Fiction() {
         ].map((item) => (
           <section key={item.title}>
             <h2 className={subheading}>{item.title}</h2>
-            <p className="mt-6 text-xl leading-relaxed">{item.text}</p>
+            <p className="mt-6 text-base leading-[1.8]">{item.text}</p>
           </section>
         ))}
       </Container>
