@@ -7,9 +7,23 @@ import {
   inquiryTypes,
   type ContactInput,
 } from "@/lib/contact-schema";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, CircleAlert, CircleCheck } from "lucide-react";
+import { ArrowIcon, buttonStyles } from "./primitives";
 const fieldClass =
-  "mt-3 min-h-12 w-full rounded-none border-b border-ink/40 bg-transparent px-0 py-3 font-serif text-xl transition-colors placeholder:text-ink/45 focus:border-forest focus:outline-2 focus:outline-offset-4 focus:outline-forest aria-invalid:border-rust";
+  "mt-2 block min-h-13 w-full rounded-none border border-ink/25 bg-white px-4 py-3 font-serif text-xl text-ink transition-colors placeholder:text-ink/40 hover:border-ink/50 focus:border-forest focus:outline-2 focus:outline-offset-0 focus:outline-forest aria-invalid:border-rust";
+const labelClass = "font-sans text-[0.8125rem] font-medium text-ink";
+function FieldError({ id, message }: { id: string; message?: string }) {
+  if (!message) return null;
+  return (
+    <p
+      id={id}
+      className="mt-2 flex items-center gap-2 font-sans text-[0.8125rem] text-rust"
+    >
+      <CircleAlert size={15} aria-hidden="true" className="shrink-0" />
+      {message}
+    </p>
+  );
+}
 export function ContactForm() {
   const [feedback, setFeedback] = useState<{
     type: "success" | "error";
@@ -82,10 +96,10 @@ export function ContactForm() {
     <form
       onSubmit={submit}
       noValidate
-      className="space-y-9"
+      className="space-y-7"
       aria-busy={isSubmitting}
     >
-      <div className="grid gap-9 sm:grid-cols-2">
+      <div className="grid gap-7 sm:grid-cols-2 sm:gap-5">
         {(
           [
             {
@@ -101,7 +115,7 @@ export function ContactForm() {
           ] as const
         ).map((field) => (
           <div key={field.name}>
-            <label htmlFor={field.name} className="font-sans text-xs">
+            <label htmlFor={field.name} className={labelClass}>
               {field.label}
             </label>
             <input
@@ -116,24 +130,21 @@ export function ContactForm() {
               required
               className={fieldClass}
             />
-            {errors[field.name] && (
-              <p
-                id={`${field.name}-error`}
-                className="mt-3 font-sans text-xs text-rust"
-              >
-                {errors[field.name]?.message}
-              </p>
-            )}
+            <FieldError
+              id={`${field.name}-error`}
+              message={errors[field.name]?.message}
+            />
           </div>
         ))}
       </div>
       <div>
-        <label htmlFor="email" className="font-sans text-xs">
+        <label htmlFor="email" className={labelClass}>
           Email
         </label>
         <input
           id="email"
           type="email"
+          inputMode="email"
           autoComplete="email"
           {...register("email")}
           maxLength={254}
@@ -142,57 +153,45 @@ export function ContactForm() {
           aria-describedby={errors.email ? "email-error" : undefined}
           className={fieldClass}
         />
-        {errors.email && (
-          <p id="email-error" className="mt-3 font-sans text-xs text-rust">
-            {errors.email.message}
-          </p>
-        )}
+        <FieldError id="email-error" message={errors.email?.message} />
       </div>
-      <div>
-        <label htmlFor="inquiryType" className="font-sans text-xs">
-          What are you enquiring about?
-        </label>
-        <select
-          id="inquiryType"
-          {...register("inquiryType")}
-          required
-          aria-invalid={!!errors.inquiryType}
-          aria-describedby={errors.inquiryType ? "inquiry-error" : undefined}
-          defaultValue=""
-          className={fieldClass}
-        >
-          <option value="" disabled>
-            Select an inquiry type
-          </option>
+      <fieldset
+        aria-invalid={!!errors.inquiryType}
+        aria-describedby={errors.inquiryType ? "inquiry-error" : undefined}
+      >
+        <legend className={labelClass}>What are you enquiring about?</legend>
+        <div className="mt-3 flex flex-wrap gap-2">
           {inquiryTypes.map((type) => (
-            <option key={type}>{type}</option>
+            <label key={type} className="relative">
+              <input
+                type="radio"
+                value={type}
+                {...register("inquiryType")}
+                className="peer sr-only"
+              />
+              <span className="inline-flex min-h-11 cursor-pointer items-center border border-ink/25 bg-white px-5 font-sans text-sm font-medium transition-colors hover:border-ink peer-checked:border-ink peer-checked:bg-ink peer-checked:text-white peer-focus-visible:outline-2 peer-focus-visible:outline-offset-3 peer-focus-visible:outline-forest">
+                {type}
+              </span>
+            </label>
           ))}
-        </select>
-        {errors.inquiryType && (
-          <p id="inquiry-error" className="mt-3 font-sans text-xs text-rust">
-            {errors.inquiryType.message}
-          </p>
-        )}
-      </div>
+        </div>
+        <FieldError id="inquiry-error" message={errors.inquiryType?.message} />
+      </fieldset>
       <div>
-        <label htmlFor="message" className="font-sans text-xs">
+        <label htmlFor="message" className={labelClass}>
           Please leave your message here
         </label>
         <textarea
           id="message"
-          rows={5}
+          rows={6}
           {...register("message")}
           required
           maxLength={5000}
           aria-invalid={!!errors.message}
           aria-describedby={errors.message ? "message-error" : undefined}
-          className={`${fieldClass} resize-y`}
+          className={`${fieldClass} resize-y leading-relaxed`}
         />
-        {errors.message && (
-          <p id="message-error" className="mt-3 font-sans text-xs text-rust">
-            {errors.message.message}
-          </p>
-        )}
+        <FieldError id="message-error" message={errors.message?.message} />
       </div>
       <div
         aria-hidden="true"
@@ -206,30 +205,37 @@ export function ContactForm() {
           autoComplete="off"
         />
       </div>
-      <p className="font-sans text-xs leading-relaxed text-ink/70">
-        Please read our{" "}
-        <a href="/privacy-policy" className="underline underline-offset-4">
-          Privacy Policy
-        </a>{" "}
-        before sharing your information.
-      </p>
-      <button
-        disabled={isSubmitting}
-        type="submit"
-        className="group inline-flex min-h-12 items-center gap-12 bg-ink px-6 py-4 font-sans text-xs text-white transition-colors hover:bg-forest disabled:cursor-wait disabled:opacity-60"
-      >
-        {isSubmitting ? "Sending…" : "Submit"}
-        <ArrowUpRight
-          size={18}
-          className="transition-transform motion-safe:group-hover:-translate-y-1"
-        />
-      </button>
+      <div className="flex flex-col gap-5 border-t border-ink/15 pt-7 sm:flex-row sm:items-center sm:justify-between">
+        <p className="max-w-xs font-sans text-[0.8125rem] leading-relaxed text-ink/70">
+          Please read our{" "}
+          <a
+            href="/privacy-policy"
+            className="underline underline-offset-4 hover:text-forest"
+          >
+            Privacy Policy
+          </a>{" "}
+          before sharing your information.
+        </p>
+        <button
+          disabled={isSubmitting}
+          type="submit"
+          className={buttonStyles("ink", "gap-12 sm:min-w-44")}
+        >
+          {isSubmitting ? "Sending…" : "Submit"}
+          <ArrowIcon Icon={ArrowUpRight} />
+        </button>
+      </div>
       <div aria-live="polite" aria-atomic="true">
         {feedback && (
           <p
             role={feedback.type === "error" ? "alert" : "status"}
-            className={`border-l-2 py-2 pl-4 text-lg leading-relaxed ${feedback.type === "error" ? "border-rust text-rust" : "border-forest text-forest"}`}
+            className={`flex items-start gap-3 p-4 font-serif text-lg leading-relaxed ${feedback.type === "error" ? "bg-rust/10 text-rust" : "bg-lime/30 text-forest"}`}
           >
+            {feedback.type === "error" ? (
+              <CircleAlert size={20} aria-hidden="true" className="mt-1 shrink-0" />
+            ) : (
+              <CircleCheck size={20} aria-hidden="true" className="mt-1 shrink-0" />
+            )}
             {feedback.message}
           </p>
         )}

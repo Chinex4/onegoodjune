@@ -1,18 +1,20 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { X, ArrowUpRight } from "lucide-react";
+import { X } from "lucide-react";
 import { Suspense, useRef, useState, useEffect } from "react";
-import { navigation } from "@/lib/site-config";
-import { shell } from "./primitives";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
+import { navigation, site } from "@/lib/site-config";
+import { label, palette, shell, buttonStyles, ArrowIcon } from "./primitives";
+import { SocialLinks } from "./footer";
 import { cn } from "@/lib/utils";
 type NavProps = {
   item: { href: string; label: string };
   className: string;
   onClick?: () => void;
+  children?: React.ReactNode;
 };
-function ActiveLink({ item, className, onClick }: NavProps) {
+function ActiveLink({ item, className, onClick, children }: NavProps) {
   const pathname = usePathname();
   const current =
     pathname === item.href ||
@@ -24,7 +26,7 @@ function ActiveLink({ item, className, onClick }: NavProps) {
       className={className}
       onClick={onClick}
     >
-      {item.label}
+      {children ?? item.label}
     </Link>
   );
 }
@@ -37,7 +39,7 @@ function NavItem(props: NavProps) {
           className={props.className}
           onClick={props.onClick}
         >
-          {props.item.label}
+          {props.children ?? props.item.label}
         </Link>
       }
     >
@@ -45,10 +47,11 @@ function NavItem(props: NavProps) {
     </Suspense>
   );
 }
+const desktopLink =
+  "relative inline-flex min-h-11 items-center font-sans text-[0.8125rem] font-medium transition-colors hover:text-forest aria-[current=page]:text-forest after:absolute after:inset-x-0 after:bottom-2 after:h-px after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100 aria-[current=page]:after:scale-x-100";
 export function Header() {
   const menu = useRef<HTMLDialogElement>(null);
   const [open, setOpen] = useState(false);
-  const reduced = useReducedMotion();
   useEffect(() => {
     if (!open) return;
     const previous = document.body.style.overflow;
@@ -64,105 +67,137 @@ export function Header() {
   return (
     <header
       id="top"
-      className={cn(shell, "flex h-24 items-center justify-between gap-6")}
+      className="sticky top-0 z-40 border-b border-ink/10 bg-white/90 backdrop-blur-md supports-[backdrop-filter]:bg-white/80"
     >
-      <Link
-        href="/"
-        aria-label="OneGoodJune home"
-        className="font-heading text-[13px] sm:text-[14px] leading-loose tracking-[-0.06em]"
-      >
-        ONEGOODJUNE
-      </Link>
-      <nav
-        aria-label="Main navigation"
-        className="ml-auto hidden items-center gap-8 lg:flex"
-      >
-        {navigation
-          .filter((item) =>
-            ["/about", "/read-pubs", "/submissions"].includes(item.href),
-          )
-          .map((item) => (
-            <NavItem
-              key={item.href}
-              item={item}
-              className="inline-flex min-h-11 items-center font-sans text-sm hover:text-forest aria-[current=page]:text-forest"
-            />
-          ))}
-      </nav>
-      <Link
-        href="/contact"
-        className="group hidden min-h-11 items-center gap-4 bg-black px-4 text-white font-sans text-[13px] transition-colors hover:bg-lime xl:inline-flex"
-      >
-        Get in touch
-        <ArrowUpRight
-          size={16}
-          className="transition-transform motion-safe:group-hover:rotate-45"
-        />
-      </Link>
-      <button
-        type="button"
-        aria-label="Open navigation"
-        aria-haspopup="dialog"
-        aria-expanded={open}
-        aria-controls="site-navigation"
-        onClick={() => {
-          menu.current?.showModal();
-          setOpen(true);
-        }}
-        className="group flex min-h-12 w-[76px] items-center justify-end"
-      >
-        <span aria-hidden="true" className="flex w-12 flex-col gap-[7px]">
-          <span className="h-[2px] w-12 bg-current motion-safe:transition-transform motion-safe:group-hover:translate-y-0.5" />
-          <span className="h-[2px] w-12 bg-current motion-safe:transition-transform motion-safe:group-hover:-translate-y-0.5" />
-        </span>
-      </button>
+      <div className={cn(shell, "flex h-[4.5rem] items-center gap-8 md:h-20")}>
+        <Link
+          href="/"
+          aria-label="OneGoodJune home"
+          className="font-heading text-[1.5rem] leading-none tracking-[-0.03em] md:text-[1.75rem]"
+        >
+          ONEGOODJUNE
+        </Link>
+        <nav
+          aria-label="Main navigation"
+          className="ml-auto hidden items-center gap-7 lg:flex xl:gap-9"
+        >
+          {navigation
+            .filter((item) => item.href !== "/")
+            .map((item) => (
+              <NavItem key={item.href} item={item} className={desktopLink} />
+            ))}
+        </nav>
+        <Link
+          href="/contact"
+          className={buttonStyles("ink", "hidden min-h-11 gap-4 px-5 xl:inline-flex")}
+        >
+          Get in touch
+          <ArrowIcon size={15} />
+        </Link>
+        <button
+          type="button"
+          aria-haspopup="dialog"
+          aria-expanded={open}
+          aria-controls="site-navigation"
+          onClick={() => {
+            menu.current?.showModal();
+            setOpen(true);
+          }}
+          className="group ml-auto flex min-h-12 items-center gap-3 font-sans text-[0.8125rem] font-medium lg:hidden"
+        >
+          Menu
+          <span aria-hidden="true" className="flex w-8 flex-col gap-[6px]">
+            <span className="h-[2px] w-8 bg-current motion-safe:transition-transform motion-safe:group-hover:translate-x-1" />
+            <span className="h-[2px] w-8 bg-current motion-safe:transition-transform motion-safe:group-hover:-translate-x-1" />
+          </span>
+        </button>
+      </div>
       <dialog
         ref={menu}
         id="site-navigation"
         onClose={() => setOpen(false)}
         aria-label="Navigation"
-        className="fixed inset-0 m-0 h-dvh max-h-dvh w-screen max-w-none overflow-y-auto bg-black p-6 text-white backdrop:bg-black sm:p-10 lg:px-16"
+        className="ground-dark fixed inset-0 m-0 h-dvh max-h-dvh w-screen max-w-none overflow-y-auto p-0 backdrop:bg-black"
       >
-        <div className="flex items-center justify-between pb-8">
-          <span className="font-heading text-[13px] sm:text-[14px]">
-            ONEGOODJUNE
-          </span>
-          <button
-            type="button"
-            aria-label="Close navigation"
-            className="grid size-11 place-items-center"
-            onClick={close}
-          >
-            <X />
-          </button>
-        </div>
-        <motion.nav
-          aria-label="Mobile navigation"
-          className="mx-auto my-8 flex max-w-5xl flex-col sm:my-14"
-          initial={false}
-          animate={
-            open && !reduced
-              ? { y: [10, 0], opacity: [0.8, 1] }
-              : { y: 0, opacity: 1 }
-          }
-          transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
-        >
-          {navigation.map((item) => (
-            <NavItem
-              key={item.href}
-              item={item}
+        <div className={cn(shell, "flex min-h-full flex-col pb-10")}>
+          <div className="flex h-[4.5rem] items-center justify-between md:h-20">
+            <Link
+              href="/"
               onClick={close}
-              className="py-3 font-serif text-2xl transition-colors hover:text-lime aria-[current=page]:text-lime sm:text-4xl"
-            />
-          ))}
-          <Link
-            href="/contact"
-            className="mt-6 py-5 font-sans text-sm hover:text-lime"
-            onClick={close}
+              className="font-heading text-[1.5rem] leading-none tracking-[-0.03em] md:text-[1.75rem]"
+            >
+              ONEGOODJUNE
+            </Link>
+            <button
+              type="button"
+              aria-label="Close navigation"
+              className="-mr-2.5 grid size-12 place-items-center transition-colors hover:text-lime"
+              onClick={close}
+            >
+              <X size={26} strokeWidth={1.6} />
+            </button>
+          </div>
+          <motion.nav
+            aria-label="Mobile navigation"
+            className="my-10 flex flex-col border-t border-white/15"
+            initial={false}
+            animate={open ? "open" : "closed"}
+            variants={{ open: { transition: { staggerChildren: 0.04 } } }}
           >
-            Get in touch ↗
-          </Link>
-        </motion.nav>
+            {navigation.map((item, i) => (
+              <motion.div
+                key={item.href}
+                variants={{
+                  closed: { opacity: 1, y: 0 },
+                  open: { opacity: [0, 1], y: [12, 0] },
+                }}
+                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <NavItem
+                  item={item}
+                  onClick={close}
+                  className="group flex items-center gap-5 border-b border-white/15 py-4 transition-colors hover:text-lime aria-[current=page]:text-lime sm:py-5"
+                >
+                  <span
+                    aria-hidden="true"
+                    className={cn(label, "w-7 text-white/50")}
+                  >
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="font-heading text-[1.875rem] leading-[1.1] tracking-[-0.02em] sm:text-[2.5rem]">
+                    {item.label}
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className={cn(
+                      "ml-auto size-3 scale-0 transition-transform duration-300 group-hover:scale-100 group-aria-[current=page]:scale-100",
+                      palette[(i * 3) % palette.length],
+                    )}
+                  />
+                </NavItem>
+              </motion.div>
+            ))}
+          </motion.nav>
+          <div className="mt-auto grid gap-8 sm:grid-cols-2 sm:items-end">
+            <div>
+              <Link
+                href="/contact"
+                onClick={close}
+                className={buttonStyles("lime", "w-full sm:w-auto")}
+              >
+                Get in touch
+                <ArrowIcon />
+              </Link>
+              <a
+                href={site.links.email}
+                className="mt-5 block font-serif text-lg text-white/80 hover:text-lime"
+              >
+                admin@onegoodjune.com
+              </a>
+            </div>
+            <SocialLinks dark className="sm:justify-end" />
+          </div>
+        </div>
       </dialog>
     </header>
   );

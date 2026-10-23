@@ -1,13 +1,18 @@
+import { Mail, MapPin } from "lucide-react";
 import {
   Container,
+  Eyebrow,
   PageIntro,
   heading,
-  Eyebrow,
+  label,
+  lead,
 } from "@/components/site/primitives";
 import { ContactForm } from "@/components/site/contact-form";
 import { SocialLinks } from "@/components/site/footer";
 import { Reveal } from "@/components/site/reveal";
+import { site } from "@/lib/site-config";
 import { pageMetadata } from "@/lib/metadata";
+import { cn } from "@/lib/utils";
 export const metadata = pageMetadata(
   "Get in touch",
   "Want to work together or have a question? Get in touch with OneGoodJune.",
@@ -22,28 +27,56 @@ export default function Contact() {
           title="Get in touch"
           description="Want to work together or have a question?"
         />
-        <div className="grid gap-14 py-16 md:grid-cols-[.7fr_1fr]">
-          <Reveal>
-            <p className="max-w-sm text-lg leading-[1.75]">
-              Fill out the contact form below and we&apos;ll be in touch as soon
-              as possible.
-            </p>
-            <a
-              href="mailto:admin@onegoodjune.com"
-              className="mt-8 inline-flex min-h-11 items-center break-all border-b border-ink/30 text-lg"
-            >
-              admin@onegoodjune.com
-            </a>
-            <p className="mt-5 font-sans text-xs text-ink/65">Lagos, Nigeria</p>
+        <div className="grid gap-14 py-14 md:py-20 lg:grid-cols-12 lg:gap-10">
+          <Reveal className="lg:col-span-4">
+            <div className="lg:sticky lg:top-32">
+              <p className={cn(lead, "max-w-sm")}>
+                Fill out the contact form below and we&apos;ll be in touch as
+                soon as possible.
+              </p>
+              <dl className="mt-10 space-y-6 border-t border-ink/15 pt-8">
+                <div>
+                  <dt className={cn(label, "text-ink/60")}>Email</dt>
+                  <dd className="mt-2">
+                    <a
+                      href={site.links.email}
+                      className="group inline-flex min-h-11 items-center gap-3 break-all font-serif text-xl underline decoration-ink/30 underline-offset-[6px] transition-colors hover:text-forest hover:decoration-forest"
+                    >
+                      <Mail
+                        size={18}
+                        aria-hidden="true"
+                        className="shrink-0 text-forest"
+                      />
+                      admin@onegoodjune.com
+                    </a>
+                  </dd>
+                </div>
+                <div>
+                  <dt className={cn(label, "text-ink/60")}>Studio</dt>
+                  <dd className="mt-2 flex items-center gap-3 font-serif text-xl">
+                    <MapPin
+                      size={18}
+                      aria-hidden="true"
+                      className="shrink-0 text-forest"
+                    />
+                    Lagos, Nigeria
+                  </dd>
+                </div>
+              </dl>
+            </div>
           </Reveal>
-          <ContactForm />
+          <div className="bg-paper p-6 sm:p-10 lg:col-span-7 lg:col-start-6">
+            <ContactForm />
+          </div>
         </div>
       </Container>
-      <section className="bg-straw py-20">
-        <Container>
-          <Eyebrow>Follow OGJ</Eyebrow>
-          <h2 className={`${heading} my-8`}>You can also find us on…</h2>
-          <SocialLinks />
+      <section className="bg-straw py-20 md:py-24">
+        <Container className="grid gap-8 lg:grid-cols-12 lg:items-end lg:gap-10">
+          <div className="lg:col-span-7">
+            <Eyebrow className="text-earth">Follow OGJ</Eyebrow>
+            <h2 className={cn(heading, "mt-6")}>You can also find us on…</h2>
+          </div>
+          <SocialLinks className="text-base lg:col-span-5 lg:justify-end" />
         </Container>
       </section>
     </main>

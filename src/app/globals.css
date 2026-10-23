@@ -2,20 +2,40 @@
 @import "tw-animate-css";
 @custom-variant dark (&:is(.dark *));
 @theme inline {
+  /* Type: Songbird display (size-adjusted in layout.tsx), Crimson Text for
+     reading with the brief's Cardo fallback, Zalando Sans for interface text. */
   --font-heading: var(--font-songbird), Georgia, serif;
-  --font-serif: Georgia, "Times New Roman", serif;
-  --font-sans: Arial, Helvetica, sans-serif;
+  --font-serif: var(--font-crimson), Cardo, Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-zalando), "Helvetica Neue", Arial, sans-serif;
   --font-mono: "Courier New", monospace;
-  --color-paper: #faf9f6;
-  --color-ink: #181b14;
+  /* Neutrals: black and white per the brief, plus warm supporting tints. */
+  --color-ink: #14170f;
+  --color-paper: #f7f5ef;
+  --color-mist: #ece9df;
+  /* Earthy Green family */
   --color-forest: #2d6e0b;
   --color-lime: #b6e266;
   --color-sage: #abc067;
   --color-straw: #e3df82;
+  /* Sunshine family */
   --color-earth: #7b3622;
   --color-rust: #b82c00;
   --color-orange: #ff751f;
   --color-sunshine: #ffa02e;
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-draw: draw 0.6s var(--ease-out-soft) both;
+  --animate-rise: rise 0.7s var(--ease-out-soft) both;
+  @keyframes draw {
+    from {
+      transform: scaleX(0);
+    }
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(0.5rem);
+    }
+  }
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
@@ -74,18 +94,36 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
+/* Black ground with a lime focus ring: white-on-black sections, menu, footer. */
+@utility ground-dark {
+  background-color: var(--color-black);
+  color: var(--color-white);
+  --focus-ring: var(--color-lime);
+}
+
 @layer base {
   html {
-    @apply scroll-smooth motion-reduce:scroll-auto;
+    @apply scroll-smooth scroll-pt-24 motion-reduce:scroll-auto;
   }
   body {
-    @apply bg-white font-serif text-ink antialiased;
+    @apply bg-white font-serif text-lg text-ink antialiased;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  p,
+  li,
+  blockquote {
+    text-wrap: pretty;
   }
   ::selection {
     @apply bg-lime text-ink;
   }
   :focus-visible {
-    @apply outline-2 outline-offset-4 outline-rust;
+    outline: 2px solid var(--focus-ring, var(--color-forest));
+    outline-offset: 3px;
   }
   button,
   a,

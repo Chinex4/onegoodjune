@@ -27,7 +27,7 @@ Public magazine queries are deliberately fresh server reads, inside Suspense bou
 
 ## Design system
 
-Supplied local Tan Songbird is self-hosted through next/font/local. Body fallback: Crimson Text → Cardo → Georgia → Times New Roman, with Georgia available locally. Utility labels use Arial/Helvetica. Brand colors are Tailwind theme tokens: forest #2d6e0b, lime #b6e266, sage #abc067, straw #e3df82, earth #7b3622, rust #b82c00, orange #ff751f and sunshine #ffa02e. Main surfaces use warm paper and dark ink. Heading scale and wider leading account for Songbird's extended glyph metrics.
+Supplied local Tan Songbird is self-hosted through next/font/local with `size-adjust: 50%`. Crimson Text (body) and Zalando Sans (interface) are self-hosted at build time through next/font/google; Cardo → Georgia remain in the fallback stack. Brand colors are Tailwind theme tokens: forest #2d6e0b, lime #b6e266, sage #abc067, straw #e3df82, earth #7b3622, rust #b82c00, orange #ff751f and sunshine #ffa02e. Main surfaces use white, black and warm paper; usage rules are in UI-UX-AUDIT.md.
 
 References studied: [Communiqué](https://communiquehq.com), [SocialChain](https://www.socialchain.com), [Pretty Little Marketer](https://www.prettylittlemarketer.com/home), [Ourtalento](https://www.ourtalento.com), and [The Republic](https://rpublc.com/magazine). No reference-site assets were copied.
 
@@ -39,7 +39,7 @@ References studied: [Communiqué](https://communiquehq.com), [SocialChain](https
 4. Waitlist and School of Growth enrollment destinations; Instagram, LinkedIn and YouTube URLs.
 5. Four team photographs and instructor portrait. Current labeled photograph slots do not impersonate people.
 6. Full School of Growth program details, schedule, format and any pricing. None has been invented.
-7. Body font files, if a supplied licensed body font should replace the temporary Georgia fallback.
+7. ~~Body font files~~ — resolved October 23: the brief's Crimson Text is now loaded.
 
 ## Copy discrepancies retained for client decision
 

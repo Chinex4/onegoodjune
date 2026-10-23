@@ -4,15 +4,43 @@ import { redirect } from "next/navigation";
 import { getCategories, getMagazine } from "@/sanity/client";
 import { ArticleCard } from "@/components/editorial/article-card";
 import { DraftNotice } from "@/components/editorial/draft-notice";
-import { Container, subheading } from "@/components/site/primitives";
+import {
+  ColorBar,
+  Container,
+  TextLink,
+  buttonStyles,
+  ArrowIcon,
+  label,
+  lead as leadText,
+  subheading,
+} from "@/components/site/primitives";
 import { Reveal } from "@/components/site/reveal";
 import { pageMetadata } from "@/lib/metadata";
+import { between } from "@/content/pages";
+import { site } from "@/lib/site-config";
+import { cn } from "@/lib/utils";
 export const metadata = pageMetadata(
   "Read Pubs",
   "Fiction, poetry, essays, creative nonfiction and moving pieces on industry shifts by contemporary faith-based voices in Africa.",
   "/read-pubs",
 );
 type Params = Promise<{ category?: string; page?: string }>;
+// From the brief: the masthead line and the five editorial segments. Each
+// segment's note names the categories it draws from; those become the labels.
+const [masthead, , ...segmentNotes] = between("BLOG PAGE", "CONTACT PAGE");
+const segmentSources: Record<string, string> = {
+  "Big Story": "News",
+  "Rising Voices": "Essays & stories",
+  "Cozy Corner": "Fiction",
+  Spotlight: "Archive",
+  Craft: "Craft",
+};
+const segments = segmentNotes.map((note) => {
+  const name = note.split(" (")[0];
+  return { name, source: segmentSources[name] ?? "" };
+});
+const tab =
+  "inline-flex min-h-12 shrink-0 items-center border-b-2 font-sans text-sm font-medium transition-colors";
 function magazineLink(category: string, page = 1) {
   const params = new URLSearchParams();
   if (category) params.set("category", category);
@@ -41,34 +69,46 @@ async function Magazine({ searchParams }: { searchParams: Params }) {
   return (
     <>
       <DraftNotice />
-      <nav
-        aria-label="Publication categories"
-        className="my-8 flex flex-wrap gap-x-7 gap-y-1 bg-black px-6 py-3 text-white"
-      >
-        <Link
-          href="/read-pubs"
-          aria-current={!category ? "page" : undefined}
-          className={`inline-flex min-h-11 items-center font-sans text-sm ${!category ? "text-lime" : "hover:text-lime"}`}
+      {categories.length > 0 && (
+        <nav
+          aria-label="Publication categories"
+          className="-mx-5 mb-4 flex gap-7 overflow-x-auto border-b border-ink/15 px-5 sm:mx-0 sm:px-0"
         >
-          All publications
-        </Link>
-        {categories.map((c) => (
           <Link
-            key={c._id}
-            href={magazineLink(c.slug)}
-            aria-current={category === c.slug ? "page" : undefined}
-            className={`inline-flex min-h-11 items-center font-sans text-sm ${category === c.slug ? "text-lime" : "hover:text-lime"}`}
+            href="/read-pubs"
+            aria-current={!category ? "page" : undefined}
+            className={cn(
+              tab,
+              !category
+                ? "border-rust text-ink"
+                : "border-transparent text-ink/65 hover:text-ink",
+            )}
           >
-            {c.title}
+            All publications
           </Link>
-        ))}
-      </nav>
+          {categories.map((c) => (
+            <Link
+              key={c._id}
+              href={magazineLink(c.slug)}
+              aria-current={category === c.slug ? "page" : undefined}
+              className={cn(
+                tab,
+                category === c.slug
+                  ? "border-rust text-ink"
+                  : "border-transparent text-ink/65 hover:text-ink",
+              )}
+            >
+              {c.title}
+            </Link>
+          ))}
+        </nav>
+      )}
       {!category && page === 1 && lead && (
         <section
           className="border-b border-ink/20 py-8 pb-14"
           aria-label="Featured article"
         >
-          <h2 className="mb-7 font-sans text-sm">Featured story</h2>
+          <h2 className={cn(label, "mb-7 text-rust")}>Featured story</h2>
           <ArticleCard post={lead} featured />
         </section>
       )}
@@ -85,26 +125,47 @@ async function Magazine({ searchParams }: { searchParams: Params }) {
         </section>
       )}
       {!data.latest.length && !category ? (
-        <section className="my-12 bg-neutral-100 p-7 md:p-12">
-          <h2 className="font-serif text-3xl">The next story is on its way.</h2>
-          <p className="mt-5 max-w-xl text-base leading-[1.8]">
-            Our literary publications will appear here once they are published.
-            In the meantime, explore our submission guidelines or read the
-            newsletter.
-          </p>
-          <div className="mt-7 flex flex-wrap gap-8">
-            <Link
-              href="/submissions"
-              className="inline-flex min-h-11 items-center border-b border-ink text-sm font-sans"
-            >
-              Submission guidelines ↗
-            </Link>
-            <a
-              href="https://onegoodjune.substack.com"
-              className="inline-flex min-h-11 items-center border-b border-ink text-sm font-sans"
-            >
-              Read the Newsletter ↗
-            </a>
+        <section className="my-10 grid gap-px bg-ink/15 md:my-14 lg:grid-cols-12">
+          <div className="bg-paper p-7 sm:p-10 lg:col-span-7 lg:p-12">
+            <p className={cn(label, "text-rust")}>Coming soon</p>
+            <h2 className={cn(subheading, "mt-5")}>
+              The next story is on its way.
+            </h2>
+            <p className={cn(leadText, "mt-5 max-w-xl text-ink/80")}>
+              Our literary publications will appear here once they are
+              published. In the meantime, explore our submission guidelines or
+              read the newsletter.
+            </p>
+            <div className="mt-9 flex flex-wrap items-center gap-x-8 gap-y-4">
+              <Link href="/submissions" className={buttonStyles("ink")}>
+                Submission guidelines
+                <ArrowIcon />
+              </Link>
+              <TextLink href={site.links.newsletter}>
+                Read the Newsletter
+              </TextLink>
+            </div>
+          </div>
+          <div className="ground-dark p-7 sm:p-10 lg:col-span-5 lg:p-12">
+            <p className={cn(label, "text-sunshine")}>In every issue</p>
+            <ol className="mt-6">
+              {segments.map((segment, i) => (
+                <li
+                  key={segment.name}
+                  className="flex items-baseline gap-5 border-b border-white/15 py-4 last:border-0"
+                >
+                  <span className={cn(label, "w-6 text-white/60")}>
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="font-heading text-[1.375rem] leading-tight">
+                    {segment.name}
+                  </span>
+                  <span className="ml-auto text-right font-sans text-xs text-white/55">
+                    {segment.source}
+                  </span>
+                </li>
+              ))}
+            </ol>
           </div>
         </section>
       ) : null}
@@ -120,7 +181,7 @@ async function Magazine({ searchParams }: { searchParams: Params }) {
               ))}
             </div>
           ) : (
-            <p className="py-8 text-base leading-[1.8]">
+            <p className="py-8 font-serif text-lg leading-[1.8] text-ink/75">
               No publications have been published in this selection yet.
             </p>
           )}
@@ -141,7 +202,7 @@ async function Magazine({ searchParams }: { searchParams: Params }) {
                     ))}
                   </div>
                 ) : (
-                  <p className="text-lg text-ink/70">
+                  <p className="font-serif text-lg text-ink/70">
                     New writing will appear in this section once it is
                     published.
                   </p>
@@ -171,10 +232,13 @@ async function Magazine({ searchParams }: { searchParams: Params }) {
       {data.total > 12 && (
         <nav
           aria-label="Publication pages"
-          className="flex items-center justify-between border-t border-ink/20 py-8 font-sans text-xs"
+          className="flex items-center justify-between border-t border-ink/20 py-8 font-sans text-sm"
         >
           {page > 1 ? (
-            <Link href={magazineLink(category, page - 1)} className="py-3">
+            <Link
+              href={magazineLink(category, page - 1)}
+              className="inline-flex min-h-11 items-center hover:text-forest"
+            >
               ← Previous
             </Link>
           ) : (
@@ -184,7 +248,10 @@ async function Magazine({ searchParams }: { searchParams: Params }) {
             Page {page} of {Math.ceil(data.total / 12)}
           </span>
           {page * 12 < data.total ? (
-            <Link href={magazineLink(category, page + 1)} className="py-3">
+            <Link
+              href={magazineLink(category, page + 1)}
+              className="inline-flex min-h-11 items-center hover:text-forest"
+            >
               Next →
             </Link>
           ) : (
@@ -203,23 +270,31 @@ export default function Publications({
   return (
     <main id="main-content" className="bg-white">
       <Container>
-        <header className="grid items-end gap-8 pb-8 pt-10 md:grid-cols-[1fr_1fr] md:pb-10 md:pt-14">
-          <h1 className="font-heading text-[27px] leading-[1.9] tracking-[-0.045em] md:text-[39px]">
-            Read Pubs
-          </h1>
-          <div>
-            <p className="font-sans text-sm">
-              The ONEGOODJUNE literary magazine
-            </p>
-            <p className="mt-4 max-w-xl text-base leading-relaxed">
+        <header className="pb-10 pt-14 md:pb-14 md:pt-20">
+          <div className="grid gap-8 lg:grid-cols-12 lg:items-end lg:gap-10">
+            <div className="lg:col-span-6">
+              <p className={cn(label, "text-rust")}>
+                The ONEGOODJUNE literary magazine
+              </p>
+              <h1 className="mt-5 font-heading text-[3.25rem] leading-none tracking-[-0.03em] sm:text-[4.5rem] lg:text-[5.5rem]">
+                Read Pubs
+              </h1>
+            </div>
+            <p className={cn(leadText, "max-w-xl text-ink/80 lg:col-span-6")}>
               Fiction, poetry, essays, creative nonfiction and moving pieces on
               industry shifts by contemporary faith-based voices in Africa.
             </p>
           </div>
+          <ColorBar className="mt-10 h-1.5 md:mt-12" />
+          <p className="mt-5 flex flex-wrap gap-x-6 gap-y-1 font-heading text-[1.25rem] tracking-[-0.01em] text-ink/80 md:text-[1.5rem]">
+            {masthead.split(/\s{2,}/).map((word) => (
+              <span key={word}>{word}</span>
+            ))}
+          </p>
         </header>
         <Suspense
           fallback={
-            <p className="py-20 text-xl" role="status">
+            <p className={cn(leadText, "py-20 text-ink/70")} role="status">
               Opening the magazine…
             </p>
           }
