@@ -24,7 +24,8 @@ export function getPublicClient() {
         apiVersion: sanityApiVersion,
         useCdn: true,
         perspective: "published",
-        token: process.env.SANITY_API_READ_TOKEN,
+        // The dataset is public: published reads need no token, and a token
+        // from another project would turn every request into a 401.
         timeout: 10000,
         maxRetries: 1,
       })
