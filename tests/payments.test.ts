@@ -49,7 +49,48 @@ test("prices match the sales copy and are charged in kobo", () => {
       ["sog-builder", 75000],
       ["sog-visionary", 55000],
       ["fiction-waitlist", 27500],
+      ["author-consultation", 101250],
+      ["spotlight-basic", 25000],
+      ["spotlight-standard", 35000],
+      ["spotlight-elite", 52000],
     ],
+  );
+});
+test("Launch Spotlight requires the book title; other programs don't", () => {
+  const spotlight = { ...input, program: "spotlight-basic" };
+  const missing = registrationSchema.safeParse(spotlight);
+  assert.equal(missing.success, false);
+  assert.deepEqual(Object.keys(missing.error!.flatten().fieldErrors), [
+    "bookTitle",
+  ]);
+  assert.equal(
+    registrationSchema.safeParse({ ...spotlight, bookTitle: "Rain Season" })
+      .success,
+    true,
+  );
+  assert.equal(
+    registrationSchema.safeParse({ ...input, program: "author-consultation" })
+      .success,
+    true,
+  );
+});
+test("event registration closes at the start time or when editors close it", async () => {
+  const { registrationIsOpen } = await import("../src/lib/event-registrations");
+  const now = Date.parse("2026-10-30T12:00:00Z");
+  assert.equal(
+    registrationIsOpen({ startsAt: "2026-11-01T19:00:00Z" }, now),
+    true,
+  );
+  assert.equal(
+    registrationIsOpen({ startsAt: "2026-10-23T19:00:00Z" }, now),
+    false,
+  );
+  assert.equal(
+    registrationIsOpen(
+      { startsAt: "2026-11-01T19:00:00Z", registrationOpen: false },
+      now,
+    ),
+    false,
   );
 });
 test("registration form requires name, email, phone and a known program", () => {

@@ -1,5 +1,6 @@
 import { isAdmin } from "@/lib/admin-auth";
 import { listRegistrations } from "@/lib/registrations";
+import { listEventRegistrations } from "@/lib/event-registrations";
 // Neutralise spreadsheet formulas and quote every cell.
 const cell = (value: unknown) => {
   const text = value == null ? "" : String(value);
@@ -8,6 +9,7 @@ const cell = (value: unknown) => {
 export async function GET(request: Request) {
   if (!(await isAdmin())) return new Response("Unauthorized", { status: 401 });
   const params = new URL(request.url).searchParams;
+  if (params.get("view") === "events") return exportEvents(params);
   const rows = await listRegistrations({
     program: params.get("program") || undefined,
     status: params.get("status") || undefined,
@@ -46,6 +48,40 @@ export async function GET(request: Request) {
     headers: {
       "Content-Type": "text/csv; charset=utf-8",
       "Content-Disposition": `attachment; filename="onegoodjune-registrations-${new Date().toISOString().slice(0, 10)}.csv"`,
+      "Cache-Control": "no-store",
+    },
+  });
+}
+async function exportEvents(params: URLSearchParams) {
+  const rows = await listEventRegistrations({
+    event: params.get("event") || undefined,
+    q: params.get("q")?.slice(0, 100) || undefined,
+  });
+  const header = ["Registered", "Name", "Email", "Event", "Question", "Answer"];
+  return csvResponse(
+    [
+      header.map(cell).join(","),
+      ...rows.map((r) =>
+        [
+          r.createdAt.toISOString(),
+          r.name,
+          r.email,
+          r.eventTitle,
+          r.question,
+          r.answer,
+        ]
+          .map(cell)
+          .join(","),
+      ),
+    ].join("\r\n"),
+    "event-registrations",
+  );
+}
+function csvResponse(csv: string, name: string) {
+  return new Response(csv, {
+    headers: {
+      "Content-Type": "text/csv; charset=utf-8",
+      "Content-Disposition": `attachment; filename="onegoodjune-${name}-${new Date().toISOString().slice(0, 10)}.csv"`,
       "Cache-Control": "no-store",
     },
   });

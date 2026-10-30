@@ -312,6 +312,70 @@ const editorialImageAsset = defineType({
   ],
   preview: { select: { title: "title", media: "image" } },
 });
+const event = defineType({
+  name: "event",
+  title: "Events",
+  type: "document",
+  fields: [
+    defineField({
+      name: "title",
+      type: "string",
+      validation: (rule) => rule.required().max(180),
+    }),
+    slug,
+    defineField({
+      name: "startsAt",
+      title: "Date and time",
+      description: "Registration closes automatically when the event starts.",
+      type: "datetime",
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "location",
+      description: "For example “Virtual | Zoom” or a venue address.",
+      type: "string",
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "admission",
+      description: "For example “Free Entry”.",
+      type: "string",
+      initialValue: "Free Entry",
+    }),
+    defineField({
+      name: "flyer",
+      title: "Flyer (landscape)",
+      type: "editorialImage",
+    }),
+    defineField({
+      name: "description",
+      type: "text",
+      rows: 6,
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "question",
+      title: "Extra registration question",
+      description: "Asked after name and email. Leave empty to skip.",
+      type: "string",
+      initialValue: "Where are you joining from?",
+    }),
+    defineField({
+      name: "registrationOpen",
+      title: "Accept registrations",
+      type: "boolean",
+      initialValue: true,
+    }),
+  ],
+  orderings: [
+    {
+      title: "Date, newest",
+      name: "startsAtDesc",
+      by: [{ field: "startsAt", direction: "desc" }],
+    },
+  ],
+  preview: { select: { title: "title", subtitle: "startsAt", media: "flyer" } },
+});
 export const schemaTypes = [
   editorialImage,
   body,
@@ -321,4 +385,5 @@ export const schemaTypes = [
   post,
   editorialSettings,
   editorialImageAsset,
+  event,
 ];

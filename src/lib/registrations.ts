@@ -14,6 +14,8 @@ export type Registration = {
   name: string;
   email: string;
   phone: string;
+  bookTitle?: string;
+  releaseDate?: string;
   amount: number;
   currency: "NGN";
   status: PaymentStatus;
@@ -59,6 +61,8 @@ export async function createRegistration(
     name: input.name,
     email: input.email.toLowerCase(),
     phone: input.phone,
+    ...(input.bookTitle && { bookTitle: input.bookTitle }),
+    ...(input.releaseDate && { releaseDate: input.releaseDate }),
     amount: program.amount,
     currency: "NGN",
     status: "pending",

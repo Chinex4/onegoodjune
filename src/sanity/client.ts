@@ -13,12 +13,14 @@ import {
   AUTHOR_QUERY,
   AUTHORS_SITEMAP_QUERY,
   CATEGORIES_QUERY,
+  EVENT_QUERY,
+  EVENTS_QUERY,
   MAGAZINE_QUERY,
   POST_QUERY,
   RELATED_QUERY,
   SITEMAP_QUERY,
 } from "./queries";
-import type { Author, Category, EditorialSection, Post } from "./types";
+import type { Author, Category, EditorialSection, Event, Post } from "./types";
 export function getPublicClient() {
   return sanityConfigured
     ? createClient({
@@ -169,3 +171,19 @@ export async function getSitemapAuthors() {
       )
     : [];
 }
+export const getEvents = cache(async () => {
+  const ctx = await context();
+  return ctx
+    ? ctx.client.fetch<Event[]>(EVENTS_QUERY, {}, { cache: "no-store" })
+    : [];
+});
+export const getEvent = cache(async (slug: string) => {
+  const ctx = await context();
+  return ctx
+    ? ctx.client.fetch<Event | null>(
+        EVENT_QUERY,
+        { slug },
+        { cache: "no-store" },
+      )
+    : null;
+});

@@ -1,6 +1,12 @@
 # Registrations, Paystack payments and the admin dashboard
 
-This covers the "Get instant access" (School of Growth) and "Join the Waitlist" (Write Fiction Like Great Movies) flows.
+This covers every paid flow:
+- "Get instant access" on School of Growth.
+- "Join the Waitlist" on Write Fiction Like Great Movies.
+- "Book your author business consultation" on `/author-consultation`.
+- "Feature My Book" on `/launch-spotlight`.
+
+It also covers free event registrations on `/events`.
 
 ## How it works
 
@@ -18,6 +24,10 @@ Prices live in `src/lib/programs.ts`:
 | School of Growth — Builder | ₦75,000 | per year |
 | School of Growth — Visionary | ₦55,000 | every quarter (founding price) |
 | Fiction course waitlist | ₦27,500 | one-time |
+| Author Business Consultation | ₦101,250 | one-time, 60-minute session |
+| Launch Spotlight — Basic / Standard / Elite | ₦25,000 / ₦35,000 / ₦52,000 | one-time; the form also asks for the book title and release date |
+
+**Consultation booking.** After a paid consultation, the confirmation page shows "Choose your session time". That goes to `/author-consultation/book?reference=…`, a branded page that only unlocks for a paid consultation reference. It links to the Zoom Scheduler, which opens on its own page because Zoom won't render inside another site.
 
 Safety measures:
 - The secret key is used only on the server.
@@ -107,3 +117,14 @@ Add these under **Project → Settings → Environment Variables**, for Producti
 | `PAYSTACK_PLAN_SOG_*` | optional |
 
 If MongoDB or Paystack isn't configured, the form shows "Registration is temporarily unavailable. Please email sayhi@onegoodjune.com." It doesn't take payment without recording it.
+
+## 5. Events
+
+Events are managed in Sanity Studio under **Events**: title, date and time, location, admission, landscape flyer, description, and an optional extra question (default "Where are you joining from?").
+
+- `/events` lists upcoming events first, then past ones.
+- Each event page shows its registration form until the start time. Untick **Accept registrations** to close it earlier.
+- Registrations (name, email, answer) are saved in MongoDB, one per email per event. You'll find them in **`/admin` → Event registrations**, with filters and CSV export.
+- This replaces the Google Sheet or Brevo option from the brief. To email registrants, export the CSV and import it into Brevo.
+
+The placeholder event from the brief ("Manny, Ada & Sesan…", 23 October 2026, 8 PM WAT) is in Studio. Its date has passed, so it shows as closed. Edit the date, or duplicate it for the next session.

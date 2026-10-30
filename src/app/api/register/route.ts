@@ -70,6 +70,15 @@ export async function POST(request: Request) {
             variable_name: "phone",
             value: registration.phone,
           },
+          ...(registration.bookTitle
+            ? [
+                {
+                  display_name: "Book",
+                  variable_name: "book_title",
+                  value: registration.bookTitle,
+                },
+              ]
+            : []),
         ],
       },
     });
