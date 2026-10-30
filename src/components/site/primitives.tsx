@@ -5,16 +5,17 @@ export const shell =
 export const sectionSpace = "py-20 md:py-28";
 // Display sizes assume Songbird's 50% size-adjust (see app/layout.tsx).
 export const display =
-  "font-heading text-[2.375rem] leading-[1.06] tracking-[-0.02em] sm:text-[2.875rem] lg:text-[3.375rem]";
+  "font-heading text-[2rem] leading-[1.08] tracking-[-0.02em] sm:text-[2.5rem] lg:text-[3rem]";
 export const heading =
-  "font-heading text-[2rem] leading-[1.08] tracking-[-0.02em] sm:text-[2.5rem] lg:text-[2.875rem]";
+  "font-heading text-[1.75rem] leading-[1.1] tracking-[-0.02em] sm:text-[2.125rem] lg:text-[2.5rem]";
 export const subheading =
-  "font-heading text-[1.625rem] leading-[1.12] tracking-[-0.015em] md:text-[1.875rem]";
+  "font-heading text-[1.375rem] leading-[1.15] tracking-[-0.015em] md:text-[1.625rem]";
 export const title =
-  "font-heading text-[1.375rem] leading-[1.15] tracking-[-0.01em] md:text-[1.5rem]";
+  "font-heading text-[1.1875rem] leading-[1.2] tracking-[-0.01em] md:text-[1.3125rem]";
 export const lead =
-  "font-serif text-[1.375rem] leading-[1.45] md:text-[1.625rem]";
-export const prose = "font-serif text-lg leading-[1.7] md:text-xl";
+  "font-serif text-[1.1875rem] leading-[1.5] md:text-[1.375rem]";
+export const prose =
+  "font-serif text-[1.0625rem] leading-[1.7] md:text-[1.125rem]";
 export const label =
   "font-sans text-[0.6875rem] font-medium uppercase leading-relaxed tracking-[0.14em] font-stretch-expanded";
 export const meta = "font-sans text-[0.8125rem] leading-relaxed";
@@ -120,17 +121,19 @@ export function PageIntro({
   description,
   children,
   accent = "text-forest",
+  titleClassName = display,
 }: {
   eyebrow: string;
   title: React.ReactNode;
   description?: string;
   children?: React.ReactNode;
   accent?: string;
+  titleClassName?: string;
 }) {
   return (
     <header className="border-b border-ink/15 pb-14 pt-14 md:pb-20 md:pt-20">
       <Eyebrow className={accent}>{eyebrow}</Eyebrow>
-      <h1 className={cn(display, "mt-7 max-w-4xl whitespace-pre-line")}>
+      <h1 className={cn(titleClassName, "mt-7 max-w-4xl whitespace-pre-line")}>
         {title}
       </h1>
       {description && (

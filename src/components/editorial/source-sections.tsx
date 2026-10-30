@@ -6,8 +6,7 @@ function Line({ text }: { text: string }) {
   if (!match) return <>{text.trim()}</>;
   return (
     <>
-      <strong className="font-semibold text-ink">{match[1]}:</strong>{" "}
-      {match[2]}
+      <strong className="font-semibold text-ink">{match[1]}:</strong> {match[2]}
     </>
   );
 }

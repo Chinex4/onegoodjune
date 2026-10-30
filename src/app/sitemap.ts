@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getSitemapPosts } from "@/sanity/client";
+import { getSitemapAuthors, getSitemapPosts } from "@/sanity/client";
 import { site } from "@/lib/site-config";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const routes = [
@@ -12,7 +12,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/contact",
     "/privacy-policy",
   ];
-  const posts = await getSitemapPosts();
+  const [posts, authors] = await Promise.all([
+    getSitemapPosts(),
+    getSitemapAuthors(),
+  ]);
   return [
     ...routes.map((route) => ({
       url: `${site.url}${route}`,
@@ -25,6 +28,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: post._updatedAt,
       changeFrequency: "monthly" as const,
       priority: 0.6,
+    })),
+    ...authors.map((author) => ({
+      url: `${site.url}/contributors/${author.slug}`,
+      lastModified: author._updatedAt,
+      changeFrequency: "monthly" as const,
+      priority: 0.4,
     })),
   ];
 }

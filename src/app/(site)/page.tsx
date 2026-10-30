@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { home } from "@/content/home";
@@ -7,18 +8,14 @@ import {
   ArrowIcon,
   ColorBar,
   Container,
-  Eyebrow,
-  TextLink,
   buttonStyles,
   heading,
   label,
   lead,
-  meta,
   prose,
-  subheading,
   title,
 } from "@/components/site/primitives";
-import { site } from "@/lib/site-config";
+import { NewsletterSection } from "@/components/site/newsletter";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -38,6 +35,7 @@ const experiences = [
   {
     ...home.fiction,
     href: "/fiction-writing",
+    image: "/images/home/experience-fiction.jpg",
     kind: "Course · Launching Q1 2027",
     action: "Join the waitlist",
     card: "bg-black text-white hover:bg-orange hover:text-ink",
@@ -47,6 +45,7 @@ const experiences = [
   {
     ...home.growth,
     href: "/school-of-growth",
+    image: "/images/home/experience-growth.jpg",
     kind: "Program · Career & personal brand",
     action: "Enroll today",
     card: "bg-white text-ink ring-2 ring-inset ring-ink hover:bg-lime",
@@ -56,6 +55,7 @@ const experiences = [
   {
     ...home.magazine,
     href: "/read-pubs",
+    image: "/images/home/experience-magazine.jpg",
     kind: "Read Pubs · Literary magazine",
     action: "Read your first",
     card: "bg-black text-white hover:bg-straw hover:text-ink",
@@ -67,42 +67,40 @@ export default function Home() {
   return (
     <main id="main-content">
       <section id="studio">
-        <Container className="pb-20 pt-14 md:pb-28 md:pt-20 lg:pt-24">
-          {/* Inline-block so the palette strip matches the wordmark's width. */}
-          <div className="inline-block max-w-full">
-            <h1 className="font-heading font-normal">
-              <span className="block text-[1.75rem] leading-none tracking-[-0.02em] motion-safe:animate-rise md:text-[2.25rem]">
-                We Are
-              </span>
-              <span className="mt-2 block whitespace-nowrap text-[clamp(2.5rem,14.4vw,7.5rem)] leading-[1.02] tracking-[-0.035em] motion-safe:animate-rise md:mt-3">
-                ONEGOODJUNE
-              </span>
-            </h1>
-            <ColorBar animated className="mt-5 h-2.5 md:mt-6" />
-          </div>
-          <div className="mt-14 grid gap-8 border-t border-ink/15 pt-10 md:mt-20 md:grid-cols-12 md:gap-10 md:pt-12">
-            <p
-              className={cn(
-                label,
-                "text-ink/70 md:col-span-4 md:pt-2 lg:col-span-3",
-              )}
-            >
-              A creative studio
-              <br />
-              Lagos, Nigeria
-            </p>
-            <div className="md:col-span-8 lg:col-span-8 lg:col-start-5">
-              <p className={cn(lead, "max-w-3xl md:text-[1.875rem]")}>
-                {home.introduction}
-              </p>
-              <a
-                href="#experience"
-                className={buttonStyles("ink", "mt-9 gap-10")}
-              >
-                Explore Our Work
-                <ArrowIcon Icon={ArrowDown} />
-              </a>
+        <Container className="grid gap-12 pb-16 pt-10 md:pb-24 md:pt-16 lg:grid-cols-12 lg:items-center lg:gap-10 lg:pt-20">
+          <div className="lg:col-span-7">
+            {/* Inline-block so the palette strip matches the wordmark's width. */}
+            <div className="inline-block max-w-full">
+              <h1 className="font-normal">
+                <span className="block font-serif text-[1.5rem] leading-none motion-safe:animate-rise md:text-[1.875rem]">
+                  We Are
+                </span>
+                <span className="mt-2 block whitespace-nowrap font-heading text-[clamp(2.25rem,13.4vw,5.75rem)] leading-[1.02] tracking-[-0.035em] motion-safe:animate-rise md:mt-3">
+                  ONEGOODJUNE
+                </span>
+              </h1>
+              <ColorBar animated className="mt-4 h-2 md:mt-5" />
             </div>
+            <p className={cn(lead, "mt-8 max-w-2xl md:mt-10")}>
+              {home.introduction}
+            </p>
+            <a
+              href="#experience"
+              className={buttonStyles("ink", "mt-8 gap-10")}
+            >
+              Explore Our Work
+              <ArrowIcon Icon={ArrowDown} />
+            </a>
+          </div>
+          <div className="relative aspect-[3/2] overflow-hidden bg-mist lg:col-span-5">
+            <Image
+              src="/images/home/hero.jpg"
+              alt="Five women of the OneGoodJune community"
+              fill
+              priority
+              sizes="(max-width: 1024px) 100vw, 40vw"
+              className="object-cover"
+            />
           </div>
         </Container>
       </section>
@@ -112,7 +110,7 @@ export default function Home() {
           <div className="grid gap-8 md:grid-cols-12 md:gap-10">
             <Reveal className="md:col-span-4">
               <h2 className={heading}>
-                What
+                <span className="font-serif font-normal">What</span>
                 <br />
                 We Do<span className="text-lime">.</span>
               </h2>
@@ -133,7 +131,7 @@ export default function Home() {
                   />
                   <p
                     className={cn(
-                      "mt-6 font-heading text-[2.75rem] leading-none",
+                      "mt-5 font-heading text-[2.25rem] leading-none",
                       serviceAccents[i].number,
                     )}
                   >
@@ -142,13 +140,13 @@ export default function Home() {
                   <h3 className={cn(title, "mt-6")}>{service.title}</h3>
                   <p
                     className={cn(
-                      "mt-3 font-serif text-xl italic",
+                      "mt-3 font-serif text-lg italic",
                       serviceAccents[i].tagline,
                     )}
                   >
                     {service.tagline}
                   </p>
-                  <p className="mt-4 font-serif text-lg leading-[1.7] text-white/75">
+                  <p className="mt-4 font-serif text-[1.0625rem] leading-[1.7] text-white/75">
                     {service.description}
                   </p>
                 </article>
@@ -162,9 +160,8 @@ export default function Home() {
         <Container>
           <div className="mb-12 flex items-end justify-between gap-6 md:mb-16">
             <h2 className={heading}>
-              Experience
-              <br className="sm:hidden" /> OneGoodJune
-              <span className="text-forest">.</span>
+              <span className="font-serif font-normal">Experience</span>
+              <br className="sm:hidden" /> ONEGOODJUNE
             </h2>
             <ArrowDown
               className="mb-2 hidden shrink-0 sm:block"
@@ -180,11 +177,20 @@ export default function Home() {
                   <Link
                     href={item.href}
                     className={cn(
-                      "group grid gap-8 p-7 transition-colors duration-300 ease-out-soft sm:p-9 md:grid-cols-12 md:items-center md:gap-10 lg:p-12",
+                      "group grid gap-6 p-4 transition-colors duration-300 ease-out-soft sm:p-5 md:grid-cols-12 md:items-center md:gap-8 lg:p-6",
                       item.card,
                     )}
                   >
-                    <div className="md:col-span-8">
+                    <div className="relative aspect-[852/572] overflow-hidden bg-mist md:col-span-4">
+                      <Image
+                        src={item.image}
+                        alt=""
+                        fill
+                        sizes="(max-width: 768px) 100vw, 30vw"
+                        className="object-cover transition-transform duration-500 ease-out-soft motion-safe:group-hover:scale-[1.03]"
+                      />
+                    </div>
+                    <div className="px-2 pb-2 md:col-span-5 md:p-0">
                       <p
                         className={cn(
                           label,
@@ -194,14 +200,16 @@ export default function Home() {
                       >
                         {String(i + 1).padStart(2, "0")} — {item.kind}
                       </p>
-                      <h3 className={cn(subheading, "mt-5")}>{item.title}</h3>
-                      <p className={cn(prose, "mt-4 max-w-2xl opacity-80")}>
+                      <h3 className="mt-3 font-serif text-[1.5rem] font-semibold leading-tight md:text-[1.75rem]">
+                        {item.title}
+                      </h3>
+                      <p className={cn(prose, "mt-3 opacity-80")}>
                         {item.description}
                       </p>
                     </div>
                     <span
                       className={cn(
-                        "inline-flex min-h-12 items-center justify-between gap-6 justify-self-start px-6 py-3 font-sans text-[0.8125rem] font-medium font-stretch-semi-expanded transition-colors duration-300 md:col-span-4 md:justify-self-end",
+                        "mx-2 mb-2 inline-flex min-h-12 items-center justify-between gap-6 justify-self-start px-6 py-3 font-sans text-[0.8125rem] font-medium font-stretch-semi-expanded transition-colors duration-300 md:col-span-3 md:m-0 md:mr-4 md:justify-self-end",
                         item.pill,
                       )}
                     >
@@ -220,47 +228,7 @@ export default function Home() {
         </Container>
       </section>
 
-      <section id="community" className="pb-20 md:pb-28">
-        <Container>
-          <div className="grid gap-12 border-t border-ink/15 pt-16 md:pt-20 lg:grid-cols-12 lg:gap-10">
-            <Reveal className="lg:col-span-5">
-              <Eyebrow className="text-forest">Newsletter</Eyebrow>
-              <h2 className={cn(heading, "mt-6")}>
-                Join Our
-                <br />
-                Community<span className="text-orange">.</span>
-              </h2>
-              <p className={cn(lead, "mt-7 max-w-md text-ink/80")}>
-                {home.newsletter.description}
-              </p>
-            </Reveal>
-            <Reveal delay={0.08} className="lg:col-span-6 lg:col-start-7">
-              {/* Substack centres its form, so the panel is centred to match. */}
-              <div className="flex flex-col items-center bg-paper px-5 py-10 text-center sm:px-10 sm:py-12">
-                <p>
-                  <span className="block font-heading text-[3.5rem] leading-none tracking-[-0.03em] text-forest md:text-[4.5rem]">
-                    {home.newsletter.subscribers.split(" ")[0]}
-                  </span>
-                  <span className={cn(meta, "mt-3 block text-ink/75")}>
-                    {home.newsletter.subscribers.split(" ").slice(1).join(" ")}
-                  </span>
-                </p>
-                <iframe
-                  src={site.links.newsletterEmbed}
-                  title="Subscribe to the OneGoodJune newsletter on Substack"
-                  loading="lazy"
-                  width={480}
-                  height={150}
-                  className="mt-6 h-[150px] w-full max-w-[30rem] border-0 bg-transparent"
-                />
-                <TextLink href={site.links.newsletter} className="mt-2">
-                  Read the Newsletter
-                </TextLink>
-              </div>
-            </Reveal>
-          </div>
-        </Container>
-      </section>
+      <NewsletterSection />
     </main>
   );
 }

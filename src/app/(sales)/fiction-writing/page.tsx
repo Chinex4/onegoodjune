@@ -11,9 +11,9 @@ import {
   subheading,
 } from "@/components/site/primitives";
 import { Countdown } from "@/components/site/countdown";
-import { ProgramAction } from "@/components/site/program-action";
+import { EnrollButton, EnrollDialog } from "@/components/site/enroll";
+import { getProgram } from "@/lib/programs";
 import { Reveal } from "@/components/site/reveal";
-import { SalesTopBar } from "@/components/site/sales";
 import { site } from "@/lib/site-config";
 import { pageMetadata } from "@/lib/metadata";
 import { cn } from "@/lib/utils";
@@ -29,23 +29,16 @@ export default function Fiction() {
     { title: "Who Is It For?", text: course.audience },
     { title: "When Is It Launching?", text: "January 15, 2027." },
   ];
+  const waitlist = getProgram("fiction-waitlist")!;
   return (
     <main id="main-content" className="bg-white">
       <section className="ground-dark">
         <Container>
-          <SalesTopBar
-            variant="orange"
-            cta={{
-              href: site.links.waitlist ?? "#investment",
-              label: "Join the Waitlist",
-              newTab: !!site.links.waitlist,
-            }}
-          />
-          <div className="pb-16 pt-10 md:pb-24 md:pt-16">
+          <div className="pb-16 pt-14 md:pb-24 md:pt-20">
             <Eyebrow className="text-sunshine">
               A specialized fiction writing course
             </Eyebrow>
-            <h1 className="mt-7 max-w-5xl font-heading text-[2.875rem] leading-[1.02] tracking-[-0.03em] sm:text-[4rem] lg:text-[5.25rem]">
+            <h1 className="mt-7 max-w-5xl font-heading text-[2.5rem] leading-[1.04] tracking-[-0.03em] sm:text-[3.5rem] lg:text-[4.5rem]">
               Write Fiction Like Great Movies
             </h1>
             <div className="mt-10 grid gap-12 lg:grid-cols-12 lg:items-end lg:gap-10">
@@ -54,11 +47,9 @@ export default function Fiction() {
                   {course.description}
                 </p>
                 <div className="mt-9">
-                  <ProgramAction
-                    href={site.links.waitlist}
-                    label="Join the Waitlist"
-                    kind="waitlist"
-                  />
+                  <EnrollButton program="fiction-waitlist" variant="orange">
+                    Join the Waitlist
+                  </EnrollButton>
                 </div>
               </div>
               <Countdown className="lg:col-span-6 lg:col-start-7" />
@@ -131,7 +122,10 @@ export default function Fiction() {
       <Container>
         <section className="grid gap-px bg-ink/15 py-px md:grid-cols-2 lg:grid-cols-4">
           {details.map((item) => (
-            <div key={item.title} className="bg-white py-10 md:px-8 md:py-14 lg:first:pl-0">
+            <div
+              key={item.title}
+              className="bg-white py-10 md:px-8 md:py-14 lg:first:pl-0"
+            >
               <h2 className={cn(label, "text-rust")}>{item.title}</h2>
               <p className="mt-4 font-serif text-xl leading-snug">
                 {item.text}
@@ -141,10 +135,7 @@ export default function Fiction() {
         </section>
       </Container>
 
-      <section
-        id="investment"
-        className="scroll-mt-4 bg-paper py-20 md:py-28"
-      >
+      <section id="investment" className="scroll-mt-4 bg-paper py-20 md:py-28">
         <Container className="grid gap-12 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-6">
             <Eyebrow className="text-rust">Your Investment</Eyebrow>
@@ -166,11 +157,9 @@ export default function Fiction() {
                 <p className={cn(prose, "mt-3")}>{course.deadline}</p>
               </div>
               <div className="mt-8">
-                <ProgramAction
-                  href={site.links.waitlist}
-                  label="Save Your Seat on the Waitlist"
-                  kind="waitlist"
-                />
+                <EnrollButton program="fiction-waitlist" variant="orange">
+                  Save Your Seat on the Waitlist
+                </EnrollButton>
               </div>
             </div>
           </div>
@@ -178,7 +167,10 @@ export default function Fiction() {
             <h3 className={subheading}>Perks of Joining the Waitlist</h3>
             <ul className="mt-8 space-y-4">
               {course.perks.map((perk, i) => (
-                <li key={perk} className="flex gap-5 border-t border-ink/15 pt-5">
+                <li
+                  key={perk}
+                  className="flex gap-5 border-t border-ink/15 pt-5"
+                >
                   <span className={cn(label, "mt-1.5 text-rust")}>
                     {String(i + 1).padStart(2, "0")}
                   </span>
@@ -224,16 +216,24 @@ export default function Fiction() {
               Save Your Seat on the Waitlist
             </h2>
             <div className="mt-8">
-              <ProgramAction
-                href={site.links.waitlist}
-                label="Join the Waitlist"
-                kind="waitlist"
-              />
+              <EnrollButton program="fiction-waitlist" variant="orange">
+                Join the Waitlist
+              </EnrollButton>
             </div>
           </div>
           <Countdown className="self-end lg:col-span-6" />
         </Container>
       </section>
+      <EnrollDialog
+        title="Write Fiction Like Great Movies"
+        defaultOption="fiction-waitlist"
+        options={[waitlist].map(({ id, name, price, period }) => ({
+          id,
+          name,
+          price,
+          period,
+        }))}
+      />
     </main>
   );
 }

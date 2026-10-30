@@ -2,21 +2,28 @@ import { Suspense } from "react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getCategories, getMagazine } from "@/sanity/client";
-import { ArticleCard } from "@/components/editorial/article-card";
-import { DraftNotice } from "@/components/editorial/draft-notice";
+import type { Post } from "@/sanity/types";
 import {
+  ArticleCard,
+  articleDate,
+  readingMinutes,
+} from "@/components/editorial/article-card";
+import { CoverImage } from "@/components/editorial/cover-image";
+import { HeroSlider } from "@/components/editorial/hero-slider";
+import { DraftNotice } from "@/components/editorial/draft-notice";
+import { NewsletterSection } from "@/components/site/newsletter";
+import {
+  ArrowIcon,
   ColorBar,
   Container,
   TextLink,
   buttonStyles,
-  ArrowIcon,
   label,
-  lead as leadText,
+  lead,
   subheading,
 } from "@/components/site/primitives";
 import { Reveal } from "@/components/site/reveal";
 import { pageMetadata } from "@/lib/metadata";
-import { between } from "@/content/pages";
 import { site } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
 export const metadata = pageMetadata(
@@ -25,27 +32,93 @@ export const metadata = pageMetadata(
   "/read-pubs",
 );
 type Params = Promise<{ category?: string; page?: string }>;
-// From the brief: the masthead line and the five editorial segments. Each
-// segment's note names the categories it draws from; those become the labels.
-const [masthead, , ...segmentNotes] = between("BLOG PAGE", "CONTACT PAGE");
-const segmentSources: Record<string, string> = {
-  "Big Story": "News",
-  "Rising Voices": "Essays & stories",
-  "Cozy Corner": "Fiction",
-  Spotlight: "Archive",
-  Craft: "Craft",
-};
-const segments = segmentNotes.map((note) => {
-  const name = note.split(" (")[0];
-  return { name, source: segmentSources[name] ?? "" };
-});
-const tab =
-  "inline-flex min-h-12 shrink-0 items-center border-b-2 font-sans text-sm font-medium transition-colors";
 function magazineLink(category: string, page = 1) {
   const params = new URLSearchParams();
   if (category) params.set("category", category);
   if (page > 1) params.set("page", String(page));
   return `/read-pubs${params.size ? `?${params}` : ""}`;
+}
+function HeroSlide({ post, first }: { post: Post; first: boolean }) {
+  return (
+    <article className="group @container grid gap-6 md:grid-cols-12 md:items-center md:gap-10">
+      <Link
+        href={`/read-pubs/${post.slug}`}
+        tabIndex={-1}
+        aria-hidden="true"
+        className="md:col-span-7"
+      >
+        <CoverImage
+          post={post}
+          width={1400}
+          priority={first}
+          sizes="(max-width: 768px) 100vw, 58vw"
+          className="aspect-[3/2]"
+        />
+      </Link>
+      <div className="md:col-span-5 md:pb-16">
+        <p className={cn(label, "text-rust")}>{post.category?.title}</p>
+        <h2 className="mt-3 font-serif text-[1.75rem] font-semibold leading-[1.12] tracking-[-0.01em] md:text-[2.375rem]">
+          <Link href={`/read-pubs/${post.slug}`} className="hover:text-forest">
+            {post.title}
+          </Link>
+        </h2>
+        {post.excerpt && (
+          <p className="mt-4 line-clamp-4 font-serif text-[1.0625rem] leading-[1.6] text-ink/80 md:text-lg">
+            {post.excerpt}
+          </p>
+        )}
+        <p className="mt-4 font-sans text-xs text-ink/70">
+          {post.author?.name ?? "OneGoodJune"} · {articleDate(post.publishedAt)}{" "}
+          · {readingMinutes(post.text)} min read
+        </p>
+        <Link
+          href={`/read-pubs/${post.slug}`}
+          className={buttonStyles("ink", "mt-6 min-h-11 gap-8 px-5")}
+        >
+          Read story
+          <ArrowIcon />
+        </Link>
+      </div>
+    </article>
+  );
+}
+function HighlightColumn({
+  title,
+  slug,
+  posts,
+  empty,
+}: {
+  title: string;
+  slug: string;
+  posts: Post[];
+  empty: string;
+}) {
+  return (
+    <div>
+      <div className="flex min-h-14 items-center justify-between gap-4 border-b border-white/20">
+        <h2 className="font-sans text-sm font-semibold uppercase tracking-[0.14em] font-stretch-expanded">
+          {title}
+        </h2>
+        {posts.length > 0 && (
+          <Link
+            href={magazineLink(slug)}
+            className="inline-flex min-h-11 items-center font-sans text-xs font-medium text-white/75 hover:text-lime"
+          >
+            See all
+          </Link>
+        )}
+      </div>
+      {posts.length ? (
+        <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-x-6">
+          {posts.map((post) => (
+            <ArticleCard key={post._id} post={post} tone="dark" compact />
+          ))}
+        </div>
+      ) : (
+        <p className="mt-6 font-serif text-lg text-white/70">{empty}</p>
+      )}
+    </div>
+  );
 }
 async function Magazine({ searchParams }: { searchParams: Params }) {
   const params = await searchParams;
@@ -65,73 +138,76 @@ async function Magazine({ searchParams }: { searchParams: Params }) {
   const lastPage = Math.max(1, Math.ceil(data.total / 12));
   if (page > lastPage) redirect(magazineLink(category, lastPage));
   const active = categories.find((c) => c.slug === category);
-  const lead = data.featured || data.latest[0];
+  const home = !category && page === 1;
+  const hero = (data.hero.length ? data.hero : data.heroFallback).slice(0, 5);
   return (
     <>
-      <DraftNotice />
-      {categories.length > 0 && (
-        <nav
-          aria-label="Publication categories"
-          className="-mx-5 mb-4 flex gap-7 overflow-x-auto border-b border-ink/15 px-5 sm:mx-0 sm:px-0"
-        >
-          <Link
-            href="/read-pubs"
-            aria-current={!category ? "page" : undefined}
-            className={cn(
-              tab,
-              !category
-                ? "border-rust text-ink"
-                : "border-transparent text-ink/65 hover:text-ink",
-            )}
+      <Container>
+        <DraftNotice />
+        {categories.length > 0 && (
+          // The client's segment line doubles as the magazine navigation.
+          <nav
+            aria-label="Publication categories"
+            className="-mx-5 flex gap-x-5 overflow-x-auto px-5 pb-1 sm:mx-0 sm:flex-wrap sm:px-0"
           >
-            All publications
-          </Link>
-          {categories.map((c) => (
             <Link
-              key={c._id}
-              href={magazineLink(c.slug)}
-              aria-current={category === c.slug ? "page" : undefined}
-              className={cn(
-                tab,
-                category === c.slug
-                  ? "border-rust text-ink"
-                  : "border-transparent text-ink/65 hover:text-ink",
-              )}
+              href="/read-pubs"
+              aria-current={!category ? "page" : undefined}
+              className="inline-flex min-h-11 shrink-0 items-center font-heading text-[1.125rem] tracking-[-0.01em] text-ink/70 transition-colors hover:text-ink aria-[current=page]:text-rust md:text-[1.25rem]"
             >
-              {c.title}
+              All.
             </Link>
-          ))}
-        </nav>
+            {categories.map((c) => (
+              <Link
+                key={c._id}
+                href={magazineLink(c.slug)}
+                aria-current={category === c.slug ? "page" : undefined}
+                className="inline-flex min-h-11 shrink-0 items-center font-heading text-[1.125rem] tracking-[-0.01em] text-ink/70 transition-colors hover:text-ink aria-[current=page]:text-rust md:text-[1.25rem]"
+              >
+                {c.title}.
+              </Link>
+            ))}
+          </nav>
+        )}
+      </Container>
+      {home && hero.length > 0 && (
+        <Container className="pb-14 pt-8 md:pb-20 md:pt-10">
+          <HeroSlider>
+            {hero.map((post, i) => (
+              <HeroSlide key={post._id} post={post} first={i === 0} />
+            ))}
+          </HeroSlider>
+        </Container>
       )}
-      {!category && page === 1 && lead && (
+      {home && (data.newcomer.length > 0 || data.spotlight.length > 0) && (
         <section
-          className="border-b border-ink/20 py-8 pb-14"
-          aria-label="Featured article"
+          aria-label="Newcomer and Spotlight"
+          className="ground-dark py-14 md:py-20"
         >
-          <h2 className={cn(label, "mb-7 text-rust")}>Featured story</h2>
-          <ArticleCard post={lead} featured />
+          <Container className="grid gap-14 lg:grid-cols-2 lg:gap-12">
+            <HighlightColumn
+              title="Newcomer"
+              slug="newcomer"
+              posts={data.newcomer}
+              empty="New voices will appear here soon."
+            />
+            <HighlightColumn
+              title="Spotlight"
+              slug="spotlight"
+              posts={data.spotlight}
+              empty="Spotlight features are on their way."
+            />
+          </Container>
         </section>
       )}
-      {!category && page === 1 && data.latest.length > 0 && (
-        <section className="py-12">
-          <h2 className={`${subheading} mb-10`}>Latest publications</h2>
-          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-            {data.latest
-              .filter((p) => p._id !== lead?._id)
-              .map((post) => (
-                <ArticleCard post={post} key={post._id} />
-              ))}
-          </div>
-        </section>
-      )}
-      {!data.latest.length && !category ? (
-        <section className="my-10 grid gap-px bg-ink/15 md:my-14 lg:grid-cols-12">
-          <div className="bg-paper p-7 sm:p-10 lg:col-span-7 lg:p-12">
+      <Container>
+        {!data.latest.length && !category ? (
+          <section className="my-10 bg-paper p-7 sm:p-10 md:my-14 lg:p-12">
             <p className={cn(label, "text-rust")}>Coming soon</p>
             <h2 className={cn(subheading, "mt-5")}>
               The next story is on its way.
             </h2>
-            <p className={cn(leadText, "mt-5 max-w-xl text-ink/80")}>
+            <p className={cn(lead, "mt-5 max-w-xl text-ink/80")}>
               Our literary publications will appear here once they are
               published. In the meantime, explore our submission guidelines or
               read the newsletter.
@@ -145,120 +221,83 @@ async function Magazine({ searchParams }: { searchParams: Params }) {
                 Read the Newsletter
               </TextLink>
             </div>
-          </div>
-          <div className="ground-dark p-7 sm:p-10 lg:col-span-5 lg:p-12">
-            <p className={cn(label, "text-sunshine")}>In every issue</p>
-            <ol className="mt-6">
-              {segments.map((segment, i) => (
-                <li
-                  key={segment.name}
-                  className="flex items-baseline gap-5 border-b border-white/15 py-4 last:border-0"
+          </section>
+        ) : null}
+        {!home ? (
+          <section className="py-10">
+            <h2 className={cn(subheading, "mb-8")}>
+              {active?.title || "Publications"}
+            </h2>
+            {data.listing.length ? (
+              <div className="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+                {data.listing.map((post) => (
+                  <ArticleCard key={post._id} post={post} />
+                ))}
+              </div>
+            ) : (
+              <p className="py-8 font-serif text-lg leading-[1.8] text-ink/75">
+                No publications have been published in this selection yet.
+              </p>
+            )}
+          </section>
+        ) : (
+          (data.sections || [])
+            .filter((section) => section.posts.length > 0)
+            .map((section, i) => (
+              <Reveal key={section._key}>
+                <section
+                  id={section.slug}
+                  className={cn("py-12", i > 0 && "border-t border-ink/15")}
                 >
-                  <span className={cn(label, "w-6 text-white/60")}>
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span className="font-heading text-[1.375rem] leading-tight">
-                    {segment.name}
-                  </span>
-                  <span className="ml-auto text-right font-sans text-xs text-white/55">
-                    {segment.source}
-                  </span>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </section>
-      ) : null}
-      {category || page > 1 ? (
-        <section className="py-10">
-          <h2 className={`${subheading} mb-8`}>
-            {active?.title || "Publications"}
-          </h2>
-          {data.listing.length ? (
-            <div className="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-              {data.listing.map((post) => (
-                <ArticleCard key={post._id} post={post} />
-              ))}
-            </div>
-          ) : (
-            <p className="py-8 font-serif text-lg leading-[1.8] text-ink/75">
-              No publications have been published in this selection yet.
-            </p>
-          )}
-        </section>
-      ) : (
-        <>
-          {(data.sections || []).map((section) => (
-            <Reveal key={section._key}>
-              <section
-                id={section.slug}
-                className="border-t border-ink/20 py-12"
-              >
-                <h2 className={`${subheading} mb-10`}>{section.title}</h2>
-                {section.posts.length ? (
-                  <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+                  <div className="mb-8 flex items-end justify-between gap-4">
+                    <h2 className={subheading}>{section.title}</h2>
+                    <Link
+                      href={magazineLink(section.slug)}
+                      className="inline-flex min-h-11 items-center font-sans text-sm font-medium hover:text-forest"
+                    >
+                      See all
+                    </Link>
+                  </div>
+                  <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
                     {section.posts.map((post) => (
                       <ArticleCard key={post._id} post={post} />
                     ))}
                   </div>
-                ) : (
-                  <p className="font-serif text-lg text-ink/70">
-                    New writing will appear in this section once it is
-                    published.
-                  </p>
-                )}
-              </section>
-            </Reveal>
-          ))}
-          {data.listing.some(
-            (post) => !data.latest.some((latest) => latest._id === post._id),
-          ) && (
-            <section className="border-t border-ink/20 py-12">
-              <h2 className={`${subheading} mb-10`}>More to read</h2>
-              <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-                {data.listing
-                  .filter(
-                    (post) =>
-                      !data.latest.some((latest) => latest._id === post._id),
-                  )
-                  .map((post) => (
-                    <ArticleCard key={post._id} post={post} />
-                  ))}
-              </div>
-            </section>
-          )}
-        </>
-      )}
-      {data.total > 12 && (
-        <nav
-          aria-label="Publication pages"
-          className="flex items-center justify-between border-t border-ink/20 py-8 font-sans text-sm"
-        >
-          {page > 1 ? (
-            <Link
-              href={magazineLink(category, page - 1)}
-              className="inline-flex min-h-11 items-center hover:text-forest"
-            >
-              ← Previous
-            </Link>
-          ) : (
-            <span />
-          )}
-          <span>
-            Page {page} of {Math.ceil(data.total / 12)}
-          </span>
-          {page * 12 < data.total ? (
-            <Link
-              href={magazineLink(category, page + 1)}
-              className="inline-flex min-h-11 items-center hover:text-forest"
-            >
-              Next →
-            </Link>
-          ) : (
-            <span />
-          )}
-        </nav>
-      )}
+                </section>
+              </Reveal>
+            ))
+        )}
+        {data.total > 12 && !home && (
+          <nav
+            aria-label="Publication pages"
+            className="flex items-center justify-between border-t border-ink/20 py-8 font-sans text-sm"
+          >
+            {page > 1 ? (
+              <Link
+                href={magazineLink(category, page - 1)}
+                className="inline-flex min-h-11 items-center hover:text-forest"
+              >
+                ← Previous
+              </Link>
+            ) : (
+              <span />
+            )}
+            <span>
+              Page {page} of {Math.ceil(data.total / 12)}
+            </span>
+            {page * 12 < data.total ? (
+              <Link
+                href={magazineLink(category, page + 1)}
+                className="inline-flex min-h-11 items-center hover:text-forest"
+              >
+                Next →
+              </Link>
+            ) : (
+              <span />
+            )}
+          </nav>
+        )}
+      </Container>
     </>
   );
 }
@@ -270,38 +309,34 @@ export default function Publications({
   return (
     <main id="main-content" className="bg-white">
       <Container>
-        <header className="pb-10 pt-14 md:pb-14 md:pt-20">
-          <div className="grid gap-8 lg:grid-cols-12 lg:items-end lg:gap-10">
-            <div className="lg:col-span-6">
-              <p className={cn(label, "text-rust")}>
-                The ONEGOODJUNE literary magazine
-              </p>
-              <h1 className="mt-5 font-heading text-[3.25rem] leading-none tracking-[-0.03em] sm:text-[4.5rem] lg:text-[5.5rem]">
-                Read Pubs
-              </h1>
-            </div>
-            <p className={cn(leadText, "max-w-xl text-ink/80 lg:col-span-6")}>
-              Fiction, poetry, essays, creative nonfiction and moving pieces on
-              industry shifts by contemporary faith-based voices in Africa.
+        <header className="flex flex-wrap items-end justify-between gap-x-8 gap-y-3 pb-5 pt-10 md:pt-14">
+          <div>
+            <p className={cn(label, "text-rust")}>
+              The ONEGOODJUNE literary magazine
             </p>
+            <h1 className="mt-3 font-heading text-[2.5rem] leading-none tracking-[-0.03em] md:text-[3.25rem]">
+              Read Pubs
+            </h1>
           </div>
-          <ColorBar className="mt-10 h-1.5 md:mt-12" />
-          <p className="mt-5 flex flex-wrap gap-x-6 gap-y-1 font-heading text-[1.25rem] tracking-[-0.01em] text-ink/80 md:text-[1.5rem]">
-            {masthead.split(/\s{2,}/).map((word) => (
-              <span key={word}>{word}</span>
-            ))}
+          <p className="max-w-md font-serif text-[1.0625rem] leading-[1.55] text-ink/75">
+            Fiction, poetry, essays, creative nonfiction and moving pieces on
+            industry shifts by contemporary faith-based voices in Africa.
           </p>
         </header>
-        <Suspense
-          fallback={
-            <p className={cn(leadText, "py-20 text-ink/70")} role="status">
+        <ColorBar className="mb-3 h-1.5" />
+      </Container>
+      <Suspense
+        fallback={
+          <Container>
+            <p className={cn(lead, "py-20 text-ink/70")} role="status">
               Opening the magazine…
             </p>
-          }
-        >
-          <Magazine searchParams={searchParams} />
-        </Suspense>
-      </Container>
+          </Container>
+        }
+      >
+        <Magazine searchParams={searchParams} />
+      </Suspense>
+      <NewsletterSection className="pt-4" />
     </main>
   );
 }

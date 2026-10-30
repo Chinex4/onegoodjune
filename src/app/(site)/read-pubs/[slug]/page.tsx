@@ -1,5 +1,7 @@
 import { Suspense } from "react";
+import { NewsletterSection } from "@/components/site/newsletter";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPost, getRelated } from "@/sanity/client";
 import { imageUrl } from "@/sanity/images";
@@ -11,6 +13,7 @@ import {
 import { RichText } from "@/components/editorial/rich-text";
 import { DraftNotice } from "@/components/editorial/draft-notice";
 import {
+  ArrowIcon,
   ColorBar,
   Container,
   label,
@@ -67,7 +70,13 @@ async function Article({ params }: Props) {
     dateModified: post._updatedAt,
     image: image ? [image] : undefined,
     author: post.author
-      ? { "@type": "Person", name: post.author.name }
+      ? {
+          "@type": "Person",
+          name: post.author.name,
+          ...(post.author.slug && {
+            url: `${site.url}/contributors/${post.author.slug}`,
+          }),
+        }
       : undefined,
     publisher: { "@type": "Organization", name: "OneGoodJune" },
     mainEntityOfPage: `${site.url}/read-pubs/${post.slug}`,
@@ -89,7 +98,10 @@ async function Article({ params }: Props) {
                 ? `/read-pubs?category=${post.category.slug}`
                 : "/read-pubs"
             }
-            className={cn(label, "inline-flex min-h-11 items-center text-rust hover:text-ink")}
+            className={cn(
+              label,
+              "inline-flex min-h-11 items-center text-rust hover:text-ink",
+            )}
           >
             {post.category?.title || "Publication"}
           </a>
@@ -102,9 +114,18 @@ async function Article({ params }: Props) {
             </p>
           )}
           <div className="mt-8 flex flex-wrap justify-center gap-3 font-sans text-[0.8125rem] leading-relaxed text-ink/75">
-            <span className="font-medium text-ink">
-              {post.author?.name || "Author to be confirmed"}
-            </span>
+            {post.author?.slug ? (
+              <Link
+                href={`/contributors/${post.author.slug}`}
+                className="font-medium text-ink underline decoration-ink/30 underline-offset-4 hover:text-forest hover:decoration-forest"
+              >
+                {post.author.name}
+              </Link>
+            ) : (
+              <span className="font-medium text-ink">
+                {post.author?.name || "OneGoodJune"}
+              </span>
+            )}
             <span>·</span>
             <time dateTime={post.publishedAt}>
               {articleDate(post.publishedAt)}
@@ -133,7 +154,12 @@ async function Article({ params }: Props) {
             )}
           </figure>
         )}
-        <article className="mx-auto max-w-[720px] break-words py-12 md:py-16">
+        <article
+          className={cn(
+            "mx-auto max-w-[720px] break-words pb-12 md:pb-16",
+            image ? "pt-12 md:pt-16" : "pt-0",
+          )}
+        >
           <RichText body={post.body} />
           {post.tags && post.tags.length > 0 && (
             <div className="mt-12 flex flex-wrap gap-3 border-t border-ink/15 pt-6">
@@ -167,9 +193,18 @@ async function Article({ params }: Props) {
                   {post.author.name}
                 </h2>
                 {post.author.bio && (
-                  <p className="mt-3 text-lg leading-relaxed text-ink/80">
+                  <p className="mt-3 line-clamp-4 font-serif text-lg leading-relaxed text-ink/80">
                     {post.author.bio}
                   </p>
+                )}
+                {post.author.slug && (
+                  <Link
+                    href={`/contributors/${post.author.slug}`}
+                    className="group mt-4 inline-flex min-h-11 items-center gap-2 border-b border-current font-sans text-sm font-medium hover:text-forest"
+                  >
+                    More from {post.author.name.split(" ")[0]}
+                    <ArrowIcon size={15} />
+                  </Link>
                 )}
               </div>
             </aside>
@@ -203,6 +238,7 @@ export default function ArticlePage(props: Props) {
       >
         <Article {...props} />
       </Suspense>
+      <NewsletterSection className="pt-4" />
     </main>
   );
 }

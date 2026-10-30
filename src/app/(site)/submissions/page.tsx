@@ -1,4 +1,5 @@
 import { Mail } from "lucide-react";
+import { NewsletterSection } from "@/components/site/newsletter";
 import { submissionLines, getSections } from "@/content/pages";
 import {
   Container,
@@ -87,6 +88,7 @@ export default function Submissions() {
           </aside>
         </div>
       </Container>
+      <NewsletterSection className="pt-4" />
     </main>
   );
 }

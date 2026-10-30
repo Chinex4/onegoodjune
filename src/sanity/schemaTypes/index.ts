@@ -34,6 +34,7 @@ const body = defineType({
         { title: "Heading 2", value: "h2" },
         { title: "Heading 3", value: "h3" },
         { title: "Quote", value: "blockquote" },
+        { title: "Section break (I, II, ★)", value: "h4" },
       ],
       marks: {
         decorators: [
@@ -79,10 +80,39 @@ const author = defineType({
       options: { source: "name" },
       validation: (rule) => rule.required(),
     }),
+    defineField({
+      name: "role",
+      title: "Short description",
+      description: "Shown under the name, e.g. “Writer & essayist, Lagos”.",
+      type: "string",
+    }),
     defineField({ name: "image", type: "editorialImage" }),
-    defineField({ name: "bio", type: "text", rows: 4 }),
+    defineField({ name: "bio", type: "text", rows: 6 }),
+    defineField({
+      name: "links",
+      title: "Website and social links",
+      type: "array",
+      of: [
+        defineArrayMember({
+          type: "object",
+          name: "authorLink",
+          fields: [
+            defineField({
+              name: "label",
+              type: "string",
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: "url",
+              type: "url",
+              validation: (rule) => rule.required(),
+            }),
+          ],
+        }),
+      ],
+    }),
   ],
-  preview: { select: { title: "name", media: "image" } },
+  preview: { select: { title: "name", subtitle: "role", media: "image" } },
 });
 const category = defineType({
   name: "category",
@@ -148,14 +178,28 @@ const post = defineType({
     }),
     defineField({
       name: "mainImage",
+      title: "Featured image",
+      description:
+        "Optional; a branded placeholder is shown until one is added.",
       type: "editorialImage",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "category",
+      title: "Main category",
       type: "reference",
       to: [{ type: "category" }],
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "additionalCategories",
+      title: "Also appears in",
+      description:
+        "For example Newcomer or Spotlight, alongside the main category.",
+      type: "array",
+      of: [
+        defineArrayMember({ type: "reference", to: [{ type: "category" }] }),
+      ],
+      validation: (rule) => rule.unique(),
     }),
     defineField({
       name: "tags",
@@ -191,6 +235,15 @@ const editorialSettings = defineType({
       title: "Featured article",
       type: "reference",
       to: [{ type: "post" }],
+    }),
+    defineField({
+      name: "heroPosts",
+      title: "Hero slider",
+      description:
+        "Up to five articles for the top of Read Pubs. Leave empty to show the latest articles outside Newcomer and Spotlight.",
+      type: "array",
+      of: [defineArrayMember({ type: "reference", to: [{ type: "post" }] })],
+      validation: (rule) => rule.unique().max(5),
     }),
     defineField({
       name: "sections",

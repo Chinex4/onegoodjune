@@ -1,4 +1,3 @@
-import { SalesFooter } from "@/components/site/sales";
 export default function SalesLayout({
   children,
 }: {
@@ -13,7 +12,6 @@ export default function SalesLayout({
         Skip to content
       </a>
       {children}
-      <SalesFooter />
     </>
   );
 }

@@ -1,4 +1,5 @@
 import { Mail, MapPin } from "lucide-react";
+import { NewsletterSection } from "@/components/site/newsletter";
 import {
   Container,
   Eyebrow,
@@ -47,7 +48,7 @@ export default function Contact() {
                         aria-hidden="true"
                         className="shrink-0 text-forest"
                       />
-                      admin@onegoodjune.com
+                      sayhi@onegoodjune.com
                     </a>
                   </dd>
                 </div>
@@ -79,6 +80,7 @@ export default function Contact() {
           <SocialLinks className="text-base lg:col-span-5 lg:justify-end" />
         </Container>
       </section>
+      <NewsletterSection className="pt-4" />
     </main>
   );
 }

@@ -81,7 +81,7 @@ export async function POST(request: Request) {
       });
   } catch {
     return reply(
-      "The contact form is temporarily unavailable. Please email admin@onegoodjune.com.",
+      "The contact form is temporarily unavailable. Please email sayhi@onegoodjune.com.",
       503,
     );
   }
@@ -90,7 +90,7 @@ export async function POST(request: Request) {
     to = process.env.CONTACT_TO_EMAIL;
   if (!key || !from || !to)
     return reply(
-      "The contact form is temporarily unavailable. Please email admin@onegoodjune.com.",
+      "The contact form is temporarily unavailable. Please email sayhi@onegoodjune.com.",
       503,
     );
   try {
@@ -104,7 +104,7 @@ export async function POST(request: Request) {
     });
     if (error || !data)
       return reply(
-        "We couldn't send your message. Please try again or email admin@onegoodjune.com.",
+        "We couldn't send your message. Please try again or email sayhi@onegoodjune.com.",
         502,
       );
     return reply(
@@ -113,7 +113,7 @@ export async function POST(request: Request) {
     );
   } catch {
     return reply(
-      "We couldn't send your message. Please try again or email admin@onegoodjune.com.",
+      "We couldn't send your message. Please try again or email sayhi@onegoodjune.com.",
       502,
     );
   }

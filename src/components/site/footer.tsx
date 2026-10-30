@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowUp } from "lucide-react";
 import { navigation, site } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
-import { ArrowIcon, ColorBar, Container, label, lead } from "./primitives";
+import { ArrowIcon, ColorBar, Container, label } from "./primitives";
 export function SocialLinks({
   dark = false,
   className = "",
@@ -13,7 +13,10 @@ export function SocialLinks({
   return (
     <ul
       aria-label="Social media"
-      className={cn("flex flex-wrap gap-x-7 gap-y-1 font-sans text-sm", className)}
+      className={cn(
+        "flex flex-wrap gap-x-7 gap-y-1 font-sans text-sm",
+        className,
+      )}
     >
       {(
         [
@@ -71,7 +74,7 @@ export function Footer() {
       <Container className="pb-8 pt-16 md:pt-20">
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
-            <p className={cn(lead, "max-w-md")}>
+            <p className="max-w-sm font-serif text-lg leading-[1.5] md:text-xl">
               Raising the bar in faith-based African fiction. Helping creative
               minds flourish.
             </p>

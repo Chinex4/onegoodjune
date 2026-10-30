@@ -30,6 +30,15 @@ export function RichText({ body }: { body: Post["body"] }) {
               {children}
             </h3>
           ),
+          // Section markers such as "II" or "★" between parts of a story.
+          h4: ({ children }) => (
+            <p
+              role="separator"
+              className="my-12 text-center font-heading text-[1.25rem] tracking-[0.2em] text-rust"
+            >
+              {children}
+            </p>
+          ),
           blockquote: ({ children }) => (
             <blockquote className="my-12 border-l-4 border-orange pl-7 font-serif text-[1.625rem] italic leading-[1.5]">
               {children}

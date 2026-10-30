@@ -1,10 +1,6 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import {
-  ArrowIcon,
-  buttonStyles,
-  type ButtonVariant,
-} from "./primitives";
+import { ArrowIcon, buttonStyles, type ButtonVariant } from "./primitives";
 // One CTA style for internal routes, in-page anchors, mailto and external links.
 export function ActionLink({
   href,

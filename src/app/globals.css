@@ -106,7 +106,7 @@
     @apply scroll-smooth scroll-pt-24 motion-reduce:scroll-auto;
   }
   body {
-    @apply bg-white font-serif text-lg text-ink antialiased;
+    @apply bg-white font-serif text-[1.0625rem] text-ink antialiased;
   }
   h1,
   h2,

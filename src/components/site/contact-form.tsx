@@ -232,9 +232,17 @@ export function ContactForm() {
             className={`flex items-start gap-3 p-4 font-serif text-lg leading-relaxed ${feedback.type === "error" ? "bg-rust/10 text-rust" : "bg-lime/30 text-forest"}`}
           >
             {feedback.type === "error" ? (
-              <CircleAlert size={20} aria-hidden="true" className="mt-1 shrink-0" />
+              <CircleAlert
+                size={20}
+                aria-hidden="true"
+                className="mt-1 shrink-0"
+              />
             ) : (
-              <CircleCheck size={20} aria-hidden="true" className="mt-1 shrink-0" />
+              <CircleCheck
+                size={20}
+                aria-hidden="true"
+                className="mt-1 shrink-0"
+              />
             )}
             {feedback.message}
           </p>

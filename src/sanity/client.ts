@@ -1,6 +1,7 @@
 import "server-only";
 import { createClient } from "next-sanity";
 import { draftMode } from "next/headers";
+import { connection } from "next/server";
 import { cache } from "react";
 import {
   sanityApiVersion,
@@ -9,13 +10,15 @@ import {
   sanityProjectId,
 } from "./env";
 import {
+  AUTHOR_QUERY,
+  AUTHORS_SITEMAP_QUERY,
   CATEGORIES_QUERY,
   MAGAZINE_QUERY,
   POST_QUERY,
   RELATED_QUERY,
   SITEMAP_QUERY,
 } from "./queries";
-import type { Category, EditorialSection, Post } from "./types";
+import type { Author, Category, EditorialSection, Post } from "./types";
 export function getPublicClient() {
   return sanityConfigured
     ? createClient({
@@ -32,6 +35,8 @@ export function getPublicClient() {
     : null;
 }
 async function context() {
+  // Reads are always fresh and filter by the current time, so run per request.
+  await connection();
   const publicClient = getPublicClient();
   if (!publicClient) return null;
   const preview = (await draftMode()).isEnabled;
@@ -60,6 +65,10 @@ export type MagazineData = {
   listing: Post[];
   total: number;
   featured: Post | null;
+  hero: Post[];
+  heroFallback: Post[];
+  newcomer: Post[];
+  spotlight: Post[];
   sections: EditorialSection[] | null;
   configured: boolean;
 };
@@ -72,6 +81,10 @@ export const getMagazine = cache(
         listing: [],
         total: 0,
         featured: null,
+        hero: [],
+        heroFallback: [],
+        newcomer: [],
+        spotlight: [],
         sections: [],
         configured: false,
       };
@@ -92,6 +105,7 @@ export const getMagazine = cache(
     return {
       ...data,
       featured: isVisible(data.featured) ? data.featured : null,
+      hero: (data.hero || []).filter((p): p is Post => isVisible(p)),
       sections: (data.sections || []).map((s) => ({
         ...s,
         posts: (s.posts || []).filter((p): p is Post => isVisible(p)),
@@ -130,6 +144,26 @@ export async function getSitemapPosts() {
   return client
     ? client.fetch<{ slug: string; _updatedAt: string }[]>(
         SITEMAP_QUERY,
+        { preview: false },
+        { cache: "no-store" },
+      )
+    : [];
+}
+export const getAuthor = cache(async (slug: string) => {
+  const ctx = await context();
+  return ctx
+    ? ctx.client.fetch<(Author & { posts: Post[] }) | null>(
+        AUTHOR_QUERY,
+        { slug, preview: ctx.preview },
+        { cache: "no-store" },
+      )
+    : null;
+});
+export async function getSitemapAuthors() {
+  const client = getPublicClient();
+  return client
+    ? client.fetch<{ slug: string; _updatedAt: string }[]>(
+        AUTHORS_SITEMAP_QUERY,
         { preview: false },
         { cache: "no-store" },
       )
