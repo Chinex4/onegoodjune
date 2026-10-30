@@ -1,5 +1,6 @@
 "use server";
 import { redirect } from "next/navigation";
+import { ADMIN_PATH } from "@/lib/admin-path";
 import {
   adminConfigured,
   endSession,
@@ -19,9 +20,9 @@ export async function login(
     return { error: "That password is incorrect." };
   }
   await startSession();
-  redirect("/admin");
+  redirect(ADMIN_PATH);
 }
 export async function logout() {
   await endSession();
-  redirect("/admin");
+  redirect(ADMIN_PATH);
 }

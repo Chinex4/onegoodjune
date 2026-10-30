@@ -1,11 +1,16 @@
 import Link from "next/link";
+import { ADMIN_PATH } from "@/lib/admin-path";
 import { Download, LogOut } from "lucide-react";
 import { buttonStyles, label } from "@/components/site/primitives";
 import { cn } from "@/lib/utils";
 import { logout } from "./actions";
 const tabs = [
-  { view: "programs", label: "Programs & payments", href: "/admin" },
-  { view: "events", label: "Event registrations", href: "/admin?view=events" },
+  { view: "programs", label: "Programs & payments", href: ADMIN_PATH },
+  {
+    view: "events",
+    label: "Event registrations",
+    href: `${ADMIN_PATH}?view=events`,
+  },
 ];
 export function AdminHeader({
   title,
