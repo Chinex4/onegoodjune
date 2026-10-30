@@ -8,7 +8,10 @@ import type { PaystackTransaction } from "../src/lib/paystack";
 
 let mongo: MongoMemoryServer;
 before(async () => {
-  mongo = await MongoMemoryServer.create();
+  // A busy machine (dev server, builds) can take longer than the 10s default.
+  mongo = await MongoMemoryServer.create({
+    instance: { launchTimeout: 60000 },
+  });
   process.env.MONGODB_URI = mongo.getUri();
   process.env.MONGODB_DB = "ogj-test";
   process.env.PAYSTACK_SECRET_KEY = "sk_test_unit";

@@ -14,7 +14,7 @@ It also covers free event registrations on `/events`.
 2. `POST /api/register` validates the form, saves a registration in MongoDB with status `pending`, and asks Paystack to start a transaction. The visitor is redirected to Paystack's checkout.
 3. After paying, Paystack sends the visitor to **`/payment/callback?reference=…`**. That page verifies the payment directly with Paystack's API, updates the registration (`paid`, `failed`, `abandoned` or `pending`) and shows the result.
 4. Paystack also calls the **webhook** `POST /api/paystack/webhook`. It checks Paystack's signature, re-verifies the transaction, and updates the same record. This catches payments when the visitor closes the tab before the callback page loads.
-5. Admins sign in at **`/admin`** to see every registration, filter by program or payment status, search, and export CSV.
+5. Admins sign in at **`/silencekeepsitgoingonegoodjune`** (the path is set in `src/lib/admin-path.ts`) to see every registration, filter by program or payment status, search, and export CSV.
 
 Prices live in `src/lib/programs.ts`:
 
@@ -75,7 +75,7 @@ Paystack can't reach `localhost`. To test webhooks locally, run a tunnel such as
 
 ### Testing a payment
 
-With test keys, pay on Paystack's checkout with the test card **4084 0840 8408 4081**, any future expiry date, CVV **408**. That card succeeds without OTP. More cards: [paystack.com/docs/payments/test-payments](https://paystack.com/docs/payments/test-payments). The registration then shows as **Paid** in `/admin`.
+With test keys, pay on Paystack's checkout with the test card **4084 0840 8408 4081**, any future expiry date, CVV **408**. That card succeeds without OTP. More cards: [paystack.com/docs/payments/test-payments](https://paystack.com/docs/payments/test-payments). The registration then shows as **Paid** in the admin dashboard.
 
 ### Recurring billing (optional)
 
@@ -93,14 +93,14 @@ Builder's "pay in 2–4 installments" isn't automated yet. Learners currently pa
 1. Complete Paystack business verification.
 2. Change `PAYSTACK_SECRET_KEY` (and the public key) to the `sk_live_` / `pk_live_` values in Vercel.
 3. Set the webhook URL on Paystack's **Live** tab.
-4. Redeploy and make one real small payment to confirm it appears as **Paid** in `/admin`.
+4. Redeploy and make one real small payment to confirm it appears as **Paid** in the admin dashboard.
 
 ## 3. Admin dashboard
 
-- `ADMIN_PASSWORD`: the password admins type at `/admin`. Use a long passphrase and share it only with people who need access.
+- `ADMIN_PASSWORD`: the password admins type at the admin dashboard. Use a long passphrase and share it only with people who need access.
 - `ADMIN_SESSION_SECRET`: 32+ random characters (`openssl rand -hex 32`). It signs the 12-hour session cookie. Changing it signs everyone out.
 
-The dashboard shows paid totals per program; filters by program, status and search; the full registration table (date, name, email, phone, program, amount, status, paid date, reference); and **Export CSV**. `/admin` and `/payment/` are excluded from search engines.
+The dashboard shows paid totals per program; filters by program, status and search; the full registration table (date, name, email, phone, program, amount, status, paid date, reference); and **Export CSV**. The dashboard is marked `noindex` and deliberately not listed in `robots.txt`, which would advertise its address; `/payment/` is excluded from search engines.
 
 ## 4. Vercel environment variables
 
@@ -124,7 +124,7 @@ Events are managed in Sanity Studio under **Events**: title, date and time, loca
 
 - `/events` lists upcoming events first, then past ones.
 - Each event page shows its registration form until the start time. Untick **Accept registrations** to close it earlier.
-- Registrations (name, email, answer) are saved in MongoDB, one per email per event. You'll find them in **`/admin` → Event registrations**, with filters and CSV export.
+- Registrations (name, email, answer) are saved in MongoDB, one per email per event. You'll find them in **the admin dashboard → Event registrations**, with filters and CSV export.
 - This replaces the Google Sheet or Brevo option from the brief. To email registrants, export the CSV and import it into Brevo.
 
 The placeholder event from the brief ("Manny, Ada & Sesan…", 23 October 2026, 8 PM WAT) is in Studio. Its date has passed, so it shows as closed. Edit the date, or duplicate it for the next session.

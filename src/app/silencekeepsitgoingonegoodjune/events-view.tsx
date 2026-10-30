@@ -1,4 +1,5 @@
 import { buttonStyles } from "@/components/site/primitives";
+import { ADMIN_PATH } from "@/lib/admin-path";
 import {
   eventRegistrationCounts,
   listEventRegistrations,
@@ -37,7 +38,7 @@ export async function EventsView({
       <AdminHeader
         title="Event registrations"
         view="events"
-        exportHref={`/admin/export?${query}`}
+        exportHref={`${ADMIN_PATH}/export?${query}`}
       />
       <section
         aria-label="Totals"

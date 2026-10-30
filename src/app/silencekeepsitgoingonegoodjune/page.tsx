@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ADMIN_PATH } from "@/lib/admin-path";
 import { Suspense } from "react";
 import { isAdmin } from "@/lib/admin-auth";
 import { mongoConfigured } from "@/lib/mongodb";
@@ -79,7 +80,7 @@ async function Dashboard({ searchParams }: { searchParams: Params }) {
       <AdminHeader
         title="Program registrations"
         view="programs"
-        exportHref={`/admin/export${query ? `?${query}` : ""}`}
+        exportHref={`${ADMIN_PATH}/export${query ? `?${query}` : ""}`}
       />
       <section
         aria-label="Totals"
