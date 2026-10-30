@@ -44,3 +44,15 @@ export type EditorialSection = {
   slug: string;
   posts: Post[];
 };
+export type Event = {
+  _id: string;
+  title: string;
+  slug: string;
+  startsAt: string;
+  location: string;
+  admission?: string;
+  flyer?: EditorialImage;
+  description: string;
+  question?: string;
+  registrationOpen?: boolean;
+};

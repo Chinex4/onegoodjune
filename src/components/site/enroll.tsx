@@ -38,15 +38,23 @@ export function EnrollButton({
 }
 const fieldClass =
   "mt-2 block min-h-12 w-full border border-ink/25 bg-white px-4 font-serif text-lg text-ink placeholder:text-ink/40 focus:border-forest focus:outline-2 focus:outline-forest aria-invalid:border-rust";
-type Errors = Partial<Record<"name" | "email" | "phone" | "program", string>>;
+type FieldName = "name" | "email" | "phone" | "bookTitle" | "releaseDate";
+type Errors = Partial<Record<FieldName | "program", string>>;
 export function EnrollDialog({
   title,
   options,
   defaultOption,
+  eyebrow = "Get instant access",
+  optionLegend = "Choose your plan",
+  askBook = false,
 }: {
   title: string;
   options: Option[];
   defaultOption: string;
+  eyebrow?: string;
+  optionLegend?: string;
+  // Launch Spotlight: also collect the book's title and release date.
+  askBook?: boolean;
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const [selected, setSelected] = useState(defaultOption);
@@ -99,7 +107,7 @@ export function EnrollDialog({
   }
   const chosen = options.find((o) => o.id === selected) ?? options[0];
   const field = (
-    name: "name" | "email" | "phone",
+    name: FieldName,
     text: string,
     props: React.InputHTMLAttributes<HTMLInputElement>,
   ) => (
@@ -113,7 +121,7 @@ export function EnrollDialog({
       <input
         id={`enroll-${name}`}
         name={name}
-        required
+        required={props.required ?? true}
         aria-invalid={!!errors[name]}
         aria-describedby={errors[name] ? `enroll-${name}-error` : undefined}
         className={fieldClass}
@@ -138,7 +146,7 @@ export function EnrollDialog({
     >
       <div className="flex items-start justify-between gap-4 bg-black px-6 py-5 text-white sm:px-8">
         <div>
-          <p className={cn(label, "text-lime")}>Get instant access</p>
+          <p className={cn(label, "text-lime")}>{eyebrow}</p>
           <h2
             id="enroll-title"
             className="mt-2 font-heading text-[1.5rem] leading-tight tracking-[-0.015em]"
@@ -163,7 +171,7 @@ export function EnrollDialog({
         {options.length > 1 && (
           <fieldset>
             <legend className="font-sans text-[0.8125rem] font-medium">
-              Choose your plan
+              {optionLegend}
             </legend>
             <div className="mt-2 grid gap-2">
               {options.map((option) => (
@@ -209,6 +217,15 @@ export function EnrollDialog({
           placeholder: "+234 801 234 5678",
           maxLength: 20,
         })}
+        {askBook && (
+          <>
+            {field("bookTitle", "Book title", { maxLength: 200 })}
+            {field("releaseDate", "Release date (or date published)", {
+              type: "date",
+              required: false,
+            })}
+          </>
+        )}
         <div
           aria-hidden="true"
           className="absolute -left-[10000px] h-px w-px overflow-hidden"

@@ -336,6 +336,24 @@ export default function Publications({
       >
         <Magazine searchParams={searchParams} />
       </Suspense>
+      <Container className="pb-16">
+        <aside className="flex flex-col gap-6 bg-sunshine/20 p-7 sm:p-10 md:flex-row md:items-center md:justify-between">
+          <div>
+            <p className={cn(label, "text-rust")}>For authors</p>
+            <p className="mt-3 max-w-xl font-serif text-[1.375rem] font-semibold leading-snug">
+              Your book is coming or it&apos;s already here. Let the right
+              readers know.
+            </p>
+          </div>
+          <Link
+            href="/launch-spotlight"
+            className={buttonStyles("ink", "shrink-0")}
+          >
+            Feature My Book
+            <ArrowIcon />
+          </Link>
+        </aside>
+      </Container>
       <NewsletterSection className="pt-4" />
     </main>
   );

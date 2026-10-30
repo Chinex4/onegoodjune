@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { Download, LogOut } from "lucide-react";
 import { isAdmin } from "@/lib/admin-auth";
 import { mongoConfigured } from "@/lib/mongodb";
 import { programs, formatNaira, getProgram } from "@/lib/programs";
@@ -9,15 +8,22 @@ import {
   registrationStats,
   type PaymentStatus,
 } from "@/lib/registrations";
-import { ColorBar, buttonStyles, label } from "@/components/site/primitives";
+import { ColorBar, buttonStyles } from "@/components/site/primitives";
 import { cn } from "@/lib/utils";
 import { LoginForm } from "./login-form";
-import { logout } from "./actions";
+import { AdminHeader } from "./admin-header";
+import { EventsView } from "./events-view";
 export const metadata: Metadata = {
   title: "Admin",
   robots: { index: false, follow: false },
 };
-type Params = Promise<{ program?: string; status?: string; q?: string }>;
+type Params = Promise<{
+  program?: string;
+  status?: string;
+  q?: string;
+  view?: string;
+  event?: string;
+}>;
 const statuses: PaymentStatus[] = ["paid", "pending", "abandoned", "failed"];
 const statusStyle: Record<PaymentStatus, string> = {
   paid: "bg-lime text-ink",
@@ -53,6 +59,7 @@ async function Dashboard({ searchParams }: { searchParams: Params }) {
       </p>
     );
   const params = await searchParams;
+  if (params.view === "events") return <EventsView params={params} />;
   const filters = {
     program: getProgram(params.program || "") ? params.program : undefined,
     status: statuses.includes(params.status as PaymentStatus)
@@ -69,29 +76,11 @@ async function Dashboard({ searchParams }: { searchParams: Params }) {
   ).toString();
   return (
     <>
-      <div className="flex flex-wrap items-end justify-between gap-6 py-10">
-        <div>
-          <p className={cn(label, "text-forest")}>Admin</p>
-          <h1 className="mt-3 font-heading text-[2rem] leading-none tracking-[-0.02em]">
-            Program registrations
-          </h1>
-        </div>
-        <div className="flex gap-3">
-          <a
-            href={`/admin/export${query ? `?${query}` : ""}`}
-            className={buttonStyles("outline", "min-h-11 gap-3 px-4")}
-          >
-            Export CSV
-            <Download size={16} aria-hidden="true" />
-          </a>
-          <form action={logout}>
-            <button className={buttonStyles("ink", "min-h-11 gap-3 px-4")}>
-              Sign out
-              <LogOut size={16} aria-hidden="true" />
-            </button>
-          </form>
-        </div>
-      </div>
+      <AdminHeader
+        title="Program registrations"
+        view="programs"
+        exportHref={`/admin/export${query ? `?${query}` : ""}`}
+      />
       <section
         aria-label="Totals"
         className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4"

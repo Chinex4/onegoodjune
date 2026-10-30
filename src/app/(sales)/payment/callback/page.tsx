@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
+import { connection } from "next/server";
 import { CircleAlert, CircleCheck, Clock } from "lucide-react";
 import {
   ArrowIcon,
@@ -19,11 +20,14 @@ export const metadata: Metadata = {
 };
 type Params = Promise<{ reference?: string; trxref?: string }>;
 async function Status({ searchParams }: { searchParams: Params }) {
+  // Payment state is per request and time-dependent.
+  await connection();
   const params = await searchParams;
   const reference = params.reference || params.trxref || "";
   let state: "paid" | "pending" | "failed" | "unknown" = "unknown";
   let returnPath = "/";
   let programName = "";
+  let next: string | undefined;
   if (/^OGJ-[A-Z0-9-]{6,80}$/.test(reference)) {
     try {
       const tx = await verifyTransaction(reference);
@@ -33,6 +37,7 @@ async function Status({ searchParams }: { searchParams: Params }) {
       const program = registration && getProgram(registration.program);
       returnPath = program?.returnPath ?? "/";
       programName = program?.name ?? "";
+      next = program?.successPath;
       state =
         registration?.status === "paid"
           ? "paid"
@@ -48,7 +53,9 @@ async function Status({ searchParams }: { searchParams: Params }) {
       Icon: CircleCheck,
       tone: "text-forest",
       title: "Payment received. Welcome aboard!",
-      body: `Your registration for ${programName} is confirmed. We've sent a receipt to your email and we'll be in touch with your next steps shortly.`,
+      body: next
+        ? `Your ${programName} is paid for. Your receipt is on its way by email. Now choose a time for your session.`
+        : `Your registration for ${programName} is confirmed. We've sent a receipt to your email and we'll be in touch with your next steps shortly.`,
     },
     pending: {
       Icon: Clock,
@@ -86,10 +93,20 @@ async function Status({ searchParams }: { searchParams: Params }) {
           Reference: {reference}
         </p>
       )}
-      <Link href={returnPath} className={buttonStyles("ink", "mt-10")}>
-        {state === "paid" ? "Back to the program" : "Try again"}
-        <ArrowIcon />
-      </Link>
+      {state === "paid" && next ? (
+        <Link
+          href={`${next}?reference=${encodeURIComponent(reference)}`}
+          className={buttonStyles("ink", "mt-10")}
+        >
+          Choose your session time
+          <ArrowIcon />
+        </Link>
+      ) : (
+        <Link href={returnPath} className={buttonStyles("ink", "mt-10")}>
+          {state === "paid" ? "Back to the program" : "Try again"}
+          <ArrowIcon />
+        </Link>
+      )}
     </>
   );
 }

@@ -54,15 +54,22 @@ export function SocialLinks({
 const columns = [
   {
     title: "Studio",
-    links: navigation.filter((item) =>
-      ["/about", "/read-pubs", "/submissions"].includes(item.href),
-    ),
+    links: [
+      ...navigation.filter((item) =>
+        ["/about", "/read-pubs", "/submissions"].includes(item.href),
+      ),
+      { label: "Events", href: "/events" },
+    ],
   },
   {
     title: "Programs",
-    links: navigation.filter((item) =>
-      ["/school-of-growth", "/fiction-writing"].includes(item.href),
-    ),
+    links: [
+      ...navigation.filter((item) =>
+        ["/school-of-growth", "/fiction-writing"].includes(item.href),
+      ),
+      { label: "Author Consultation", href: "/author-consultation" },
+      { label: "Launch Spotlight", href: "/launch-spotlight" },
+    ],
   },
 ];
 const footerLink =

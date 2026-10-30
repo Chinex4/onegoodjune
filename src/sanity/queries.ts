@@ -35,3 +35,10 @@ export const AUTHORS_SITEMAP_QUERY = defineQuery(
 export const SITEMAP_QUERY = defineQuery(
   `*[${visible}]{"slug":slug.current,_updatedAt}`,
 );
+const eventFields = `_id,title,"slug":slug.current,startsAt,location,admission,flyer,description,question,registrationOpen`;
+export const EVENTS_QUERY = defineQuery(
+  `*[_type=="event" && defined(slug.current) && defined(startsAt)]|order(startsAt desc){${eventFields}}`,
+);
+export const EVENT_QUERY = defineQuery(
+  `*[_type=="event" && slug.current==$slug][0]{${eventFields}}`,
+);
