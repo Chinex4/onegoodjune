@@ -1,8 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
 import type { Post } from "@/sanity/types";
-import { imageUrl } from "@/sanity/images";
+import { CoverImage } from "./cover-image";
 import { label } from "@/components/site/primitives";
 import { cn } from "@/lib/utils";
 export function readingMinutes(text?: string) {
@@ -23,13 +21,17 @@ export function articleDate(value?: string) {
 export function ArticleCard({
   post,
   featured = false,
+  tone = "light",
+  compact = false,
 }: {
   post: Post;
   featured?: boolean;
+  tone?: "light" | "dark";
+  compact?: boolean;
 }) {
-  const image = imageUrl(post.mainImage, featured ? 1400 : 800);
+  const dark = tone === "dark";
   return (
-    <article className="group min-w-0">
+    <article className="group @container min-w-0">
       <Link
         href={`/read-pubs/${post.slug}`}
         className={
@@ -38,56 +40,63 @@ export function ArticleCard({
             : "block"
         }
       >
-        <div
-          className={`relative overflow-hidden bg-paper ${featured ? "aspect-[4/3]" : "aspect-[3/2]"}`}
-        >
-          {image ? (
-            <Image
-              src={image}
-              alt={post.mainImage?.alt || post.title}
-              fill
-              sizes={
-                featured
-                  ? "(max-width: 768px) 100vw, 60vw"
-                  : "(max-width: 768px) 100vw, 33vw"
-              }
-              className="object-cover transition-transform duration-500 ease-out-soft motion-safe:group-hover:scale-[1.03]"
-            />
-          ) : (
-            <span
-              className="absolute inset-0 flex items-center justify-center font-heading text-[2rem] text-ink/15"
-              aria-hidden="true"
-            >
-              ONEGOODJUNE
-            </span>
+        <CoverImage
+          post={post}
+          width={featured ? 1400 : 800}
+          sizes={
+            featured
+              ? "(max-width: 768px) 100vw, 60vw"
+              : "(max-width: 768px) 100vw, 33vw"
+          }
+          className={featured ? "aspect-[4/3]" : "aspect-[3/2]"}
+        />
+        <div className={featured ? "" : compact ? "pt-4" : "pt-5"}>
+          {!compact && (
+            <p className={cn(label, dark ? "text-sunshine" : "text-rust")}>
+              {post.category?.title || "Publication"}
+            </p>
           )}
-        </div>
-        <div className={featured ? "" : "pt-6"}>
-          <p className={cn(label, "text-rust")}>
-            {post.category?.title || "Publication"}
-          </p>
           <h3
-            className={`mt-3 font-serif font-semibold leading-[1.15] tracking-[-0.01em] transition-colors group-hover:text-forest ${featured ? "text-[2rem] md:text-[2.5rem]" : "text-[1.625rem]"}`}
+            className={cn(
+              "font-serif font-semibold leading-[1.18] tracking-[-0.01em] transition-colors",
+              dark ? "group-hover:text-lime" : "group-hover:text-forest",
+              featured
+                ? "mt-3 text-[1.75rem] md:text-[2.25rem]"
+                : compact
+                  ? "text-[1.1875rem]"
+                  : "mt-3 text-[1.375rem]",
+            )}
           >
             {post.title}
           </h3>
-          {post.excerpt && (
-            <p className="mt-3 font-serif text-lg leading-[1.6] text-ink/80">
+          {post.excerpt && !compact && (
+            <p
+              className={cn(
+                "mt-3 line-clamp-3 font-serif text-[1.0625rem] leading-[1.6]",
+                dark ? "text-white/75" : "text-ink/80",
+              )}
+            >
               {post.excerpt}
             </p>
           )}
-          <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 font-sans text-xs leading-relaxed text-ink/70">
-            <span>{post.author?.name || "Author to be confirmed"}</span>
-            <span aria-hidden="true">·</span>
-            <time dateTime={post.publishedAt}>
-              {articleDate(post.publishedAt)}
-            </time>
-            <span>· {readingMinutes(post.text)} min read</span>
-            <ArrowUpRight
-              size={15}
-              className="ml-auto transition-transform motion-safe:group-hover:-translate-y-1"
-              aria-hidden="true"
-            />
+          <div
+            className={cn(
+              "flex flex-wrap items-center gap-x-3 gap-y-1 font-sans text-xs leading-relaxed",
+              compact ? "mt-2" : "mt-4",
+              dark ? "text-white/70" : "text-ink/70",
+            )}
+          >
+            <span className="w-full font-semibold">
+              {post.author?.name || "OneGoodJune"}
+            </span>
+            {!compact && (
+              <span>
+                <time dateTime={post.publishedAt}>
+                  {articleDate(post.publishedAt)}
+                </time>{" "}
+                · {readingMinutes(post.text)} min read
+              </span>
+            )}
           </div>
         </div>
       </Link>

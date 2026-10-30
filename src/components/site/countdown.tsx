@@ -15,7 +15,10 @@ export function Countdown({ className = "" }: { className?: string }) {
   if (time?.complete)
     return (
       <p
-        className={cn("border-y border-current/20 py-6 font-serif text-xl", className)}
+        className={cn(
+          "border-y border-current/20 py-6 font-serif text-xl",
+          className,
+        )}
         role="status"
       >
         The scheduled launch date has arrived. Get in touch for course
@@ -40,7 +43,9 @@ export function Countdown({ className = "" }: { className?: string }) {
             <span className="block font-sans text-[2rem] font-semibold leading-none tabular-nums tracking-[-0.02em] text-orange font-stretch-semi-expanded sm:text-[3rem] md:text-[3.5rem]">
               {time ? String(time[unit]).padStart(2, "0") : "—"}
             </span>
-            <span className={cn(label, "mt-3 block text-[0.625rem] opacity-70")}>
+            <span
+              className={cn(label, "mt-3 block text-[0.625rem] opacity-70")}
+            >
               {unit}
             </span>
           </div>

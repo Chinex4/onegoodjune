@@ -5,6 +5,7 @@ import {
   Eyebrow,
   PageIntro,
   heading,
+  subheading,
   label,
   lead,
   prose,
@@ -36,8 +37,10 @@ export default function About() {
       <Container>
         <PageIntro
           eyebrow="Our story"
+          // Reading font, sized so each statement holds one line on phones.
+          titleClassName="font-serif text-[1.375rem] font-semibold leading-[1.3] min-[360px]:text-[1.5rem] sm:text-[2.125rem] lg:text-[2.625rem]"
           title={about.opening.slice(0, 3).map((line, i) => (
-            <span key={line} className="block">
+            <span key={line} className="block whitespace-nowrap">
               {line.replace(/\.$/, "")}
               <span className={stopColors[i]}>.</span>
             </span>
@@ -55,8 +58,8 @@ export default function About() {
             </figure>
           </Reveal>
           <Reveal delay={0.08} className="lg:col-span-7 lg:col-start-6">
-            <p className={lead}>{lead1}</p>
-            <div className="mt-8 space-y-6">
+            <div className="space-y-6">
+              <p className={cn(prose, "text-ink/85")}>{lead1}</p>
               {story.map((p) => (
                 <p key={p} className={cn(prose, "text-ink/85")}>
                   {p}
@@ -66,18 +69,16 @@ export default function About() {
           </Reveal>
         </section>
       </Container>
-      <section className="bg-forest py-20 text-white [--focus-ring:var(--color-lime)] md:py-28">
+      <section className="bg-forest py-16 text-white [--focus-ring:var(--color-lime)] md:py-20">
         <Container className="grid gap-8 lg:grid-cols-12 lg:gap-10">
           <Reveal className="lg:col-span-4">
             <Eyebrow className="text-white" swatch="bg-lime">
               Our mission
             </Eyebrow>
-            <h2 className={cn(heading, "mt-6")}>A Simple Quest</h2>
+            <h2 className={cn(subheading, "mt-5")}>A Simple Quest</h2>
           </Reveal>
           <Reveal delay={0.08} className="lg:col-span-7 lg:col-start-6">
-            <p className="font-serif text-[1.75rem] leading-[1.35] md:text-[2.25rem]">
-              {about.mission}
-            </p>
+            <p className={lead}>{about.mission}</p>
           </Reveal>
         </Container>
       </section>
@@ -129,9 +130,7 @@ export default function About() {
                       </>
                     )}
                   </div>
-                  <p className={cn(label, "mt-6 text-forest")}>
-                    {person.role}
-                  </p>
+                  <p className={cn(label, "mt-6 text-forest")}>{person.role}</p>
                   <h3 className={cn(title, "mt-3")}>{person.name}</h3>
                   <p className="mt-3 font-serif text-lg leading-[1.6] text-ink/80">
                     {person.description}
@@ -142,7 +141,8 @@ export default function About() {
           })}
         </div>
       </Container>
-      <section className="bg-sunshine py-20 md:py-24">
+      {/* A soft sunshine tint: the full-strength orange read as too loud. */}
+      <section className="border-t-4 border-sunshine bg-sunshine/15 py-16 md:py-20">
         <Container className="grid gap-10 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-7">
             <h2 className={heading}>Start your own adventure</h2>
@@ -153,7 +153,7 @@ export default function About() {
           </div>
           <div className="flex flex-wrap gap-3 lg:col-span-5 lg:justify-end">
             <ActionLink href="/read-pubs">Read OGJ Stacks</ActionLink>
-            <ActionLink href="/school-of-growth" variant="white">
+            <ActionLink href="/school-of-growth" variant="outline">
               Join SOG
             </ActionLink>
           </div>

@@ -89,13 +89,17 @@ export function Header() {
         </nav>
         <Link
           href="/contact"
-          className={buttonStyles("ink", "hidden min-h-11 gap-4 px-5 xl:inline-flex")}
+          className={buttonStyles(
+            "ink",
+            "hidden min-h-11 gap-4 px-5 xl:inline-flex",
+          )}
         >
           Get in touch
           <ArrowIcon size={15} />
         </Link>
         <button
           type="button"
+          aria-label="Open menu"
           aria-haspopup="dialog"
           aria-expanded={open}
           aria-controls="site-navigation"
@@ -103,9 +107,8 @@ export function Header() {
             menu.current?.showModal();
             setOpen(true);
           }}
-          className="group ml-auto flex min-h-12 items-center gap-3 font-sans text-[0.8125rem] font-medium lg:hidden"
+          className="group -mr-2 ml-auto grid size-12 place-items-center lg:hidden"
         >
-          Menu
           <span aria-hidden="true" className="flex w-8 flex-col gap-[6px]">
             <span className="h-[2px] w-8 bg-current motion-safe:transition-transform motion-safe:group-hover:translate-x-1" />
             <span className="h-[2px] w-8 bg-current motion-safe:transition-transform motion-safe:group-hover:-translate-x-1" />
@@ -192,7 +195,7 @@ export function Header() {
                 href={site.links.email}
                 className="mt-5 block font-serif text-lg text-white/80 hover:text-lime"
               >
-                admin@onegoodjune.com
+                sayhi@onegoodjune.com
               </a>
             </div>
             <SocialLinks dark className="sm:justify-end" />

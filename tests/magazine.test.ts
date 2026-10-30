@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { parse, evaluate } from "groq-js";
 import {
+  AUTHOR_QUERY,
   MAGAZINE_QUERY,
   CATEGORIES_QUERY,
   POST_QUERY,
@@ -27,6 +28,7 @@ const posts = Array.from({ length: 16 }, (_, i) => ({
   author: { _ref: author._id },
   category: { _ref: i % 2 === 0 ? "category-stories" : "category-news" },
   tags: i % 4 === 0 ? [{ _ref: "tag-fiction" }] : [],
+  additionalCategories: i < 2 ? [{ _ref: "category-newcomer" }] : [],
   body: [{ _type: "block", children: [{ _type: "span", text: "Test body" }] }],
 }));
 const dataset = [
@@ -55,30 +57,35 @@ async function query(q: string, params: Record<string, unknown> = {}) {
   ).get();
 }
 test("CMS categories, publication dates, pagination and tag-driven sections work", async () => {
-  assert.equal((await query(CATEGORIES_QUERY)).length, 5);
+  assert.equal((await query(CATEGORIES_QUERY)).length, 8);
   const data = await query(MAGAZINE_QUERY);
   assert.equal(data.latest.length, 4);
   assert.equal(data.total, 16);
   assert.equal(data.listing.length, 12);
-  assert.equal(
-    data.sections.find((s: { title: string }) => s.title === "Cozy Corner")
-      .posts.length,
-    4,
+  const section = (title: string) =>
+    data.sections.find((s: { title: string }) => s.title === title);
+  assert.equal(section("Stories").posts.length, 4);
+  assert(
+    section("Stories").posts.every(
+      (p: { category: { slug: string } }) => p.category.slug === "stories",
+    ),
   );
   assert(
-    data.sections
-      .find((s: { title: string }) => s.title === "Cozy Corner")
-      .posts.every(
-        (p: { category: { slug: string } }) => p.category.slug === "stories",
-      ),
+    section("News").posts.every(
+      (p: { category: { slug: string } }) => p.category.slug === "news",
+    ),
   );
+  // Posts tagged "also in Newcomer" join that highlight and its category page,
+  // but the hero fallback skips them.
+  assert.equal(data.newcomer.length, 2);
   assert(
-    data.sections
-      .find((s: { title: string }) => s.title === "Big Story")
-      .posts.every(
-        (p: { category: { slug: string } }) => p.category.slug === "news",
-      ),
+    data.heroFallback.every(
+      (p: { _id: string }) => !["test-0", "test-1"].includes(p._id),
+    ),
   );
+  assert.equal(data.hero.length, 0);
+  const newcomer = await query(MAGAZINE_QUERY, { category: "newcomer" });
+  assert.equal(newcomer.total, 2);
   const page2 = await query(MAGAZINE_QUERY, { start: 12, end: 24 });
   assert.equal(page2.listing.length, 4);
   const stories = await query(MAGAZINE_QUERY, { category: "stories" });
@@ -103,5 +110,26 @@ test("draft perspective query permits an upcoming article for preview", async ()
   assert.equal(
     (await query(POST_QUERY, { slug: "future", preview: true })).title,
     "Test article 0",
+  );
+});
+test("author pages list only that author's visible posts", async () => {
+  const data = await query(AUTHOR_QUERY.replace("$slug", '"test-author"'));
+  assert.equal(data, null); // fixture author has no slug
+  const result = await evaluate(
+    parse(AUTHOR_QUERY, { params: { slug: "a", preview: false } }),
+    {
+      dataset: [
+        ...dataset,
+        { ...author, _id: "a1", slug: { current: "a" } },
+        { ...posts[3], _id: "by-a1", author: { _ref: "a1" } },
+      ],
+      params: { slug: "a", preview: false },
+      timestamp: new Date("2026-10-21T12:00:00Z"),
+    },
+  );
+  const withSlug = await result.get();
+  assert.deepEqual(
+    withSlug.posts.map((p: { _id: string }) => p._id),
+    ["by-a1"],
   );
 });

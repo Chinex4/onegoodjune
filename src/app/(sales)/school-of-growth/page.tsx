@@ -5,7 +5,6 @@ import {
   ColorBar,
   Container,
   Eyebrow,
-  buttonStyles,
   heading,
   label,
   lead,
@@ -15,7 +14,8 @@ import {
   type ButtonVariant,
 } from "@/components/site/primitives";
 import { Reveal } from "@/components/site/reveal";
-import { SalesTopBar } from "@/components/site/sales";
+import { EnrollButton, EnrollDialog } from "@/components/site/enroll";
+import { programs } from "@/lib/programs";
 import { StickyCta } from "@/components/site/sticky-cta";
 import { PlanSwitcher } from "@/components/site/plan-switcher";
 import { sog } from "@/content/sog";
@@ -28,21 +28,25 @@ export const metadata = pageMetadata(
   sog.introduction,
   "/school-of-growth",
 );
+const planIds = ["sog-riser", "sog-builder", "sog-visionary"];
+// Opens the registration form; payment happens on Paystack afterwards.
 function Access({
   variant = "lime",
   className = "",
+  program,
 }: {
   variant?: ButtonVariant;
   className?: string;
+  program?: string;
 }) {
   return (
-    <a
-      href={site.links.enrollment}
-      className={buttonStyles(variant, cn("gap-10", className))}
+    <EnrollButton
+      program={program}
+      variant={variant}
+      className={cn("gap-10", className)}
     >
       {sog.access}
-      <ArrowIcon />
-    </a>
+    </EnrollButton>
   );
 }
 function Paragraphs({
@@ -131,13 +135,10 @@ export default function Growth() {
     <main id="main-content" className="bg-white text-ink">
       <section id="hero" className="ground-dark">
         <Container>
-          <SalesTopBar
-            cta={{ href: site.links.enrollment, label: sog.access }}
-          />
-          <div className="grid items-center gap-12 pb-16 pt-8 md:pb-20 lg:grid-cols-12 lg:gap-10 lg:pt-12">
+          <div className="grid items-center gap-12 pb-16 pt-14 md:pb-20 md:pt-20 lg:grid-cols-12 lg:gap-10">
             <div className="lg:col-span-6">
               <p className={cn(label, "text-lime")}>{sog.strapline}</p>
-              <h1 className="mt-6 font-heading text-[3.25rem] leading-[0.98] tracking-[-0.03em] sm:text-[4.5rem] lg:text-[5.25rem]">
+              <h1 className="mt-6 font-heading text-[2.75rem] leading-[0.98] tracking-[-0.03em] sm:text-[3.75rem] lg:text-[4.5rem]">
                 School
                 <br />
                 of Growth
@@ -145,7 +146,7 @@ export default function Growth() {
               <p className={cn(lead, "mt-8 max-w-xl text-white/85")}>
                 {sog.introduction}
               </p>
-              <p className="mt-5 font-heading text-[1.375rem] tracking-[-0.01em] text-straw">
+              <p className="mt-5 font-heading text-[1.1875rem] tracking-[-0.01em] text-straw">
                 {sog.promise}
               </p>
               <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-4">
@@ -190,31 +191,31 @@ export default function Growth() {
       </section>
 
       <Container>
-        <section className="grid gap-12 py-16 md:py-28 lg:grid-cols-12 lg:gap-10">
-          <Reveal className="lg:col-span-5">
+        <section className="mx-auto max-w-3xl py-16 md:py-24">
+          <Reveal>
             <h2 className={heading}>{sog.goalsTitle}</h2>
-            <p className={cn(prose, "mt-7 border-l-4 border-orange pl-5")}>
-              {sog.invitation[0]}
-            </p>
-            <p className="mt-6 font-heading text-[1.75rem] leading-tight tracking-[-0.015em] text-forest">
-              {sog.invitation[1]}
-            </p>
           </Reveal>
-          <ol className="lg:col-span-6 lg:col-start-7">
+          <ol className="mt-8 md:mt-10">
             {sog.goals.map((goal, i) => (
               <li
                 key={goal}
-                className="flex gap-5 border-b border-ink/15 py-5 first:pt-0 md:py-6"
+                className="flex gap-5 border-b border-ink/15 py-4 first:pt-0 md:py-5"
               >
-                <span className={cn(label, "mt-1.5 w-6 shrink-0 text-forest")}>
+                <span className={cn(label, "mt-1 w-6 shrink-0 text-forest")}>
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <span className="font-serif text-xl leading-snug md:text-[1.375rem]">
+                <span className="font-serif text-lg leading-snug md:text-xl">
                   {goal}
                 </span>
               </li>
             ))}
           </ol>
+          <p className={cn(prose, "mt-10 border-l-4 border-orange pl-5")}>
+            {sog.invitation[0]}
+          </p>
+          <p className="mt-5 font-heading text-[1.375rem] leading-tight tracking-[-0.015em] text-forest md:text-[1.625rem]">
+            {sog.invitation[1]}
+          </p>
         </section>
       </Container>
 
@@ -241,7 +242,7 @@ export default function Growth() {
             </div>
           </div>
           <Reveal className="lg:col-span-6 lg:col-start-7">
-            <p className="font-heading text-[1.75rem] tracking-[-0.015em]">
+            <p className="font-heading text-[1.375rem] tracking-[-0.015em]">
               {sog.story[0]}
             </p>
             <Paragraphs items={sog.story.slice(1)} className="mt-6" />
@@ -249,7 +250,8 @@ export default function Growth() {
         </Container>
       </section>
 
-      <section className="bg-lime py-16 md:py-28">
+      {/* Soft lime wash with a forest rule: the full lime field read as loud. */}
+      <section className="border-y-4 border-forest bg-lime/25 py-12 md:py-16">
         <Container>
           <Reveal>
             <h2 className={cn(heading, "max-w-4xl")}>{sog.opportunities[0]}</h2>
@@ -257,7 +259,7 @@ export default function Growth() {
           <div className="mt-12 grid gap-12 md:mt-16 lg:grid-cols-2 lg:gap-16">
             <Paragraphs items={sog.opportunities.slice(1, 4)} />
             <div>
-              <p className="font-heading text-[1.75rem] leading-tight tracking-[-0.015em]">
+              <p className="font-heading text-[1.375rem] leading-tight tracking-[-0.015em] text-forest">
                 {sog.opportunities[4]}
               </p>
               <p className={cn(prose, "mt-5 font-semibold")}>
@@ -317,7 +319,7 @@ export default function Growth() {
       <section className="ground-dark py-16 md:py-28">
         <Container>
           <p className={cn(label, "text-lime")}>{sog.thisIs}</p>
-          <h2 className="mt-4 font-heading text-[3rem] leading-none tracking-[-0.03em] sm:text-[4rem] lg:text-[4.75rem]">
+          <h2 className="mt-4 font-heading text-[2.5rem] leading-none tracking-[-0.03em] sm:text-[3.25rem] lg:text-[4rem]">
             {sog.programName}
           </h2>
           <p className={cn(subheading, "mt-5 text-straw")}>{sog.positioning}</p>
@@ -326,7 +328,7 @@ export default function Growth() {
               {definitionLead}formula:
             </p>
             {formula && (
-              <p className="font-heading text-[1.75rem] leading-[1.15] tracking-[-0.015em] text-lime md:text-[2.25rem] lg:col-span-6">
+              <p className="font-heading text-[1.5rem] leading-[1.15] tracking-[-0.015em] text-lime md:text-[1.875rem] lg:col-span-6">
                 {formula}
               </p>
             )}
@@ -394,7 +396,7 @@ export default function Growth() {
         className="scroll-mt-4 border-t border-ink/10 bg-paper py-16 md:py-28"
       >
         <Container>
-          <p className="mx-auto max-w-3xl text-center font-heading text-[1.75rem] leading-tight tracking-[-0.015em] text-forest md:text-[2.25rem]">
+          <p className="mx-auto max-w-3xl text-center font-heading text-[1.5rem] leading-tight tracking-[-0.015em] text-forest md:text-[1.875rem]">
             {sog.invitationToGrow}
           </p>
           <div className="mt-16 grid gap-6 border-t border-ink/15 pt-16 lg:grid-cols-12 lg:gap-10">
@@ -431,7 +433,7 @@ export default function Growth() {
                       <p className={cn(label, style.tag)}>{plan.strapline}</p>
                     </div>
                     <p className="mt-8">
-                      <span className="font-heading text-[3.5rem] leading-none tracking-[-0.03em]">
+                      <span className="font-heading text-[3rem] leading-none tracking-[-0.03em]">
                         {price.usd}
                       </span>
                       <span className="ml-2 font-sans text-lg font-medium">
@@ -444,7 +446,11 @@ export default function Growth() {
                     <p className="mt-6 font-serif text-lg leading-[1.6] opacity-90">
                       {plan.description}
                     </p>
-                    <Access variant={style.button} className="mt-7 w-full" />
+                    <Access
+                      program={planIds[i]}
+                      variant={style.button}
+                      className="mt-7 w-full"
+                    />
                     <div className={cn("mt-8 border-t pt-7", style.rule)}>
                       <h4 className={cn(label, "opacity-70")}>
                         {sog.whatYouGet}
@@ -577,7 +583,10 @@ export default function Growth() {
       <section className="ground-dark py-16 md:py-28">
         <Container>
           <p className={cn(label, "text-lime")}>{sog.frameworkLabel}</p>
-          <h2 className={cn(heading, "mt-6")}>{frameworkTitle}</h2>
+          {/* Sized to the viewport so the three steps hold one line on phones. */}
+          <h2 className="mt-6 whitespace-nowrap font-heading text-[clamp(0.9375rem,4.1vw,2.5rem)] leading-tight tracking-[-0.02em]">
+            {frameworkTitle}
+          </h2>
           <p className={cn(lead, "mt-6 max-w-2xl text-white/80")}>
             {frameworkIntro}
           </p>
@@ -711,7 +720,7 @@ export default function Growth() {
 
       <section id="closing" className="ground-dark py-16 md:py-28">
         <Container className="grid gap-10 lg:grid-cols-12 lg:items-end lg:gap-10">
-          <p className="font-sans text-[1.5rem] font-semibold uppercase leading-[1.25] tracking-[-0.005em] font-stretch-expanded md:text-[2rem] lg:col-span-9">
+          <p className="font-sans text-[1.25rem] font-semibold uppercase leading-[1.3] tracking-[-0.005em] font-stretch-expanded md:text-[1.625rem] lg:col-span-9">
             {sog.closing}
           </p>
           <div className="lg:col-span-3 lg:justify-self-end">
@@ -733,6 +742,13 @@ export default function Growth() {
           <Access className="min-h-11 shrink-0 gap-3 px-4 sm:gap-4 sm:px-5" />
         </Container>
       </StickyCta>
+      <EnrollDialog
+        title="School of Growth"
+        defaultOption="sog-builder"
+        options={programs
+          .filter((p) => p.group === "school-of-growth")
+          .map(({ id, name, price, period }) => ({ id, name, price, period }))}
+      />
     </main>
   );
 }

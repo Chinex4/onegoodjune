@@ -18,8 +18,10 @@ export type Author = {
   _id: string;
   name: string;
   slug?: string;
+  role?: string;
   bio?: string;
   image?: EditorialImage;
+  links?: { label: string; url: string }[];
 };
 export type Post = {
   _id: string;
@@ -32,6 +34,7 @@ export type Post = {
   _updatedAt?: string;
   mainImage?: EditorialImage;
   category?: Category;
+  additionalCategories?: Category[];
   tags?: { _id: string; title: string; slug: string }[];
   text?: string;
 };

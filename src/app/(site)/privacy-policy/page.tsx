@@ -1,4 +1,5 @@
 import { policySections } from "@/content/pages";
+import { NewsletterSection } from "@/components/site/newsletter";
 import { Container, PageIntro, label } from "@/components/site/primitives";
 import { SourceSections } from "@/components/editorial/source-sections";
 import { pageMetadata } from "@/lib/metadata";
@@ -40,6 +41,7 @@ export default function Privacy() {
           </div>
         </div>
       </Container>
+      <NewsletterSection className="pt-4" />
     </main>
   );
 }

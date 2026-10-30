@@ -5,14 +5,19 @@ export const site = {
     newsletter: "https://onegoodjune.substack.com",
     newsletterEmbed: "https://onegoodjune.substack.com/embed?transparent=1",
     submissions: "mailto:submissions@onegoodjune.com",
-    email: "mailto:admin@onegoodjune.com",
+    email: "mailto:sayhi@onegoodjune.com",
     waitlist: process.env.NEXT_PUBLIC_WAITLIST_URL || null,
     enrollment:
       process.env.NEXT_PUBLIC_ENROLLMENT_URL ||
       "https://checkout.mainstack.com/onegj/sog",
-    instagram: process.env.NEXT_PUBLIC_INSTAGRAM_URL || null,
-    linkedin: process.env.NEXT_PUBLIC_LINKEDIN_URL || null,
-    youtube: process.env.NEXT_PUBLIC_YOUTUBE_URL || null,
+    instagram:
+      process.env.NEXT_PUBLIC_INSTAGRAM_URL ||
+      "https://www.instagram.com/onegoodjune",
+    linkedin:
+      process.env.NEXT_PUBLIC_LINKEDIN_URL ||
+      "https://www.linkedin.com/company/onegoodjune/",
+    youtube:
+      process.env.NEXT_PUBLIC_YOUTUBE_URL || "https://youtube.com/@onegoodjune",
   },
   assets: {
     writing: "/images/writing.jpg",
@@ -20,7 +25,12 @@ export const site = {
     sogPoster: "/images/sog-video-poster.jpg",
     sogCoach: "/images/sog-coach.jpg",
     growth: "/images/creative-desk.jpg",
-    team: [null, null, null, null] as (string | null)[],
+    team: [
+      "/images/team/esther.jpg",
+      "/images/team/dinma.jpg",
+      "/images/team/seun.jpg",
+      "/images/team/akunna.jpg",
+    ] as (string | null)[],
   },
 } as const;
 export const navigation = [
