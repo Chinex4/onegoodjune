@@ -45,7 +45,7 @@ async function EventDetail({ params }: Props) {
       ? "https://schema.org/OnlineEventAttendanceMode"
       : "https://schema.org/OfflineEventAttendanceMode",
     location: { "@type": "VirtualLocation", url: `${site.url}/events/${slug}` },
-    organizer: { "@type": "Organization", name: "OneGoodJune", url: site.url },
+    organizer: { "@type": "Organization", name: "ONEGOODJUNE", url: site.url },
   };
   return (
     <>
@@ -70,7 +70,7 @@ async function EventDetail({ params }: Props) {
         />
         <div className="mt-10 grid gap-12 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-7">
-            <p className={cn(label, "text-forest")}>OneGoodJune Events</p>
+            <p className={cn(label, "text-forest")}>ONEGOODJUNE Events</p>
             <h1 className="mt-4 font-serif text-[2rem] font-semibold leading-[1.12] tracking-[-0.01em] md:text-[2.75rem]">
               {event.title}
             </h1>

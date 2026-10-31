@@ -6,7 +6,7 @@ import { pageMetadata } from "@/lib/metadata";
 import { cn } from "@/lib/utils";
 export const metadata = pageMetadata(
   "Privacy Policy",
-  "OneGoodJune privacy policy. Effective Oct 19, 2026.",
+  "ONEGOODJUNE privacy policy. Effective Oct 19, 2026.",
   "/privacy-policy",
 );
 export default function Privacy() {
@@ -14,7 +14,7 @@ export default function Privacy() {
     <main id="main-content">
       <Container>
         <PageIntro
-          eyebrow="OneGoodJune · Effective Oct 19, 2026"
+          eyebrow="ONEGOODJUNE · Effective Oct 19, 2026"
           title="Privacy Policy"
         />
         <div className="grid gap-12 py-14 md:py-20 lg:grid-cols-12 lg:gap-10">

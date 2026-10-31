@@ -77,7 +77,7 @@ test("successful delivery, provider failures and bot trap behave correctly (mock
     UPSTASH_REDIS_REST_URL: "https://limiter.invalid",
     UPSTASH_REDIS_REST_TOKEN: "test-only",
     RESEND_API_KEY: "re_test_only",
-    CONTACT_FROM_EMAIL: "OneGoodJune <sender@example.com>",
+    CONTACT_FROM_EMAIL: "ONEGOODJUNE <sender@example.com>",
     CONTACT_TO_EMAIL: "inbox@example.com",
   });
   let emailCalls = 0;

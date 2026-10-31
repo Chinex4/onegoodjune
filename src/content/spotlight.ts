@@ -11,7 +11,7 @@ export const spotlight = {
     "You prayed over it, wrote it, edited it and finished it. And then comes the question every author asks: how will people find out?",
     "Posting on your own page only reaches the people who already know you. A launch or sales revival needs a bigger room, one where readers who love faith-based stories are already gathered, already looking for their next read.",
   ],
-  room: "That room is OneGoodJune Pubs.",
+  room: "That room is ONEGOODJUNE Pubs.",
   meetTitle: "Meet Launch Spotlight",
   meet: "Launch Spotlight is a sponsored feature page that announces your book to our readers and builds anticipation before release day or directs attention to your already existing book for more sales. Every spotlight includes:",
   includes: [

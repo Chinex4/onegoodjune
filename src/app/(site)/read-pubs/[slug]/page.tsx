@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     ...pageMetadata(
       post.title,
-      post.excerpt || "A OneGoodJune literary publication.",
+      post.excerpt || "A ONEGOODJUNE literary publication.",
       `/read-pubs/${post.slug}`,
     ),
     twitter: {
@@ -78,7 +78,7 @@ async function Article({ params }: Props) {
           }),
         }
       : undefined,
-    publisher: { "@type": "Organization", name: "OneGoodJune" },
+    publisher: { "@type": "Organization", name: "ONEGOODJUNE" },
     mainEntityOfPage: `${site.url}/read-pubs/${post.slug}`,
   };
   return (
@@ -123,7 +123,7 @@ async function Article({ params }: Props) {
               </Link>
             ) : (
               <span className="font-medium text-ink">
-                {post.author?.name || "OneGoodJune"}
+                {post.author?.name || "ONEGOODJUNE"}
               </span>
             )}
             <span>·</span>

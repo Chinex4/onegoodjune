@@ -34,7 +34,7 @@ export default function LaunchSpotlight() {
       <section id="hero" className="ground-dark">
         <Container className="pb-16 pt-14 md:pb-24 md:pt-20">
           <Eyebrow className="text-sunshine">
-            Launch Spotlight · OneGoodJune Pubs
+            Launch Spotlight · ONEGOODJUNE Pubs
           </Eyebrow>
           <h1 className="mt-6 max-w-4xl font-heading text-[2.375rem] leading-[1.05] tracking-[-0.03em] sm:text-[3.25rem] lg:text-[4rem]">
             {s.headline}

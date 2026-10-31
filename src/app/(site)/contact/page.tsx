@@ -16,7 +16,7 @@ import { pageMetadata } from "@/lib/metadata";
 import { cn } from "@/lib/utils";
 export const metadata = pageMetadata(
   "Get in touch",
-  "Want to work together or have a question? Get in touch with OneGoodJune.",
+  "Want to work together or have a question? Get in touch with ONEGOODJUNE.",
   "/contact",
 );
 export default function Contact() {

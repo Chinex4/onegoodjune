@@ -1,6 +1,6 @@
 # UI/UX audit and refinement — October 23, 2026
 
-Scope: every public route (`/`, `/about`, `/read-pubs`, `/read-pubs/[slug]`, `/submissions`, `/school-of-growth`, `/fiction-writing`, `/contact`, `/privacy-policy`, 404/error states), shared shell, design tokens and motion. Reviewed against *Website Copy – OneGoodJune copy.docx* and *SOG Sales Copy.docx* (the primary source of truth), the October 23 client corrections recorded in `DESIGN-REVISION.md`, and the live deployment (identical to `main`).
+Scope: every public route (`/`, `/about`, `/read-pubs`, `/read-pubs/[slug]`, `/submissions`, `/school-of-growth`, `/fiction-writing`, `/contact`, `/privacy-policy`, 404/error states), shared shell, design tokens and motion. Reviewed against *Website Copy – ONEGOODJUNE copy.docx* and *SOG Sales Copy.docx* (the primary source of truth), the October 23 client corrections recorded in `DESIGN-REVISION.md`, and the live deployment (identical to `main`).
 
 ## 1. Brand inputs
 
@@ -20,7 +20,7 @@ October 23 client corrections that stay in force: no homepage photographs, black
 Severity: **H** = hurts brand or conversion, **M** = noticeable quality issue, **L** = polish.
 
 ### Brand and visual design
-- **H — Half the approved palette is absent.** The Sunshine family never appears; Earthy Green appears as one button. The site reads as generic monochrome rather than OneGoodJune.
+- **H — Half the approved palette is absent.** The Sunshine family never appears; Earthy Green appears as one button. The site reads as generic monochrome rather than ONEGOODJUNE.
 - **H — Brief typefaces not used.** Crimson Text (first choice) is freely licensed, but the site fell back to Georgia and Arial. Zalando Sans (the brief's alternate heading face) is also available.
 - **M — Songbird's metrics fight the type scale.** Its cap height is 1.44 em (normal faces are ~0.7 em), so headings were set at 13–25px with 1.9–2.1 line-height. That made the scale impossible to reason about and created very loose heading leading.
 - **M — Inconsistent heading styles.** SOG mixes Songbird, `font-serif text-3xl` and `font-sans` for equivalent section headings. Fiction and About use different eyebrow and title patterns.

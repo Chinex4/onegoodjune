@@ -72,7 +72,7 @@ export function Header() {
       <div className={cn(shell, "flex h-[4.5rem] items-center gap-8 md:h-20")}>
         <Link
           href="/"
-          aria-label="OneGoodJune home"
+          aria-label="ONEGOODJUNE home"
           className="font-heading text-[1.5rem] leading-none tracking-[-0.03em] md:text-[1.75rem]"
         >
           ONEGOODJUNE

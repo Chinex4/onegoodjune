@@ -19,7 +19,7 @@ export const submissionLines = between(
   "PRIVACY POLICY PAGE",
 );
 export const policyLines = between(
-  "OneGoodJune · Effective Oct 19, 2026",
+  "ONEGOODJUNE · Effective Oct 19, 2026",
   "Second Sales Page (I indicated it in the document – This one is minimalist)",
 );
 export function getSections(

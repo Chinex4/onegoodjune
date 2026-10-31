@@ -14,7 +14,7 @@ import { pageMetadata } from "@/lib/metadata";
 import { cn } from "@/lib/utils";
 export const metadata = pageMetadata(
   "Submissions",
-  "Guidelines for sharing your fiction, poetry, essays and creative nonfiction with OneGoodJune.",
+  "Guidelines for sharing your fiction, poetry, essays and creative nonfiction with ONEGOODJUNE.",
   "/submissions",
 );
 // "•Your email subject: Creative Submission – Your Name" → value after the colon.

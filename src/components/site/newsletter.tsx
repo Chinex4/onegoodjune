@@ -41,7 +41,7 @@ export function NewsletterSection({ className = "" }: { className?: string }) {
               </p>
               <iframe
                 src={site.links.newsletterEmbed}
-                title="Subscribe to the OneGoodJune newsletter on Substack"
+                title="Subscribe to the ONEGOODJUNE newsletter on Substack"
                 loading="lazy"
                 width={480}
                 height={150}

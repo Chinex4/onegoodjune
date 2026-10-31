@@ -21,7 +21,7 @@ import { cn } from "@/lib/utils";
 export const metadata: Metadata = {
   title: {
     absolute:
-      "OneGoodJune — A creative studio for faith-based African visionaries",
+      "ONEGOODJUNE — A creative studio for faith-based African visionaries",
   },
   alternates: { canonical: "/" },
 };
@@ -95,7 +95,7 @@ export default function Home() {
           <div className="relative aspect-[3/2] overflow-hidden bg-mist lg:col-span-5">
             <Image
               src="/images/home/hero.jpg"
-              alt="Five women of the OneGoodJune community"
+              alt="Five women of the ONEGOODJUNE community"
               fill
               priority
               sizes="(max-width: 1024px) 100vw, 40vw"

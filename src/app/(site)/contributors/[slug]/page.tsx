@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return pageMetadata(
     author.name,
     author.bio?.slice(0, 160) ||
-      `Read ${author.name}'s writing in Read Pubs, the OneGoodJune literary magazine.`,
+      `Read ${author.name}'s writing in Read Pubs, the ONEGOODJUNE literary magazine.`,
     `/contributors/${slug}`,
   );
 }

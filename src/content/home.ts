@@ -1,4 +1,4 @@
-// Transcribed verbatim from Website Copy – OneGoodJune copy.docx.
+// Transcribed verbatim from Website Copy – ONEGOODJUNE copy.docx.
 export const home = {
   introduction:
     "A creative studio helping faith-based African writers and creative visionaries understand, steward, and run their creative visions with intentional consistency.",

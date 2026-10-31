@@ -4,7 +4,7 @@
 
 Applied the local design-taste-frontend and design-motion-principles skills. The direction draw selected **The well-kept board**, seed **2069327333**, over Contact sheet (requires many images) and Name as a monument (conflicts with the smaller-type request).
 
-On this page, OneGoodJune's three ways into a creative life become a compact typographic program index. The homepage presents the studio, its three services, its three experiences, then its existing newsletter. The School of Growth page proves its offer with the client's coach video, founder story, exact plan inclusions and supplied student accounts. Its working interactions are video playback, native FAQ disclosures and checkout links.
+On this page, ONEGOODJUNE's three ways into a creative life become a compact typographic program index. The homepage presents the studio, its three services, its three experiences, then its existing newsletter. The School of Growth page proves its offer with the client's coach video, founder story, exact plan inclusions and supplied student accounts. Its working interactions are video playback, native FAQ disclosures and checkout links.
 
 The client's corrections take precedence over the skill's generic defaults: no homepage photographs, black/white section backgrounds, smaller headings, retained licensed Songbird, text-only stacked experience cards and no scroll-jacking. No generated imagery, invented testimonials or example publications were added. The source's long sales headings are preserved even where they need more than two lines. The original skill draw's oversized hero, image floor, automatic marquee and tightly packed image rails are overridden for those explicit client constraints. The existing shared site frame remains consistent across public pages.
 
@@ -29,7 +29,7 @@ Sanity project/dataset configuration and published articles are required to popu
 
 ROUND 1
 Seen in one second: the Songbird studio name.
-Idea (one sentence): OneGoodJune's three experiences become a compact typographic program index.
+Idea (one sentence): ONEGOODJUNE's three experiences become a compact typographic program index.
 Live thing: choose a program/publication; subscribe through the existing newsletter destination. On the sales page: watch the coach and expand the actual FAQs.
 Layout words by section: hero=name / services=columns / experience=stack / community=split / footer=name.
 Scores: design 6.5 · usability 8 · creativity 7 · content 8 → overall 7.2.

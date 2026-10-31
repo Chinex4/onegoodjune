@@ -9,7 +9,7 @@ export function pageMetadata(
     description,
     alternates: { canonical: path },
     openGraph: {
-      title: `${title} | OneGoodJune`,
+      title: `${title} | ONEGOODJUNE`,
       description,
       url: path,
       type: "website",
@@ -17,7 +17,7 @@ export function pageMetadata(
     },
     twitter: {
       card: "summary_large_image",
-      title: `${title} | OneGoodJune`,
+      title: `${title} | ONEGOODJUNE`,
       description,
       images: ["/opengraph-image"],
     },

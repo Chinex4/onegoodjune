@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 export const alt =
-  "OneGoodJune — Raising the bar in faith-based African fiction. Helping creative minds flourish.";
+  "ONEGOODJUNE — Raising the bar in faith-based African fiction. Helping creative minds flourish.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export default async function OpenGraphImage() {

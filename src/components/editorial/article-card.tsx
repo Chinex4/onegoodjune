@@ -87,7 +87,7 @@ export function ArticleCard({
             )}
           >
             <span className="w-full font-semibold">
-              {post.author?.name || "OneGoodJune"}
+              {post.author?.name || "ONEGOODJUNE"}
             </span>
             {!compact && (
               <span>

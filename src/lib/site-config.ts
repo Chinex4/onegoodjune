@@ -1,5 +1,5 @@
 export const site = {
-  name: "OneGoodJune",
+  name: "ONEGOODJUNE",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://onegoodjune.com",
   links: {
     newsletter: "https://onegoodjune.substack.com",

@@ -1,4 +1,4 @@
-# OneGoodJune implementation status
+# ONEGOODJUNE implementation status
 
 ## Implemented
 

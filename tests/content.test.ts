@@ -37,7 +37,7 @@ test("all privacy wording is preserved in all 14 sections", () => {
   );
   assert.equal(
     source[source.indexOf("PRIVACY POLICY PAGE") + 2],
-    "OneGoodJune · Effective Oct 19, 2026",
+    "ONEGOODJUNE · Effective Oct 19, 2026",
   );
 });
 test("all four supplied team members and course modules are present", () => {

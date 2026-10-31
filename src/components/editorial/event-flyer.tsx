@@ -38,7 +38,7 @@ export function EventFlyer({
           className="absolute inset-0 flex flex-col justify-between p-[6%] text-white"
         >
           <span className="font-sans text-[clamp(0.625rem,2.2cqw,0.875rem)] font-semibold uppercase tracking-[0.16em] text-white font-stretch-expanded">
-            OneGoodJune Events
+            ONEGOODJUNE Events
           </span>
           <span className="line-clamp-3 max-w-[85%] font-heading text-[clamp(1.125rem,5.5cqw,2.75rem)] leading-[1.05] tracking-[-0.02em]">
             {event.title}

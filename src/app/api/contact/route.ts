@@ -99,7 +99,7 @@ export async function POST(request: Request) {
       from,
       to,
       replyTo: input.email,
-      subject: `OneGoodJune enquiry: ${input.inquiryType}`,
+      subject: `ONEGOODJUNE enquiry: ${input.inquiryType}`,
       text: `Name: ${input.firstName} ${input.lastName}\nEmail: ${input.email}\nInquiry: ${input.inquiryType}\n\n${input.message}`,
     });
     if (error || !data)

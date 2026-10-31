@@ -58,7 +58,7 @@ This section supersedes the earlier School of Growth, instructor-image, enrollme
 - Reduced-motion cold load: content opacity 1; scroll behavior auto; decorative progress bar hidden; no hydration/runtime errors. The previous conditional-render hydration issue is fixed.
 - SOG video: H.264/AAC, native controls, duration 32.706667 seconds; playback advanced with paused=false and error=null.
 - FAQ installment answer expands correctly.
-- All five SOG access links use the supplied Mainstack destination. External checkout returned HTTP 200 and title “Pay for School of Growth | OneGoodJune”. No purchase was submitted.
+- All five SOG access links use the supplied Mainstack destination. External checkout returned HTTP 200 and title “Pay for School of Growth | ONEGOODJUNE”. No purchase was submitted.
 - Supplied coach portrait replaces the former fiction instructor image notice. Other team portraits still require approved assets.
 - The blank Substack embed was removed in favor of a real subscription destination.
 - No Sanity project is configured, so live CMS publishing and real article layouts remain an integration check. No fictional publication content was added.

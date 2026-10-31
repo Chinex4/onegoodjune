@@ -68,7 +68,7 @@ function HeroSlide({ post, first }: { post: Post; first: boolean }) {
           </p>
         )}
         <p className="mt-4 font-sans text-xs text-ink/70">
-          {post.author?.name ?? "OneGoodJune"} · {articleDate(post.publishedAt)}{" "}
+          {post.author?.name ?? "ONEGOODJUNE"} · {articleDate(post.publishedAt)}{" "}
           · {readingMinutes(post.text)} min read
         </p>
         <Link

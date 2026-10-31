@@ -129,7 +129,7 @@ export function Footer() {
         <div className="@container mt-16 md:mt-24">
           <Link
             href="/"
-            aria-label="OneGoodJune home"
+            aria-label="ONEGOODJUNE home"
             className="block whitespace-nowrap font-heading text-[16.6cqw] leading-[0.95] tracking-[-0.035em] transition-colors hover:text-lime"
           >
             ONEGOODJUNE
@@ -137,7 +137,7 @@ export function Footer() {
         </div>
         <div className="mt-10 grid grid-cols-2 items-center gap-x-6 gap-y-2 border-t border-white/15 pt-6 font-sans text-[0.8125rem] leading-relaxed text-white/70 md:flex md:gap-8">
           <p className="col-span-2">
-            © 2026 OneGoodJune Studios (OneGoodJune Limited). All Rights
+            © 2026 ONEGOODJUNE Studios (ONEGOODJUNE Limited). All Rights
             Reserved.
           </p>
           <p className="col-span-2 md:mr-auto">Lagos, Nigeria</p>

@@ -34,14 +34,14 @@ const zalando = Zalando_Sans({
 });
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
-  title: { default: "OneGoodJune", template: "%s | OneGoodJune" },
+  title: { default: "ONEGOODJUNE", template: "%s | ONEGOODJUNE" },
   description:
     "A creative studio helping faith-based African writers and creative visionaries understand, steward, and run their creative visions with intentional consistency.",
   openGraph: {
     type: "website",
     locale: "en_NG",
-    siteName: "OneGoodJune",
-    title: "We Are OneGoodJune",
+    siteName: "ONEGOODJUNE",
+    title: "We Are ONEGOODJUNE",
     description:
       "Raising the bar in faith-based African fiction. Helping creative minds flourish.",
   },

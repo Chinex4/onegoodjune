@@ -4,7 +4,7 @@ import { schemaTypes } from "./src/sanity/schemaTypes";
 import { sanityProjectId, sanityDataset } from "./src/sanity/env";
 export default defineConfig({
   name: "onegoodjune",
-  title: "OneGoodJune Editorial",
+  title: "ONEGOODJUNE Editorial",
   projectId: sanityProjectId || "unconfigured",
   dataset: sanityDataset,
   basePath: "/studio",
@@ -12,7 +12,7 @@ export default defineConfig({
     structureTool({
       structure: (S) =>
         S.list()
-          .title("OneGoodJune")
+          .title("ONEGOODJUNE")
           .items([
             S.listItem()
               .title("Editorial selections")
