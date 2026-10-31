@@ -14,9 +14,9 @@ import {
 export function NewsletterSection({ className = "" }: { className?: string }) {
   const [count, ...rest] = home.newsletter.subscribers.split(" ");
   return (
-    <section id="community" className={cn("pb-20 md:pb-28", className)}>
+    <section id="community" className={cn("pb-10 md:pb-14", className)}>
       <Container>
-        <div className="grid gap-10 border-t border-ink/15 pt-16 md:pt-20 lg:grid-cols-12 lg:gap-10">
+        <div className="grid gap-10 border-t border-ink/15 pt-8 md:pt-10 lg:grid-cols-12 lg:gap-10">
           <Reveal className="lg:col-span-5">
             <Eyebrow className="text-forest">Newsletter</Eyebrow>
             <h2 className={cn(heading, "mt-5")}>
@@ -32,7 +32,7 @@ export function NewsletterSection({ className = "" }: { className?: string }) {
             {/* Substack centres its form, so the panel is centred to match. */}
             <div className="flex flex-col items-center bg-lime px-5 py-10 text-center sm:px-10 sm:py-12">
               <p>
-                <span className="block font-heading text-[3rem] leading-none tracking-[-0.03em] text-forest md:text-[3.75rem]">
+                <span className="block font-heading text-[3rem] leading-none tracking-[-0.03em] text-black md:text-[3.75rem]">
                   {count}
                 </span>
                 <span className={cn(meta, "mt-3 block text-ink/80")}>

@@ -47,6 +47,7 @@ export function initializeTransaction(input: {
   reference: string;
   callbackUrl: string;
   plan?: string;
+  billingCycles?: number;
   metadata: Record<string, unknown>;
 }) {
   return call<{
@@ -63,8 +64,25 @@ export function initializeTransaction(input: {
       callback_url: input.callbackUrl,
       metadata: input.metadata,
       ...(input.plan && { plan: input.plan }),
+      ...(input.plan &&
+        input.billingCycles && { invoice_limit: input.billingCycles }),
     }),
   });
+}
+export async function validateQuarterlyPlan(code: string, amount: number) {
+  const plan = await call<{
+    amount: number;
+    currency: string;
+    interval: string;
+  }>(`/plan/${encodeURIComponent(code)}`);
+  if (
+    plan.amount !== amount ||
+    plan.currency !== "NGN" ||
+    plan.interval !== "quarterly"
+  )
+    throw new PaystackError(
+      "Builder installment plan does not match the configured quarterly price and interval",
+    );
 }
 export function verifyTransaction(reference: string) {
   return call<PaystackTransaction>(

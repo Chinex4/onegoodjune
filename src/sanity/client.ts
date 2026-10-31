@@ -1,4 +1,6 @@
 import "server-only";
+import { contributorProfile } from "@/content/contributor-profile";
+import { isExampleEvent } from "@/lib/event-visibility";
 import { createClient } from "next-sanity";
 import { draftMode } from "next/headers";
 import { connection } from "next/server";
@@ -154,11 +156,13 @@ export async function getSitemapPosts() {
 export const getAuthor = cache(async (slug: string) => {
   const ctx = await context();
   return ctx
-    ? ctx.client.fetch<(Author & { posts: Post[] }) | null>(
-        AUTHOR_QUERY,
-        { slug, preview: ctx.preview },
-        { cache: "no-store" },
-      )
+    ? ctx.client
+        .fetch<(Author & { posts: Post[] }) | null>(
+          AUTHOR_QUERY,
+          { slug, preview: ctx.preview },
+          { cache: "no-store" },
+        )
+        .then((author) => (author ? contributorProfile(author) : null))
     : null;
 });
 export async function getSitemapAuthors() {
@@ -174,16 +178,16 @@ export async function getSitemapAuthors() {
 export const getEvents = cache(async () => {
   const ctx = await context();
   return ctx
-    ? ctx.client.fetch<Event[]>(EVENTS_QUERY, {}, { cache: "no-store" })
+    ? ctx.client
+        .fetch<Event[]>(EVENTS_QUERY, {}, { cache: "no-store" })
+        .then((events) => events.filter((event) => !isExampleEvent(event)))
     : [];
 });
 export const getEvent = cache(async (slug: string) => {
   const ctx = await context();
   return ctx
-    ? ctx.client.fetch<Event | null>(
-        EVENT_QUERY,
-        { slug },
-        { cache: "no-store" },
-      )
+    ? ctx.client
+        .fetch<Event | null>(EVENT_QUERY, { slug }, { cache: "no-store" })
+        .then((event) => (event && !isExampleEvent(event) ? event : null))
     : null;
 });

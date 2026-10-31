@@ -65,10 +65,23 @@ export function Header() {
     setOpen(false);
   };
   return (
-    <header
-      id="top"
-      className="sticky top-0 z-40 border-b border-ink/10 bg-white/90 backdrop-blur-md supports-[backdrop-filter]:bg-white/80"
-    >
+    <header className="sticky top-0 z-40 border-b border-ink/10 bg-white/90 backdrop-blur-md supports-[backdrop-filter]:bg-white/80">
+      <div className="bg-lime px-3 py-2 text-center font-sans text-xs text-ink">
+        <span>Enrol: </span>
+        <Link
+          href="/school-of-growth"
+          className="inline-flex min-h-8 items-center px-2 underline-offset-4 hover:underline"
+        >
+          School of Growth
+        </Link>
+        <span aria-hidden="true"> | </span>
+        <Link
+          href="/fiction-writing"
+          className="inline-flex min-h-8 items-center px-2 underline-offset-4 hover:underline"
+        >
+          Fiction Course
+        </Link>
+      </div>
       <div className={cn(shell, "flex h-[4.5rem] items-center gap-8 md:h-20")}>
         <Link
           href="/"
@@ -109,7 +122,7 @@ export function Header() {
           }}
           className="group -mr-2 ml-auto grid size-12 place-items-center lg:hidden"
         >
-          <span aria-hidden="true" className="flex w-8 flex-col gap-[6px]">
+          <span aria-hidden="true" className="flex w-12 flex-col gap-[6px]">
             <span className="h-[2px] w-8 bg-current motion-safe:transition-transform motion-safe:group-hover:translate-x-1" />
             <span className="h-[2px] w-8 bg-current motion-safe:transition-transform motion-safe:group-hover:-translate-x-1" />
           </span>
@@ -159,7 +172,7 @@ export function Header() {
                 <NavItem
                   item={item}
                   onClick={close}
-                  className="group flex items-center gap-5 border-b border-white/15 py-4 transition-colors hover:text-lime aria-[current=page]:text-lime sm:py-5"
+                  className="group flex items-center gap-5 border-b border-white/15 py-3 transition-colors hover:text-lime aria-[current=page]:text-lime sm:py-4"
                 >
                   <span
                     aria-hidden="true"
@@ -167,7 +180,7 @@ export function Header() {
                   >
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <span className="font-heading text-[1.875rem] leading-[1.1] tracking-[-0.02em] sm:text-[2.5rem]">
+                  <span className="font-heading text-[1.625rem] leading-[1.1] tracking-[-0.02em] sm:text-[2rem]">
                     {item.label}
                   </span>
                   <span

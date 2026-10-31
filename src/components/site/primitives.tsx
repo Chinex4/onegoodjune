@@ -2,7 +2,7 @@ import { ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 export const shell =
   "mx-auto w-[calc(100%-2.5rem)] max-w-7xl sm:w-[calc(100%-4rem)] lg:w-[calc(100%-6rem)]";
-export const sectionSpace = "py-20 md:py-28";
+export const sectionSpace = "py-10 md:py-14";
 // Display sizes assume Songbird's 50% size-adjust (see app/layout.tsx).
 export const display =
   "font-heading text-[2rem] leading-[1.08] tracking-[-0.02em] sm:text-[2.5rem] lg:text-[3rem]";
@@ -15,10 +15,10 @@ export const title =
 export const lead =
   "font-serif text-[1.1875rem] leading-[1.5] md:text-[1.375rem]";
 export const prose =
-  "font-serif text-[1.0625rem] leading-[1.7] md:text-[1.125rem]";
+  "font-serif text-[1.0625rem] leading-[1.5] md:text-[1.125rem]";
 export const label =
-  "font-sans text-[0.6875rem] font-medium uppercase leading-relaxed tracking-[0.14em] font-stretch-expanded";
-export const meta = "font-sans text-[0.8125rem] leading-relaxed";
+  "font-sans text-[0.6875rem] font-medium uppercase leading-normal tracking-[0.14em] font-stretch-expanded";
+export const meta = "font-sans text-[0.8125rem] leading-normal";
 
 // Order runs deep green → light → sunshine → deep earth, like a proof strip.
 export const palette = [
@@ -110,7 +110,9 @@ export function Eyebrow({
 }) {
   return (
     <p className={cn(label, "flex items-center gap-3", className)}>
-      <span aria-hidden="true" className={cn("size-2 shrink-0", swatch)} />
+      {swatch !== "none" && (
+        <span aria-hidden="true" className={cn("size-2 shrink-0", swatch)} />
+      )}
       {children}
     </p>
   );
@@ -122,6 +124,7 @@ export function PageIntro({
   children,
   accent = "text-forest",
   titleClassName = display,
+  eyebrowSwatch,
 }: {
   eyebrow: string;
   title: React.ReactNode;
@@ -129,10 +132,13 @@ export function PageIntro({
   children?: React.ReactNode;
   accent?: string;
   titleClassName?: string;
+  eyebrowSwatch?: string;
 }) {
   return (
-    <header className="border-b border-ink/15 pb-14 pt-14 md:pb-20 md:pt-20">
-      <Eyebrow className={accent}>{eyebrow}</Eyebrow>
+    <header className="border-b border-ink/15 pb-7 pt-7 md:pb-10 md:pt-10">
+      <Eyebrow className={accent} swatch={eyebrowSwatch}>
+        {eyebrow}
+      </Eyebrow>
       <h1 className={cn(titleClassName, "mt-7 max-w-4xl whitespace-pre-line")}>
         {title}
       </h1>

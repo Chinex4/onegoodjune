@@ -82,8 +82,8 @@ export function Footer() {
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <p className="max-w-sm font-serif text-lg leading-[1.5] md:text-xl">
-              Raising the bar in faith-based African fiction. Helping creative
-              minds flourish.
+              Raising the bar in faith-based African storytelling. Helping
+              creative minds flourish.
             </p>
             <Link
               href="/contact"
@@ -130,12 +130,12 @@ export function Footer() {
           <Link
             href="/"
             aria-label="ONEGOODJUNE home"
-            className="block whitespace-nowrap font-heading text-[16.6cqw] leading-[0.95] tracking-[-0.035em] transition-colors hover:text-lime"
+            className="block whitespace-nowrap font-heading text-[1.75rem] md:text-[2.5rem] leading-[0.95] tracking-[-0.035em] transition-colors hover:text-lime"
           >
             ONEGOODJUNE
           </Link>
         </div>
-        <div className="mt-10 grid grid-cols-2 items-center gap-x-6 gap-y-2 border-t border-white/15 pt-6 font-sans text-[0.8125rem] leading-relaxed text-white/70 md:flex md:gap-8">
+        <div className="mt-10 grid grid-cols-2 items-center gap-x-6 gap-y-2 border-t border-white/15 pt-6 font-sans text-[0.8125rem] leading-normal text-white/70 md:flex md:gap-8">
           <p className="col-span-2">
             © 2026 ONEGOODJUNE Studios (ONEGOODJUNE Limited). All Rights
             Reserved.

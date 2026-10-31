@@ -1,13 +1,10 @@
+import { heroDate } from "@/lib/editorial-format";
 import { Suspense } from "react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getCategories, getMagazine } from "@/sanity/client";
 import type { Post } from "@/sanity/types";
-import {
-  ArticleCard,
-  articleDate,
-  readingMinutes,
-} from "@/components/editorial/article-card";
+import { ArticleCard } from "@/components/editorial/article-card";
 import { CoverImage } from "@/components/editorial/cover-image";
 import { HeroSlider } from "@/components/editorial/hero-slider";
 import { DraftNotice } from "@/components/editorial/draft-notice";
@@ -40,40 +37,26 @@ function magazineLink(category: string, page = 1) {
 }
 function HeroSlide({ post, first }: { post: Post; first: boolean }) {
   return (
-    <article className="group @container grid gap-6 md:grid-cols-12 md:items-center md:gap-10">
-      <Link
-        href={`/read-pubs/${post.slug}`}
-        tabIndex={-1}
-        aria-hidden="true"
-        className="md:col-span-7"
-      >
-        <CoverImage
-          post={post}
-          width={1400}
-          priority={first}
-          sizes="(max-width: 768px) 100vw, 58vw"
-          className="aspect-[3/2]"
-        />
-      </Link>
-      <div className="md:col-span-5 md:pb-16">
-        <p className={cn(label, "text-rust")}>{post.category?.title}</p>
-        <h2 className="mt-3 font-serif text-[1.75rem] font-semibold leading-[1.12] tracking-[-0.01em] md:text-[2.375rem]">
-          <Link href={`/read-pubs/${post.slug}`} className="hover:text-forest">
+    <article className="group relative isolate overflow-hidden bg-black text-center text-white">
+      <CoverImage
+        post={post}
+        width={1600}
+        priority={first}
+        sizes="100vw"
+        className="absolute inset-0 [&_span]:hidden"
+      />
+      <div className="relative flex min-h-[280px] flex-col items-center justify-end bg-black/55 px-6 py-8 md:min-h-[480px] md:px-12 md:py-12">
+        <p className="font-sans text-xs font-medium uppercase tracking-wide">
+          {post.author?.name ?? "ONEGOODJUNE"} · {heroDate(post.publishedAt)}
+        </p>
+        <h2 className="mt-4 max-w-4xl font-serif text-2xl font-semibold leading-tight md:text-5xl">
+          <Link href={`/read-pubs/${post.slug}`} className="hover:underline">
             {post.title}
           </Link>
         </h2>
-        {post.excerpt && (
-          <p className="mt-4 line-clamp-4 font-serif text-[1.0625rem] leading-[1.6] text-ink/80 md:text-lg">
-            {post.excerpt}
-          </p>
-        )}
-        <p className="mt-4 font-sans text-xs text-ink/70">
-          {post.author?.name ?? "ONEGOODJUNE"} · {articleDate(post.publishedAt)}{" "}
-          · {readingMinutes(post.text)} min read
-        </p>
         <Link
           href={`/read-pubs/${post.slug}`}
-          className={buttonStyles("ink", "mt-6 min-h-11 gap-8 px-5")}
+          className={buttonStyles("white", "mt-6")}
         >
           Read story
           <ArrowIcon />
@@ -171,13 +154,13 @@ async function Magazine({ searchParams }: { searchParams: Params }) {
         )}
       </Container>
       {home && hero.length > 0 && (
-        <Container className="pb-14 pt-8 md:pb-20 md:pt-10">
+        <div className="pb-7 pt-4 md:pb-10 md:pt-5">
           <HeroSlider>
             {hero.map((post, i) => (
               <HeroSlide key={post._id} post={post} first={i === 0} />
             ))}
           </HeroSlider>
-        </Container>
+        </div>
       )}
       {home && (data.newcomer.length > 0 || data.spotlight.length > 0) && (
         <section
@@ -235,7 +218,7 @@ async function Magazine({ searchParams }: { searchParams: Params }) {
                 ))}
               </div>
             ) : (
-              <p className="py-8 font-serif text-lg leading-[1.8] text-ink/75">
+              <p className="py-8 font-serif text-lg leading-[1.5] text-ink/75">
                 No publications have been published in this selection yet.
               </p>
             )}
@@ -311,14 +294,11 @@ export default function Publications({
       <Container>
         <header className="flex flex-wrap items-end justify-between gap-x-8 gap-y-3 pb-5 pt-10 md:pt-14">
           <div>
-            <p className={cn(label, "text-rust")}>
-              The ONEGOODJUNE literary magazine
-            </p>
-            <h1 className="mt-3 font-heading text-[2.5rem] leading-none tracking-[-0.03em] md:text-[3.25rem]">
-              Read Pubs
+            <h1 className="font-sans text-sm font-medium uppercase tracking-wide text-rust">
+              ONEGOODJUNE Pub: A Literary Magazine
             </h1>
           </div>
-          <p className="max-w-md font-serif text-[1.0625rem] leading-[1.55] text-ink/75">
+          <p className="max-w-md font-serif text-[1.0625rem] leading-[1.5] text-ink/75">
             Fiction, poetry, essays, creative nonfiction and moving pieces on
             industry shifts by contemporary faith-based voices in Africa.
           </p>

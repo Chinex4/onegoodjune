@@ -41,7 +41,7 @@ export function SourceParagraphs({ lines }: { lines: string[] }) {
       );
   }
   return (
-    <div className="space-y-5 font-serif text-lg leading-[1.75] text-ink/85 md:text-xl">
+    <div className="space-y-5 font-serif text-lg leading-[1.5] text-ink/85 md:text-xl">
       {blocks}
     </div>
   );

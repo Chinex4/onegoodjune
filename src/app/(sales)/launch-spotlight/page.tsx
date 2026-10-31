@@ -1,3 +1,4 @@
+import { reviewContent } from "@/content/pending-review";
 import { Check, Plus } from "lucide-react";
 import {
   ColorBar,
@@ -58,7 +59,7 @@ export default function LaunchSpotlight() {
       </section>
 
       <Container>
-        <section className="mx-auto max-w-3xl py-16 md:py-24">
+        <section className="mx-auto max-w-3xl py-8 md:py-12">
           <h2 className={heading}>{s.problemTitle}</h2>
           {s.problem.map((p) => (
             <p key={p} className={cn(prose, "mt-5")}>
@@ -71,7 +72,7 @@ export default function LaunchSpotlight() {
         </section>
       </Container>
 
-      <section className="bg-sunshine/20 py-16 md:py-24">
+      <section className="bg-sunshine/20 py-8 md:py-12">
         <Container className="grid gap-10 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-5">
             <h2 className={heading}>{s.meetTitle}</h2>
@@ -98,7 +99,7 @@ export default function LaunchSpotlight() {
       </section>
 
       <Container>
-        <section className="py-16 md:py-24">
+        <section className="py-8 md:py-12">
           <h2 className={heading}>{s.stepsTitle}</h2>
           <ol className="mt-10 grid gap-px bg-ink/15 md:grid-cols-3">
             {s.steps.map((step, i) => (
@@ -117,7 +118,7 @@ export default function LaunchSpotlight() {
         </section>
       </Container>
 
-      <section id="packages" className="scroll-mt-4 bg-paper py-16 md:py-24">
+      <section id="packages" className="scroll-mt-4 bg-paper py-8 md:py-12">
         <Container>
           <h2 className={heading}>{s.packagesTitle}</h2>
           <div className="mt-12 grid items-start gap-5 lg:mt-16 lg:grid-cols-3 lg:gap-6">
@@ -167,7 +168,7 @@ export default function LaunchSpotlight() {
       </section>
 
       <Container>
-        <section className="grid gap-8 py-16 md:py-24 lg:grid-cols-12 lg:gap-10">
+        <section className="grid gap-8 py-8 md:py-12 lg:grid-cols-12 lg:gap-10">
           <h2 className={cn(heading, "lg:col-span-5")}>{s.pagesTitle}</h2>
           <div className="space-y-5 lg:col-span-6 lg:col-start-7">
             {s.pages.map((p) => (
@@ -178,7 +179,23 @@ export default function LaunchSpotlight() {
           </div>
         </section>
 
-        <section className="grid gap-10 border-t border-ink/15 py-16 md:py-24 lg:grid-cols-12 lg:gap-10">
+        {reviewContent.spotlightTerms && (
+          <section className="py-8">
+            <details className="bg-paper p-6">
+              <summary className="min-h-11 cursor-pointer font-serif text-xl">
+                Terms and conditions
+              </summary>
+              <div className="mt-5 space-y-4">
+                {reviewContent.spotlightTerms.map((p) => (
+                  <p key={p} className="font-serif text-lg leading-normal">
+                    {p}
+                  </p>
+                ))}
+              </div>
+            </details>
+          </section>
+        )}
+        <section className="grid gap-10 border-t border-ink/15 py-8 md:py-12 lg:grid-cols-12 lg:gap-10">
           <h2 className={cn(heading, "lg:col-span-4")}>{s.faqTitle}</h2>
           <div className="border-t border-ink/15 lg:col-span-7 lg:col-start-6">
             {s.faqs.map((faq) => (
@@ -199,7 +216,7 @@ export default function LaunchSpotlight() {
         </section>
       </Container>
 
-      <section id="closing" className="ground-dark py-16 md:py-24">
+      <section id="closing" className="ground-dark py-8 md:py-12">
         <Container className="max-w-3xl text-center">
           <p className={cn(label, "text-sunshine")}>Launch Spotlight</p>
           <h2 className={cn(heading, "mt-4")}>{s.closingTitle}</h2>

@@ -21,6 +21,14 @@ export type Registration = {
   status: PaymentStatus;
   createdAt: Date;
   updatedAt: Date;
+  welcomeEmail?: {
+    sentAt?: Date;
+    failedAt?: Date;
+    attempts?: number;
+    leaseUntil?: Date;
+    token?: string;
+    messageId?: string;
+  };
   paidAt?: Date;
   paystack?: {
     accessCode?: string;
@@ -102,10 +110,14 @@ export async function applyTransaction(
       : null);
   const program = owner ? getProgram(owner.program) : undefined;
   // Without a plan the amount must match exactly; plans set their own amount.
-  const amountOk =
-    !program ||
-    !!plan ||
-    (tx.amount === program.amount && tx.currency === "NGN");
+  const amountOk = program?.billingCycles
+    ? tx.amount === program.amount &&
+      tx.currency === "NGN" &&
+      !!program.planEnv &&
+      plan === process.env[program.planEnv]
+    : !program ||
+      !!plan ||
+      (tx.amount === program.amount && tx.currency === "NGN");
   const paid = tx.status === "success" && amountOk;
   await (
     await payments()

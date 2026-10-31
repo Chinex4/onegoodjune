@@ -57,7 +57,7 @@ export default function RootLayout({
       lang="en"
       className={`${songbird.variable} ${crimson.variable} ${zalando.variable} h-full antialiased`}
     >
-      <body>
+      <body id="top">
         <MotionProvider>{children}</MotionProvider>
       </body>
     </html>

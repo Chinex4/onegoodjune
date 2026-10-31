@@ -34,11 +34,6 @@ async function Contributor({ params }: Props) {
   const author = await getAuthor(slug);
   if (!author) notFound();
   const photo = imageUrl(author.image, 600);
-  const initials = author.name
-    .split(" ")
-    .map((part) => part[0])
-    .slice(0, 2)
-    .join("");
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -56,28 +51,22 @@ async function Contributor({ params }: Props) {
         }}
       />
       <Container>
-        <header className="grid gap-8 border-b border-ink/15 pb-12 pt-12 md:grid-cols-12 md:items-center md:gap-10 md:pb-16 md:pt-16">
-          <div className="relative aspect-square w-40 overflow-hidden bg-lime md:col-span-3 md:w-full md:max-w-60">
-            {photo ? (
+        <header className="border-b border-ink/15 pb-6 pt-0 md:pb-8">
+          {photo && (
+            <div className="relative left-1/2 aspect-[16/9] w-screen -translate-x-1/2 overflow-hidden bg-paper md:max-h-[520px]">
               <Image
                 src={photo}
                 alt={author.image?.alt || author.name}
                 fill
-                sizes="240px"
-                className="object-cover"
+                sizes="100vw"
+                className="object-cover object-[center_30%]"
+                priority
               />
-            ) : (
-              <span
-                aria-hidden="true"
-                className="absolute inset-0 grid place-items-center font-heading text-[3.5rem] text-ink/80"
-              >
-                {initials}
-              </span>
-            )}
-          </div>
-          <div className="md:col-span-9 md:col-start-4">
-            <p className={cn(label, "text-rust")}>Contributor</p>
-            <h1 className="mt-3 font-serif text-[2.25rem] font-semibold leading-tight tracking-[-0.01em] md:text-[3rem]">
+            </div>
+          )}
+          <div className="mt-6 max-w-3xl">
+            <p className={cn(label, "text-rust")}>About the contributor</p>
+            <h1 className="mt-3 font-serif text-[1.75rem] font-semibold leading-tight tracking-[-0.01em] md:text-[2.25rem]">
               {author.name}
             </h1>
             {author.role && (
@@ -86,7 +75,7 @@ async function Contributor({ params }: Props) {
               </p>
             )}
             {author.bio && (
-              <p className="mt-5 max-w-2xl whitespace-pre-line font-serif text-[1.0625rem] leading-[1.7] text-ink/85 md:text-lg">
+              <p className="mt-5 max-w-2xl whitespace-pre-line font-serif text-[1.0625rem] leading-[1.5] text-ink/85 md:text-lg">
                 {author.bio}
               </p>
             )}
@@ -111,11 +100,7 @@ async function Contributor({ params }: Props) {
         </header>
         <ColorBar className="mt-px h-1" />
         <section className="py-12 md:py-16">
-          <h2 className={cn(subheading, "mb-8")}>
-            {author.posts.length === 1
-              ? "Published in Read Pubs"
-              : `${author.posts.length} pieces in Read Pubs`}
-          </h2>
+          <h2 className={cn(subheading, "mb-8")}>Other published works</h2>
           <div className="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
             {author.posts.map((post) => (
               <ArticleCard key={post._id} post={post} />

@@ -12,7 +12,7 @@ import {
 import source from "../src/content/source-copy.json";
 test("the launch uses one Lagos instant and completes without negative time", () => {
   const launch = Date.parse(COURSE_LAUNCH);
-  assert.equal(new Date(launch).toISOString(), "2027-01-14T23:00:00.000Z");
+  assert.equal(new Date(launch).toISOString(), "2027-02-04T23:00:00.000Z");
   assert.deepEqual(getCountdown(launch - 90061000), {
     complete: false,
     days: 1,
@@ -43,10 +43,10 @@ test("all privacy wording is preserved in all 14 sections", () => {
 test("all four supplied team members and course modules are present", () => {
   assert.equal(about.team.length, 4);
   for (const person of about.team) {
-    assert(source.includes(person.name));
+    assert(source.includes(person.name.replace("Olabiyi", "Biyi")));
     assert(source.includes(person.description));
   }
-  assert.equal(course.modules.length, 14);
+  assert.equal(course.modules.length, 17);
   assert(submissionLines.some((s) => s.includes("500 to 3,000 words")));
 });
 const valid = {

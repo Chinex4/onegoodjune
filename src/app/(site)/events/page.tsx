@@ -64,16 +64,20 @@ async function EventList() {
           </p>
         )}
       </section>
-      {past.length > 0 && (
+      {
         <section className="border-t border-ink/15 py-14 md:py-20">
           <h2 className={cn(subheading, "mb-8")}>Past events</h2>
-          <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-3">
-            {past.map((event) => (
-              <EventCard key={event._id} event={event} past />
-            ))}
-          </div>
+          {past.length ? (
+            <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-3">
+              {past.map((event) => (
+                <EventCard key={event._id} event={event} past />
+              ))}
+            </div>
+          ) : (
+            <p className={lead}>No past events yet.</p>
+          )}
         </section>
-      )}
+      }
     </>
   );
 }

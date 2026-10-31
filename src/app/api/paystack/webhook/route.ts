@@ -1,5 +1,6 @@
 import { isValidSignature, verifyTransaction } from "@/lib/paystack";
 import { mongoConfigured } from "@/lib/mongodb";
+import { deliverWelcome } from "@/lib/email/delivery";
 import { applyTransaction } from "@/lib/registrations";
 // Paystack posts payment events here (set the URL in Paystack → Settings →
 // API Keys & Webhooks). Each event is signed with the secret key; we also
@@ -19,7 +20,13 @@ export async function POST(request: Request) {
   if (event.event === "charge.success" && event.data?.reference) {
     try {
       const tx = await verifyTransaction(event.data.reference);
-      await applyTransaction(tx, "webhook");
+      const registration = await applyTransaction(tx, "webhook");
+      if (
+        registration?.status === "paid" &&
+        registration.reference === tx.reference
+      ) {
+        await deliverWelcome(registration.reference);
+      }
     } catch (error) {
       console.error(
         "Webhook processing failed:",

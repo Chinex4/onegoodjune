@@ -1,3 +1,4 @@
+import { reviewContent } from "@/content/pending-review";
 import Image from "next/image";
 import { about } from "@/content/pages";
 import {
@@ -37,6 +38,7 @@ export default function About() {
       <Container>
         <PageIntro
           eyebrow="Our story"
+          eyebrowSwatch="none"
           // Reading font, sized so each statement holds one line on phones.
           titleClassName="font-serif text-[1.375rem] font-semibold leading-[1.3] min-[360px]:text-[1.5rem] sm:text-[2.125rem] lg:text-[2.625rem]"
           title={about.opening.slice(0, 3).map((line, i) => (
@@ -46,15 +48,12 @@ export default function About() {
             </span>
           ))}
         />
-        <section className="grid gap-12 py-16 md:py-24 lg:grid-cols-12 lg:gap-10">
+        <section className="grid gap-12 py-8 md:py-12 lg:grid-cols-12 lg:gap-10">
           <Reveal className="lg:col-span-4">
-            <figure className="border-l-4 border-orange pl-6 lg:sticky lg:top-32">
+            <figure className="lg:sticky lg:top-32">
               <blockquote className="font-heading text-[1.75rem] leading-[1.15] tracking-[-0.015em] md:text-[2rem]">
                 {pullQuote}
               </blockquote>
-              <figcaption className={cn(label, "mt-5 text-ink/60")}>
-                Born out of necessity
-              </figcaption>
             </figure>
           </Reveal>
           <Reveal delay={0.08} className="lg:col-span-7 lg:col-start-6">
@@ -69,10 +68,10 @@ export default function About() {
           </Reveal>
         </section>
       </Container>
-      <section className="bg-forest py-16 text-white [--focus-ring:var(--color-lime)] md:py-20">
+      <section className="bg-forest py-8 text-white [--focus-ring:var(--color-lime)] md:py-12">
         <Container className="grid gap-8 lg:grid-cols-12 lg:gap-10">
           <Reveal className="lg:col-span-4">
-            <Eyebrow className="text-white" swatch="bg-lime">
+            <Eyebrow className="text-white" swatch="none">
               Our mission
             </Eyebrow>
             <h2 className={cn(subheading, "mt-5")}>A Simple Quest</h2>
@@ -82,16 +81,30 @@ export default function About() {
           </Reveal>
         </Container>
       </section>
+      {reviewContent.creed && (
+        <section className="py-8 md:py-12">
+          <Container>
+            <h2 className={heading}>Our creed</h2>
+            <div className="mt-6 space-y-4">
+              {reviewContent.creed.map((p) => (
+                <p key={p} className={prose}>
+                  {p}
+                </p>
+              ))}
+            </div>
+          </Container>
+        </section>
+      )}
       <Container className={sectionSpace}>
         <div className="grid gap-6 lg:grid-cols-12 lg:items-end lg:gap-10">
           <div className="lg:col-span-6">
-            <Eyebrow className="text-forest">
+            <Eyebrow className="text-forest" swatch="none">
               The people behind the quest
             </Eyebrow>
             <h2 className={cn(heading, "mt-6")}>Adventure Builders</h2>
           </div>
         </div>
-        <div className="mt-12 grid gap-x-6 gap-y-12 sm:grid-cols-2 md:mt-16 lg:grid-cols-4">
+        <div className="mt-6 grid gap-x-6 gap-y-8 sm:grid-cols-2 md:mt-8 lg:grid-cols-4">
           {about.team.map((person, i) => {
             const photo = site.assets.team[i];
             return (
@@ -99,7 +112,7 @@ export default function About() {
                 <article>
                   <div
                     className={cn(
-                      "relative flex aspect-[4/5] items-end overflow-hidden p-4",
+                      "relative flex aspect-square w-full max-w-[280px] items-end overflow-hidden p-4",
                       photo ? "bg-mist" : portraitTints[i],
                     )}
                   >
@@ -108,7 +121,10 @@ export default function About() {
                         src={photo}
                         alt={person.name}
                         fill
-                        className="object-cover"
+                        className={cn(
+                          "object-cover",
+                          i === 3 && "scale-[1.16] object-[center_35%]",
+                        )}
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                       />
                     ) : (
@@ -132,7 +148,7 @@ export default function About() {
                   </div>
                   <p className={cn(label, "mt-6 text-forest")}>{person.role}</p>
                   <h3 className={cn(title, "mt-3")}>{person.name}</h3>
-                  <p className="mt-3 font-serif text-lg leading-[1.6] text-ink/80">
+                  <p className="mt-3 font-serif text-lg leading-[1.5] text-ink/80">
                     {person.description}
                   </p>
                 </article>
@@ -142,7 +158,7 @@ export default function About() {
         </div>
       </Container>
       {/* A soft sunshine tint: the full-strength orange read as too loud. */}
-      <section className="border-t-4 border-sunshine bg-sunshine/15 py-16 md:py-20">
+      <section className="border-t-4 border-sunshine bg-sunshine/15 py-8 md:py-12">
         <Container className="grid gap-10 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-7">
             <h2 className={heading}>Start your own adventure</h2>

@@ -1,4 +1,5 @@
 import source from "./source-copy.json";
+import revisions from "./client-email-revisions.json";
 export function between(start: string, end: string) {
   return source.slice(source.indexOf(start) + 1, source.indexOf(end));
 }
@@ -8,7 +9,10 @@ export const about = {
   team: Array.from({ length: 4 }, (_, i) => {
     const start = source.indexOf("Esther Uzoamaka Okoloeze") + i * 3;
     return {
-      name: source[start],
+      name: source[start].replace(
+        "Seun Mary-Ann Biyi",
+        "Seun Mary-Ann Olabiyi",
+      ),
       role: source[start + 1],
       description: source[start + 2],
     };
@@ -17,6 +21,13 @@ export const about = {
 export const submissionLines = between(
   "SUBMISSION PAGE",
   "PRIVACY POLICY PAGE",
+).map((line) =>
+  line
+    .replace("Creative Submission", "Submissions")
+    .replace(
+      /^Creative Ambassador Award:.*$/,
+      "Features and portfolio building: Get featured in our year ‘wrapped’ series and have a credible portfolio of your work for references.",
+    ),
 );
 export const policyLines = between(
   "ONEGOODJUNE · Effective Oct 19, 2026",
@@ -37,21 +48,19 @@ export function getSections(
 export const policySections = getSections(policyLines, (s) =>
   /^\d+\. /.test(s),
 );
-const courseStart = source.indexOf("*Write Fiction Like Great Movies*");
-const courseLines = source.slice(courseStart);
 export const course = {
-  title: "Write Fiction Like Great Movies",
-  description: courseLines[1],
-  modules: between("Course Modules", "Guaranteed Results"),
-  results: between("Guaranteed Results", "Delivery Mode"),
-  delivery: source[source.indexOf("Delivery Mode") + 1],
-  duration: source[source.indexOf("Duration") + 1],
-  audience: source[source.indexOf("Who Is It For?") + 1],
-  instructor: source[source.indexOf("Writing Instructor") + 1],
-  deadline: source[source.indexOf("Waitlist Price Deadline") + 1],
-  perks: between(
-    "Perks of Joining the Waitlist",
-    "How You'll Access the Course",
-  ),
-  access: source[source.indexOf("How You'll Access the Course") + 1],
+  title: revisions[45],
+  description: revisions[46],
+  introduction: revisions.slice(48, 51),
+  modules: revisions.slice(52, 69),
+  results: revisions.slice(71, 75),
+  outcomes: revisions.slice(76, 80),
+  delivery: revisions[81],
+  duration: revisions[83],
+  audience: revisions[89],
+  instructor: revisions[91],
+  deadline: revisions[93],
+  perks: revisions.slice(95, 98),
+  access: revisions[99],
+  launchDate: revisions[101],
 };

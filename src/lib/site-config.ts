@@ -39,5 +39,6 @@ export const navigation = [
   { label: "Read Pubs", href: "/read-pubs" },
   { label: "Submissions", href: "/submissions" },
   { label: "School of Growth", href: "/school-of-growth" },
-  { label: "Fiction Writing", href: "/fiction-writing" },
+  { label: "Fiction Course", href: "/fiction-writing" },
+  { label: "Events", href: "/events" },
 ];

@@ -1,7 +1,7 @@
 import { registrationSchema } from "@/lib/registration-schema";
 import { getProgram } from "@/lib/programs";
 import { mongoConfigured } from "@/lib/mongodb";
-import { initializeTransaction } from "@/lib/paystack";
+import { initializeTransaction, validateQuarterlyPlan } from "@/lib/paystack";
 import { attachCheckout, createRegistration } from "@/lib/registrations";
 import { site } from "@/lib/site-config";
 const headers = { "Cache-Control": "no-store" };
@@ -40,21 +40,29 @@ export async function POST(request: Request) {
     );
   // Bots fill the hidden field; give them nothing to retry against.
   if (parsed.data.website) return reply("Thank you.", 200);
-  const program = getProgram(parsed.data.program)!;
+  const program = getProgram(parsed.data.program);
+  if (!program)
+    return reply(
+      "This payment option is not currently available. Please choose another plan.",
+      503,
+    );
   if (!mongoConfigured() || !process.env.PAYSTACK_SECRET_KEY)
     return reply(
       "Registration is temporarily unavailable. Please email sayhi@onegoodjune.com.",
       503,
     );
   try {
-    const registration = await createRegistration(parsed.data, program);
     const plan = program.planEnv ? process.env[program.planEnv] : undefined;
+    if (program.billingCycles && plan)
+      await validateQuarterlyPlan(plan, program.amount);
+    const registration = await createRegistration(parsed.data, program);
     const checkout = await initializeTransaction({
       email: registration.email,
       amount: program.amount,
       reference: registration.reference,
       callbackUrl: `${self}/payment/callback`,
       plan,
+      billingCycles: program.billingCycles,
       metadata: {
         program: program.id,
         name: registration.name,

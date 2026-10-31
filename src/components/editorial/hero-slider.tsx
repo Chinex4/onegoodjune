@@ -55,7 +55,7 @@ export function HeroSlider({
         ))}
       </div>
       {count > 1 && (
-        <div className="mt-5 flex items-center gap-2 md:absolute md:bottom-6 md:right-6 md:mt-0">
+        <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
           <button
             type="button"
             aria-label="Previous story"

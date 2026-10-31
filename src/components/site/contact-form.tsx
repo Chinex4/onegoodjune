@@ -189,7 +189,7 @@ export function ContactForm() {
           maxLength={5000}
           aria-invalid={!!errors.message}
           aria-describedby={errors.message ? "message-error" : undefined}
-          className={`${fieldClass} resize-y leading-relaxed`}
+          className={`${fieldClass} resize-y leading-normal`}
         />
         <FieldError id="message-error" message={errors.message?.message} />
       </div>
@@ -206,7 +206,7 @@ export function ContactForm() {
         />
       </div>
       <div className="flex flex-col gap-5 border-t border-ink/15 pt-7 sm:flex-row sm:items-center sm:justify-between">
-        <p className="max-w-xs font-sans text-[0.8125rem] leading-relaxed text-ink/70">
+        <p className="max-w-xs font-sans text-[0.8125rem] leading-normal text-ink/70">
           Please read our{" "}
           <a
             href="/privacy-policy"
@@ -229,7 +229,7 @@ export function ContactForm() {
         {feedback && (
           <p
             role={feedback.type === "error" ? "alert" : "status"}
-            className={`flex items-start gap-3 p-4 font-serif text-lg leading-relaxed ${feedback.type === "error" ? "bg-rust/10 text-rust" : "bg-lime/30 text-forest"}`}
+            className={`flex items-start gap-3 p-4 font-serif text-lg leading-normal ${feedback.type === "error" ? "bg-rust/10 text-rust" : "bg-lime/30 text-forest"}`}
           >
             {feedback.type === "error" ? (
               <CircleAlert

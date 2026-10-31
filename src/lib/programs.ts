@@ -13,6 +13,7 @@ export type Program = {
   period: string;
   // Optional Paystack plan code: when set, checkout creates a subscription.
   planEnv?: string;
+  billingCycles?: number;
   returnPath: string;
   // Where a paid learner continues (e.g. choosing a consultation time).
   successPath?: string;
@@ -86,9 +87,44 @@ export const programs: Program[] = [
     requiresBook: true,
   })),
 ];
-export const programIds = programs.map((p) => p.id) as [string, ...string[]];
+// The enum is stable on server and client; unavailable configurations are
+// rejected by the server before any registration or charge is created.
+export const programIds: [string, ...string[]] = [
+  "sog-builder-quarterly",
+  ...programs.map((p) => p.id),
+];
+export function builderQuarterly(): Program | undefined {
+  const naira = Number(process.env.SOG_BUILDER_QUARTERLY_AMOUNT_NAIRA);
+  const amount = Math.round(naira * 100);
+  if (
+    !Number.isFinite(naira) ||
+    naira <= 0 ||
+    !Number.isSafeInteger(amount) ||
+    !/^PLN_[a-zA-Z0-9]+$/.test(
+      process.env.PAYSTACK_PLAN_SOG_BUILDER_QUARTERLY || "",
+    )
+  )
+    return;
+  return {
+    id: "sog-builder-quarterly",
+    group: "school-of-growth",
+    name: "School of Growth — Builder (pay quarterly)",
+    amount,
+    price: formatNaira(amount),
+    period: "every quarter · 4 payments",
+    planEnv: "PAYSTACK_PLAN_SOG_BUILDER_QUARTERLY",
+    billingCycles: 4,
+    returnPath: "/school-of-growth",
+  };
+}
+export function enrollmentPrograms() {
+  const quarterly = builderQuarterly();
+  return quarterly ? [...programs, quarterly] : programs;
+}
 export function getProgram(id: string) {
-  return programs.find((p) => p.id === id);
+  return id === "sog-builder-quarterly"
+    ? builderQuarterly()
+    : programs.find((p) => p.id === id);
 }
 export function formatNaira(kobo: number) {
   return `₦${(kobo / 100).toLocaleString("en-NG")}`;

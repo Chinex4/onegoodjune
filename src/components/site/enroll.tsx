@@ -263,7 +263,7 @@ export function EnrollDialog({
             : `Continue to payment · ${chosen.price}`}
           <Lock size={16} aria-hidden="true" />
         </button>
-        <p className="font-sans text-[0.75rem] leading-relaxed text-ink/65">
+        <p className="font-sans text-[0.75rem] leading-normal text-ink/65">
           Payments are processed securely by Paystack. By continuing you agree
           to our{" "}
           <a

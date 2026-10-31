@@ -169,3 +169,54 @@ test("admin sessions expire and reject tampering", async () => {
   assert.equal(passwordMatches("correct horse"), true);
   assert.equal(passwordMatches("wrong"), false);
 });
+
+test("welcome delivery skips unpaid registrations, locks concurrent retries and retries SMTP failure", async () => {
+  const { deliverWelcome } = await import("../src/lib/email/delivery");
+  const { createRegistration } = await import("../src/lib/registrations");
+  const { getDb } = await import("../src/lib/mongodb");
+  const col = (await getDb()).collection("registrations");
+  const registration = await createRegistration(
+    input,
+    getProgram("sog-riser")!,
+  );
+  let sends = 0;
+  const sender = async () => {
+    sends++;
+    await new Promise((r) => setTimeout(r, 20));
+    return "test-message-id";
+  };
+  await deliverWelcome(registration.reference, sender);
+  assert.equal(sends, 0);
+  await col.updateOne(
+    { reference: registration.reference },
+    { $set: { status: "paid" } },
+  );
+  await Promise.allSettled([
+    deliverWelcome(registration.reference, sender),
+    deliverWelcome(registration.reference, sender),
+  ]);
+  assert.equal(sends, 1);
+  assert(
+    (await col.findOne({ reference: registration.reference }))?.welcomeEmail
+      .sentAt,
+  );
+  await deliverWelcome(registration.reference, sender);
+  assert.equal(sends, 1);
+  const retry = await createRegistration(input, getProgram("sog-riser")!);
+  await col.updateOne(
+    { reference: retry.reference },
+    { $set: { status: "paid" } },
+  );
+  await assert.rejects(
+    deliverWelcome(retry.reference, async () => {
+      throw new Error("SMTP unavailable");
+    }),
+  );
+  const failed = await col.findOne({ reference: retry.reference });
+  assert(failed?.welcomeEmail.failedAt);
+  assert(!failed?.welcomeEmail.sentAt);
+  await deliverWelcome(retry.reference, sender);
+  assert(
+    (await col.findOne({ reference: retry.reference }))?.welcomeEmail.sentAt,
+  );
+});

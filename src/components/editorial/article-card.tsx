@@ -72,7 +72,7 @@ export function ArticleCard({
           {post.excerpt && !compact && (
             <p
               className={cn(
-                "mt-3 line-clamp-3 font-serif text-[1.0625rem] leading-[1.6]",
+                "mt-3 line-clamp-3 font-serif text-[1.0625rem] leading-[1.5]",
                 dark ? "text-white/75" : "text-ink/80",
               )}
             >
@@ -81,7 +81,7 @@ export function ArticleCard({
           )}
           <div
             className={cn(
-              "flex flex-wrap items-center gap-x-3 gap-y-1 font-sans text-xs leading-relaxed",
+              "flex flex-wrap items-center gap-x-3 gap-y-1 font-sans text-xs leading-normal",
               compact ? "mt-2" : "mt-4",
               dark ? "text-white/70" : "text-ink/70",
             )}

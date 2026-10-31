@@ -13,7 +13,6 @@ import {
 import { RichText } from "@/components/editorial/rich-text";
 import { DraftNotice } from "@/components/editorial/draft-notice";
 import {
-  ArrowIcon,
   ColorBar,
   Container,
   label,
@@ -60,7 +59,6 @@ async function Article({ params }: Props) {
   if (!post) notFound();
   const related = await getRelated(post);
   const image = imageUrl(post.mainImage, 1800);
-  const authorImage = imageUrl(post.author?.image, 200);
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -91,7 +89,7 @@ async function Article({ params }: Props) {
       />
       <Container>
         <DraftNotice />
-        <header className="mx-auto max-w-4xl py-16 text-center md:py-24">
+        <header className="mx-auto max-w-4xl py-8 text-center md:py-12">
           <a
             href={
               post.category
@@ -113,7 +111,7 @@ async function Article({ params }: Props) {
               {post.excerpt}
             </p>
           )}
-          <div className="mt-8 flex flex-wrap justify-center gap-3 font-sans text-[0.8125rem] leading-relaxed text-ink/75">
+          <div className="mt-8 flex flex-wrap justify-center gap-3 font-sans text-[0.8125rem] leading-normal text-ink/75">
             {post.author?.slug ? (
               <Link
                 href={`/contributors/${post.author.slug}`}
@@ -132,7 +130,7 @@ async function Article({ params }: Props) {
             </time>
             <span>· {readingMinutes(post.text)} min read</span>
           </div>
-          <ColorBar className="mx-auto mt-10 h-1 max-w-40" />
+          <ColorBar className="mx-auto mt-5 h-1 max-w-40" />
         </header>
         {image && (
           <figure>
@@ -147,7 +145,7 @@ async function Article({ params }: Props) {
               />
             </div>
             {(post.mainImage?.caption || post.mainImage?.credit) && (
-              <figcaption className="mt-4 font-sans text-xs leading-relaxed text-ink/70">
+              <figcaption className="mt-4 font-sans text-xs leading-normal text-ink/70">
                 {post.mainImage.caption}
                 {post.mainImage.credit && ` — ${post.mainImage.credit}`}
               </figcaption>
@@ -157,58 +155,10 @@ async function Article({ params }: Props) {
         <article
           className={cn(
             "mx-auto max-w-[720px] break-words pb-12 md:pb-16",
-            image ? "pt-12 md:pt-16" : "pt-0",
+            image ? "pt-6 md:pt-8" : "pt-0",
           )}
         >
           <RichText body={post.body} />
-          {post.tags && post.tags.length > 0 && (
-            <div className="mt-12 flex flex-wrap gap-3 border-t border-ink/15 pt-6">
-              {post.tags.map((tag) => (
-                <span
-                  key={tag._id}
-                  className={cn(label, "bg-paper px-3 py-1.5 text-ink/75")}
-                >
-                  {tag.title}
-                </span>
-              ))}
-            </div>
-          )}
-          {post.author && (
-            <aside
-              className="mt-14 flex gap-6 border-y border-ink/20 py-8"
-              aria-label="About the author"
-            >
-              {authorImage && (
-                <Image
-                  src={authorImage}
-                  alt={post.author.image?.alt || post.author.name}
-                  width={72}
-                  height={72}
-                  className="size-18 shrink-0 rounded-full object-cover"
-                />
-              )}
-              <div>
-                <p className={cn(label, "text-rust")}>Written by</p>
-                <h2 className="mt-2 font-serif text-2xl font-semibold">
-                  {post.author.name}
-                </h2>
-                {post.author.bio && (
-                  <p className="mt-3 line-clamp-4 font-serif text-lg leading-relaxed text-ink/80">
-                    {post.author.bio}
-                  </p>
-                )}
-                {post.author.slug && (
-                  <Link
-                    href={`/contributors/${post.author.slug}`}
-                    className="group mt-4 inline-flex min-h-11 items-center gap-2 border-b border-current font-sans text-sm font-medium hover:text-forest"
-                  >
-                    More from {post.author.name.split(" ")[0]}
-                    <ArrowIcon size={15} />
-                  </Link>
-                )}
-              </div>
-            </aside>
-          )}
         </article>
         {related.length > 0 && (
           <section className="border-t border-ink/20 py-16">

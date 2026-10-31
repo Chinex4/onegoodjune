@@ -1,5 +1,5 @@
 // Midnight on launch day in Lagos; one absolute instant in every time zone.
-export const COURSE_LAUNCH = "2027-01-15T00:00:00+01:00";
+export const COURSE_LAUNCH = "2027-02-05T00:00:00+01:00";
 export function getCountdown(now: number) {
   const remaining = Math.max(
     0,

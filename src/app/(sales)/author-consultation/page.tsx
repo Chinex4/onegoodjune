@@ -28,12 +28,12 @@ function Terms({ className = "" }: { className?: string }) {
   return (
     <p
       className={cn(
-        "flex flex-wrap gap-x-3 gap-y-1 font-sans text-sm font-medium",
+        "flex flex-nowrap gap-x-2 whitespace-nowrap font-sans text-[clamp(0.5625rem,2.5vw,0.875rem)] font-medium",
         className,
       )}
     >
       {c.terms.map((term, i) => (
-        <span key={term} className="flex items-center gap-3">
+        <span key={term} className="flex items-center gap-2">
           {i > 0 && <span aria-hidden="true">·</span>}
           {term}
         </span>
@@ -52,7 +52,7 @@ function Book({
     <EnrollButton
       program="author-consultation"
       variant={variant}
-      className={cn("gap-8", className)}
+      className={cn("gap-3 whitespace-nowrap px-4 text-xs", className)}
     >
       {c.cta}
     </EnrollButton>
@@ -100,7 +100,7 @@ export default function AuthorConsultation() {
       </section>
 
       <Container>
-        <section className="mx-auto max-w-3xl py-16 md:py-24">
+        <section className="mx-auto max-w-3xl py-8 md:py-12">
           {c.opening.map((line, i) => (
             <p
               key={line}
@@ -117,7 +117,7 @@ export default function AuthorConsultation() {
         </section>
       </Container>
 
-      <section className="bg-paper py-16 md:py-24">
+      <section className="bg-paper py-8 md:py-12">
         <Container className="grid gap-10 lg:grid-cols-12 lg:gap-10">
           <h2 className={cn(heading, "lg:col-span-5")}>{c.introTitle}</h2>
           <div className="space-y-5 lg:col-span-6 lg:col-start-7">
@@ -131,7 +131,7 @@ export default function AuthorConsultation() {
       </section>
 
       <Container>
-        <section className="py-16 md:py-24">
+        <section className="py-8 md:py-12">
           <h2 className={heading}>{c.topicsTitle}</h2>
           <p className={cn(lead, "mt-5 text-ink/80")}>{c.topicsIntro}</p>
           <div className="mt-10 grid gap-4 sm:grid-cols-2">
@@ -149,7 +149,7 @@ export default function AuthorConsultation() {
           </p>
         </section>
 
-        <section className="grid gap-10 border-t border-ink/15 py-16 md:py-24 lg:grid-cols-12 lg:gap-10">
+        <section className="grid gap-10 border-t border-ink/15 py-8 md:py-12 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-5">
             <h2 className={heading}>{c.outcomesTitle}</h2>
             {c.outcomesIntro.map((p) => (
@@ -184,7 +184,7 @@ export default function AuthorConsultation() {
         </section>
       </Container>
 
-      <section className="ground-dark py-16 md:py-24">
+      <section className="ground-dark py-8 md:py-12">
         <Container className="grid gap-10 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-5">
             <h2 className={heading}>{c.audienceTitle}</h2>
@@ -213,7 +213,7 @@ export default function AuthorConsultation() {
       </section>
 
       <Container>
-        <section className="py-16 md:py-24">
+        <section className="py-8 md:py-12">
           <h2 className={heading}>{c.stepsTitle}</h2>
           <ol className="mt-10 grid gap-px bg-ink/15 md:grid-cols-3">
             {c.steps.map((step, i) => (
@@ -231,7 +231,7 @@ export default function AuthorConsultation() {
 
       <section
         id="closing"
-        className="bg-earth py-16 text-white [--focus-ring:var(--color-straw)] md:py-24"
+        className="bg-earth py-8 text-white [--focus-ring:var(--color-straw)] md:py-24"
       >
         <Container className="max-w-3xl text-center">
           <h2 className={heading}>{c.closingTitle}</h2>

@@ -15,7 +15,7 @@ import {
 } from "@/components/site/primitives";
 import { Reveal } from "@/components/site/reveal";
 import { EnrollButton, EnrollDialog } from "@/components/site/enroll";
-import { programs } from "@/lib/programs";
+import { enrollmentPrograms } from "@/lib/programs";
 import { StickyCta } from "@/components/site/sticky-cta";
 import { PlanSwitcher } from "@/components/site/plan-switcher";
 import { sog } from "@/content/sog";
@@ -191,7 +191,7 @@ export default function Growth() {
       </section>
 
       <Container>
-        <section className="mx-auto max-w-3xl py-16 md:py-24">
+        <section className="mx-auto max-w-3xl py-8 md:py-12">
           <Reveal>
             <h2 className={heading}>{sog.goalsTitle}</h2>
           </Reveal>
@@ -443,7 +443,7 @@ export default function Growth() {
                         {price.period}
                       </span>
                     </p>
-                    <p className="mt-6 font-serif text-lg leading-[1.6] opacity-90">
+                    <p className="mt-6 font-serif text-lg leading-[1.5] opacity-90">
                       {plan.description}
                     </p>
                     <Access
@@ -474,7 +474,7 @@ export default function Growth() {
                               >
                                 <Check size={13} strokeWidth={3} />
                               </span>
-                              <span className="font-serif text-[1.0625rem] leading-[1.55]">
+                              <span className="font-serif text-[1.0625rem] leading-[1.5]">
                                 {body ? (
                                   <>
                                     <strong className="block font-sans text-sm font-semibold">
@@ -558,7 +558,7 @@ export default function Growth() {
                       “
                     </span>
                     <h3 className={cn(title, "mt-4")}>{item.title}</h3>
-                    <blockquote className="mt-5 whitespace-pre-line font-serif text-lg leading-[1.7]">
+                    <blockquote className="mt-5 whitespace-pre-line font-serif text-lg leading-[1.5]">
                       {item.quote}
                     </blockquote>
                     <figcaption className="mt-auto flex items-center gap-3 pt-8">
@@ -607,7 +607,7 @@ export default function Growth() {
                   <h3 className={cn(label, "mt-6 text-sm text-white")}>
                     {name.join(" ")}
                   </h3>
-                  <p className="mt-4 font-serif text-lg leading-[1.65] text-white/80">
+                  <p className="mt-4 font-serif text-lg leading-[1.5] text-white/80">
                     {body}
                   </p>
                 </li>
@@ -745,7 +745,7 @@ export default function Growth() {
       <EnrollDialog
         title="School of Growth"
         defaultOption="sog-builder"
-        options={programs
+        options={enrollmentPrograms()
           .filter((p) => p.group === "school-of-growth")
           .map(({ id, name, price, period }) => ({ id, name, price, period }))}
       />

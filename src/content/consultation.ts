@@ -88,8 +88,8 @@ export const consultation = {
     "Your author journey is uniquely yours. The decisions you make about your brand, business, and creative future should reflect that.",
     "Let’s talk about what you’re building and what it will take to move forward.",
   ],
-  cta: "Book your author business consultation",
+  cta: "Book your one-on-one session",
   terms: ["₦101,250", "60 minutes", "One-on-one", "Online"],
   scheduler:
-    "https://scheduler.zoom.us/esther-okoloeze/author-business-consultation",
+    "https://calendly.com/euo/abc",
 };

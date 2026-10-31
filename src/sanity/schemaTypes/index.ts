@@ -318,6 +318,14 @@ const event = defineType({
   type: "document",
   fields: [
     defineField({
+      name: "isExample",
+      title: "Design example only",
+      type: "boolean",
+      description:
+        "Examples stay in Studio and do not appear on the public website.",
+      initialValue: false,
+    }),
+    defineField({
       name: "title",
       type: "string",
       validation: (rule) => rule.required().max(180),

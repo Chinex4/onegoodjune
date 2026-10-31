@@ -45,6 +45,7 @@ export type EditorialSection = {
   posts: Post[];
 };
 export type Event = {
+  isExample?: boolean | null;
   _id: string;
   title: string;
   slug: string;

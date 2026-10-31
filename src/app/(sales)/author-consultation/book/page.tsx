@@ -97,7 +97,7 @@ async function Booking({ searchParams }: { searchParams: Params }) {
         </Container>
         <ColorBar />
       </section>
-      {/* Zoom's scheduler only renders as a top-level page (it stays blank
+      {/* The scheduler only renders as a top-level page (it stays blank
           inside an iframe), so the calendar opens on its own. */}
       <Container className="grid gap-10 py-12 md:py-16 lg:grid-cols-12 lg:gap-10">
         <div className="lg:col-span-6">
@@ -105,9 +105,9 @@ async function Booking({ searchParams }: { searchParams: Params }) {
             Pick a time that works for you
           </h2>
           <p className={cn(lead, "mt-4 text-ink/80")}>
-            The calendar opens in Zoom Scheduler. Choose an available hour,
-            answer the short questionnaire, and you&apos;ll get a calendar
-            invite with the meeting link.
+            The calendar opens in Calendly. Choose an available hour, answer the
+            short questionnaire, and you&apos;ll get a calendar invite with the
+            meeting link.
           </p>
           <a
             href={c.scheduler}
@@ -134,7 +134,7 @@ async function Booking({ searchParams }: { searchParams: Params }) {
               <h3 className="mt-2 font-serif text-xl font-semibold">
                 {step.title}
               </h3>
-              <p className="mt-2 font-serif text-[1.0625rem] leading-relaxed text-ink/80">
+              <p className="mt-2 font-serif text-[1.0625rem] leading-normal text-ink/80">
                 {step.text}
               </p>
             </li>

@@ -67,7 +67,7 @@ export default function Home() {
   return (
     <main id="main-content">
       <section id="studio">
-        <Container className="grid gap-12 pb-16 pt-10 md:pb-24 md:pt-16 lg:grid-cols-12 lg:items-center lg:gap-10 lg:pt-20">
+        <Container className="grid gap-12 pb-8 pt-8 md:pb-12 md:pt-10 lg:grid-cols-12 lg:items-center lg:gap-10 lg:pt-20">
           <div className="lg:col-span-7">
             {/* Inline-block so the palette strip matches the wordmark's width. */}
             <div className="inline-block max-w-full">
@@ -105,23 +105,25 @@ export default function Home() {
         </Container>
       </section>
 
-      <section id="what-we-do" className="ground-dark py-20 md:py-28">
+      <Container className="pb-10 md:pb-14">
+        {" "}
+        <div className="grid gap-8 md:grid-cols-12 md:gap-10">
+          <Reveal className="md:col-span-4">
+            <h2 className={heading}>
+              <span className="font-serif font-normal">What</span>
+              <br />
+              We Do<span className="text-lime">.</span>
+            </h2>
+          </Reveal>
+          <Reveal delay={0.08} className="md:col-span-8 lg:col-start-5">
+            <p className={cn(lead, "max-w-3xl text-ink/85")}>{home.whatWeDo}</p>
+          </Reveal>
+        </div>
+      </Container>
+
+      <section id="what-we-do" className="ground-dark py-10 md:py-14">
         <Container>
-          <div className="grid gap-8 md:grid-cols-12 md:gap-10">
-            <Reveal className="md:col-span-4">
-              <h2 className={heading}>
-                <span className="font-serif font-normal">What</span>
-                <br />
-                We Do<span className="text-lime">.</span>
-              </h2>
-            </Reveal>
-            <Reveal delay={0.08} className="md:col-span-8 lg:col-start-5">
-              <p className={cn(lead, "max-w-3xl text-white/85")}>
-                {home.whatWeDo}
-              </p>
-            </Reveal>
-          </div>
-          <div className="mt-16 grid gap-12 md:mt-20 md:grid-cols-3 md:gap-8 lg:gap-12">
+          <div className="mt-0 grid gap-12 md:mt-20 md:grid-cols-3 md:gap-8 lg:gap-12">
             {home.services.map((service, i) => (
               <Reveal key={service.title} delay={i * 0.08}>
                 <article>
@@ -146,7 +148,7 @@ export default function Home() {
                   >
                     {service.tagline}
                   </p>
-                  <p className="mt-4 font-serif text-[1.0625rem] leading-[1.7] text-white/75">
+                  <p className="mt-4 font-serif text-[1.0625rem] leading-[1.5] text-white/75">
                     {service.description}
                   </p>
                 </article>
@@ -156,9 +158,9 @@ export default function Home() {
         </Container>
       </section>
 
-      <section id="experience" className="py-20 md:py-28">
+      <section id="experience" className="py-10 md:py-14">
         <Container>
-          <div className="mb-12 flex items-end justify-between gap-6 md:mb-16">
+          <div className="mb-6 flex items-end justify-between gap-6 md:mb-8">
             <h2 className={heading}>
               <span className="font-serif font-normal">Experience</span>
               <br className="sm:hidden" /> ONEGOODJUNE
@@ -170,7 +172,7 @@ export default function Home() {
               aria-hidden="true"
             />
           </div>
-          <ol className="space-y-3">
+          <ol className="space-y-6">
             {experiences.map((item, i) => (
               <li key={item.href}>
                 <Reveal delay={i * 0.05}>
