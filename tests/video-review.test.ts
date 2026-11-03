@@ -140,3 +140,22 @@ test("the supplied creed preserves all four principles", async () => {
   assert.equal(reviewContent.creed.principles.length, 4);
   assert.equal(reviewContent.creed.principles[1], "Embrace joyful stewardship rooted in personal consecration, agency, accountability, and consistent action.");
 });
+
+test("Builder choices are named clearly and stay together before Visionary", async () => {
+  const { enrollmentPrograms } = await import("../src/lib/programs");
+  const price = process.env.SOG_BUILDER_QUARTERLY_AMOUNT_NAIRA;
+  const plan = process.env.PAYSTACK_PLAN_SOG_BUILDER_QUARTERLY;
+  try {
+    process.env.SOG_BUILDER_QUARTERLY_AMOUNT_NAIRA = "18750";
+    process.env.PAYSTACK_PLAN_SOG_BUILDER_QUARTERLY = "PLN_fixture";
+    const options = enrollmentPrograms().filter(p => p.group === "school-of-growth");
+    assert.deepEqual(options.map(p => p.id), ["sog-riser", "sog-builder", "sog-builder-quarterly", "sog-visionary"]);
+    assert.equal(options[1].name, "School of Growth — Builder (Pay Once)");
+    assert.equal(options[2].name, "School of Growth — Builder (Pay x4)");
+    assert.equal(options[2].period, "every quarter");
+    assert.equal(options[2].billingCycles, 4);
+  } finally {
+    if (price === undefined) delete process.env.SOG_BUILDER_QUARTERLY_AMOUNT_NAIRA; else process.env.SOG_BUILDER_QUARTERLY_AMOUNT_NAIRA = price;
+    if (plan === undefined) delete process.env.PAYSTACK_PLAN_SOG_BUILDER_QUARTERLY; else process.env.PAYSTACK_PLAN_SOG_BUILDER_QUARTERLY = plan;
+  }
+});

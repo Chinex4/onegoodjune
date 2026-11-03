@@ -6,7 +6,7 @@ Updated November 3, 2026. This is the current checklist; it supersedes outstandi
 
 | Page | Current route | What to check |
 | --- | --- | --- |
-| Home | `/home` | Two-part School of Growth/Fiction CTA banner appears only here; compact all-caps wordmark; image-led introduction; white/black sections; numbered services; compact stacked experience title/CTA cards without pictures/descriptions; newsletter; compact white footer wordmark on black. |
+| Home | `/home` | Two-part School of Growth/Fiction CTA banner appears only here; compact all-caps wordmark; image-led introduction; white/black sections; numbered services; stacked experience cards with restored images, descriptions and CTAs; newsletter; compact white footer wordmark on black. |
 | About | `/about` | Smaller/lighter opening statements; mission; **Our Creed / Guiding Philosophies** immediately after mission with all four supplied principles; Adventure Builders; four supplied profiles and portraits; Olabiyi spelling; publications/SOG CTAs. |
 | Magazine | `/pubs` | Literary-magazine header; image-led hero, controls below; categories from Sanity; Newcomer/Spotlight sections; filtering and pagination. |
 | Articles | `/pubs/[slug]` | Opens at the beginning; `Nov 03, 2026` date style; readable 1.5 paragraph line spacing; rich text/images/byline; related articles; no repeated bottom author panel. |
@@ -110,4 +110,11 @@ Creed, Spotlight terms, Chidinma portrait, submission style wording and requeste
 
 ## Latest validation
 
-37 automated tests pass. ESLint, TypeScript, production build and whitespace checks pass. Browser checks at 320px, 390px and 1440px confirm four creed principles after Mission and before Adventure Builders, visible quarterly pricing, no horizontal overflow and no browser errors. No real provider checkout or email was submitted; Paystack plan lookup was read-only.
+38 automated tests pass. ESLint, TypeScript, production build and whitespace checks pass. Browser checks at 320px, 390px and 1440px confirm four creed principles after Mission and before Adventure Builders, visible quarterly pricing, no horizontal overflow and no browser errors. No real provider checkout or email was submitted; Paystack plan lookup was read-only.
+
+
+## Screenshot follow-up
+
+Experience images and descriptions restored on desktop and mobile at the user’s request. Builder enrollment choices are labelled Builder (Pay Once) and Builder (Pay x4), grouped before Visionary; quarterly cadence reads every quarter without repeating the payment count. The four-payment billing cap is unchanged. Email-footer tagline has no forced line break. Consultation confirmation uses the supplied confirmed-payment wording and Schedule Your Session CTA. Magazine masthead reads ONEGOODJUNE Pubs.
+
+Featured-image master recommendation: **1800 × 1200 px, 3:2 landscape** (1200 × 800 px minimum recommended). Standard cards use 3:2; featured cards may crop to 4:3; hero crops vary with viewport and article headers use 2:1 desktop / 16:10 mobile. Keep key faces/details central and avoid embedded titles/text near edges. The website renders the article title separately. Use a compressed JPEG or WebP where practical, and provide image alternative text. This is a recommended source size, not a fixed upload constraint.

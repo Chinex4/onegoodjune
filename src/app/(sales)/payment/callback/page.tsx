@@ -54,7 +54,7 @@ async function Status({ searchParams }: { searchParams: Params }) {
       tone: "text-forest",
       title: "Payment received. Welcome aboard!",
       body: next
-        ? `Your ${programName} is paid for. Your receipt is on its way by email. Now choose a time for your session.`
+        ? `Your payment for Author Business Consultation has been confirmed. Your receipt is on its way by email. Now schedule your session to book your consultation.`
         : `Your registration for ${programName} is confirmed. We've sent a receipt to your email and we'll be in touch with your next steps shortly.`,
     },
     pending: {
@@ -98,7 +98,7 @@ async function Status({ searchParams }: { searchParams: Params }) {
           href={`${next}?reference=${encodeURIComponent(reference)}`}
           className={buttonStyles("ink", "mt-10")}
         >
-          Choose your session time
+          Schedule Your Session
           <ArrowIcon />
         </Link>
       ) : (

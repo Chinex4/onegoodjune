@@ -12,6 +12,7 @@ import {
   heading,
   label,
   lead,
+  prose,
   title,
 } from "@/components/site/primitives";
 import { NewsletterSection } from "@/components/site/newsletter";
@@ -182,7 +183,16 @@ export default function Home() {
                       item.card,
                     )}
                   >
-                    <div className="px-2 pb-2 md:col-span-9 md:p-0">
+                    <div className="relative aspect-[852/572] overflow-hidden bg-mist md:col-span-4">
+                      <Image
+                        src={item.image}
+                        alt=""
+                        fill
+                        sizes="(max-width: 768px) 100vw, 30vw"
+                        className="object-cover transition-transform duration-500 ease-out-soft motion-safe:group-hover:scale-[1.03]"
+                      />
+                    </div>
+                    <div className="px-2 pb-2 md:col-span-5 md:p-0">
                       <p
                         className={cn(
                           label,
@@ -195,6 +205,7 @@ export default function Home() {
                       <h3 className="mt-3 font-serif text-[1.25rem] font-semibold leading-snug md:text-[1.5rem]">
                         {item.title}
                       </h3>
+                      <p className={cn(prose, "mt-3 opacity-80")}>{item.description}</p>
                     </div>
                     <span
                       className={cn(

@@ -297,7 +297,7 @@ export default function Publications({
         <header className="flex flex-wrap items-end justify-between gap-x-8 gap-y-3 pb-5 pt-10 md:pt-14">
           <div>
             <h1 className="font-sans text-sm font-medium uppercase tracking-wide text-rust">
-              ONEGOODJUNE Pub: A Literary Magazine
+              ONEGOODJUNE Pubs: A Literary Magazine
             </h1>
           </div>
           <p className="max-w-md font-serif text-[1.0625rem] leading-[1.5] text-ink/75">

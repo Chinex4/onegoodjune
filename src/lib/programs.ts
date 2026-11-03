@@ -34,7 +34,7 @@ export const programs: Program[] = [
   {
     id: "sog-builder",
     group: "school-of-growth",
-    name: "School of Growth — Builder",
+    name: "School of Growth — Builder (Pay Once)",
     amount: 75_000_00,
     price: "₦75,000",
     period: "per year",
@@ -108,10 +108,10 @@ export function builderQuarterly(): Program | undefined {
   return {
     id: "sog-builder-quarterly",
     group: "school-of-growth",
-    name: "School of Growth — Builder (pay quarterly)",
+    name: "School of Growth — Builder (Pay x4)",
     amount,
     price: formatNaira(amount),
-    period: "every quarter · 4 payments",
+    period: "every quarter",
     planEnv: "PAYSTACK_PLAN_SOG_BUILDER_QUARTERLY",
     billingCycles: 4,
     returnPath: "/sog",
@@ -119,7 +119,9 @@ export function builderQuarterly(): Program | undefined {
 }
 export function enrollmentPrograms() {
   const quarterly = builderQuarterly();
-  return quarterly ? [...programs, quarterly] : programs;
+  return programs.flatMap((program) =>
+    program.id === "sog-builder" && quarterly ? [program, quarterly] : [program],
+  );
 }
 export function getProgram(id: string) {
   return id === "sog-builder-quarterly"
