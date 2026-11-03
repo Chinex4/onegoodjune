@@ -24,6 +24,8 @@ function ruleValue(lines: string[], prefix: string) {
 }
 export default function Submissions() {
   const body = submissionLines.slice(2, -1);
+  const documentRule = body.findIndex(line => line.startsWith("•Document name"));
+  if (documentRule >= 0) body.splice(documentRule, 0, "HOW TO SUBMIT");
   const sections = getSections(body, (s) => /^[A-Z' ]+$/.test(s)).map(
     (section) => ({
       ...section,

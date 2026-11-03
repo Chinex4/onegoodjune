@@ -1,4 +1,4 @@
-import { reviewContent } from "@/content/pending-review";
+import { spotlightTerms } from "@/content/spotlight-terms";
 import { Check, Plus } from "lucide-react";
 import {
   ColorBar,
@@ -19,7 +19,7 @@ import { cn } from "@/lib/utils";
 export const metadata = pageMetadata(
   "Launch Spotlight",
   s.subheadline,
-  "/launch-spotlight",
+  "/spotlight",
 );
 const packageStyles = [
   { card: "bg-white ring-1 ring-ink/15", button: "ink" as const },
@@ -179,22 +179,18 @@ export default function LaunchSpotlight() {
           </div>
         </section>
 
-        {reviewContent.spotlightTerms && (
-          <section className="py-8">
-            <details className="bg-paper p-6">
-              <summary className="min-h-11 cursor-pointer font-serif text-xl">
-                Terms and conditions
-              </summary>
-              <div className="mt-5 space-y-4">
-                {reviewContent.spotlightTerms.map((p) => (
-                  <p key={p} className="font-serif text-lg leading-normal">
-                    {p}
-                  </p>
-                ))}
-              </div>
-            </details>
-          </section>
-        )}
+        <section className="py-8" aria-labelledby="terms-heading">
+          <h2 id="terms-heading" className={heading}>Terms and Conditions</h2>
+          <details className="group mt-6 border-y border-ink/20">
+            <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-6 py-5 font-serif text-xl [&::-webkit-details-marker]:hidden">
+              Read the terms and conditions
+              <Plus aria-hidden="true" className="size-5 shrink-0 transition-transform group-open:rotate-45" />
+            </summary>
+            <ol className="list-decimal space-y-5 pb-7 pl-6 font-serif text-lg leading-normal">
+              {spotlightTerms.map(([title, text]) => <li key={title} className="pl-2"><strong className="font-semibold">{title}</strong> {text}</li>)}
+            </ol>
+          </details>
+        </section>
         <section className="grid gap-10 border-t border-ink/15 py-8 md:py-12 lg:grid-cols-12 lg:gap-10">
           <h2 className={cn(heading, "lg:col-span-4")}>{s.faqTitle}</h2>
           <div className="border-t border-ink/15 lg:col-span-7 lg:col-start-6">

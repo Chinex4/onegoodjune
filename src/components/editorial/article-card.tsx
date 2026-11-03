@@ -1,3 +1,5 @@
+import { heroDate } from "@/lib/editorial-format";
+import { SponsoredLabel } from "./sponsored-label";
 import Link from "next/link";
 import type { Post } from "@/sanity/types";
 import { CoverImage } from "./cover-image";
@@ -9,15 +11,7 @@ export function readingMinutes(text?: string) {
     Math.ceil((text || "").trim().split(/\s+/).filter(Boolean).length / 220),
   );
 }
-export function articleDate(value?: string) {
-  if (!value || Number.isNaN(Date.parse(value))) return "Date to be confirmed";
-  return new Intl.DateTimeFormat("en-GB", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-    timeZone: "Africa/Lagos",
-  }).format(new Date(value));
-}
+export const articleDate = heroDate;
 export function ArticleCard({
   post,
   featured = false,
@@ -33,7 +27,7 @@ export function ArticleCard({
   return (
     <article className="group @container min-w-0">
       <Link
-        href={`/read-pubs/${post.slug}`}
+        href={`/pubs/${post.slug}`}
         className={
           featured
             ? "grid items-center gap-8 md:grid-cols-[1.2fr_1fr] md:gap-12"
@@ -51,6 +45,7 @@ export function ArticleCard({
           className={featured ? "aspect-[4/3]" : "aspect-[3/2]"}
         />
         <div className={featured ? "" : compact ? "pt-4" : "pt-5"}>
+          <SponsoredLabel post={post} dark={dark} />
           {!compact && (
             <p className={cn(label, dark ? "text-sunshine" : "text-rust")}>
               {post.category?.title || "Publication"}

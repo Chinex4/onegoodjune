@@ -1,3 +1,4 @@
+import { Check } from "lucide-react";
 import Image from "next/image";
 import { StickyCta } from "@/components/site/sticky-cta";
 import { course } from "@/content/pages";
@@ -21,7 +22,7 @@ import { cn } from "@/lib/utils";
 export const metadata = pageMetadata(
   course.title,
   course.description,
-  "/fiction-writing",
+  "/fiction-course",
 );
 export default function Fiction() {
   const details = [
@@ -62,8 +63,7 @@ export default function Fiction() {
 
       <Container>
         <section className="py-8 md:py-12">
-          <h2 className={heading}>Write Fiction Like Great Movies</h2>
-          <div className="mt-6 max-w-3xl space-y-4">
+          <div className="max-w-3xl space-y-4">
             {course.introduction.map((p) => (
               <p key={p} className={prose}>
                 {p}
@@ -73,19 +73,19 @@ export default function Fiction() {
         </section>
       </Container>
       <Container>
-        <section className="grid gap-12 py-10 md:py-14 lg:grid-cols-12 lg:gap-10">
+        <section className="grid gap-12 border-t border-ink/20 py-10 md:py-14 lg:grid-cols-12 lg:gap-10">
           <Reveal className="lg:col-span-4">
             <div className="lg:sticky lg:top-10">
               <Eyebrow className="text-rust">The craft, in depth</Eyebrow>
               <h2 className={cn(heading, "mt-6")}>Course Modules</h2>
               <p className={cn(label, "mt-6 text-ink/60")}>
-                {course.modules.length} modules
+                16 modules + a final assignment
               </p>
             </div>
           </Reveal>
           <ol className="grid gap-x-8 sm:grid-cols-2 lg:col-span-8">
             {course.modules.map((module, i) => {
-              const project = /^Project:/.test(module);
+              const project = i === course.modules.length - 1;
               return (
                 <li
                   key={module}
@@ -102,7 +102,7 @@ export default function Fiction() {
                       project ? "text-ink" : "text-rust",
                     )}
                   >
-                    {String(i + 1).padStart(2, "0")}
+                    {project ? "★" : String(i + 1).padStart(2, "0")}
                   </span>
                   <span className="font-serif text-xl leading-snug">
                     {module}
@@ -139,8 +139,9 @@ export default function Fiction() {
           <h2 className={heading}>What You Can Do After Taking the Course</h2>
           <ul className="mt-6 grid gap-5 md:grid-cols-2">
             {course.outcomes.map((item) => (
-              <li key={item} className={prose}>
-                {item}
+              <li key={item} className="flex items-start gap-4 bg-paper p-6 font-serif text-xl leading-normal">
+                <Check aria-hidden="true" className="mt-1 size-5 shrink-0 text-forest" />
+                <span>{item}</span>
               </li>
             ))}
           </ul>
@@ -172,7 +173,7 @@ export default function Fiction() {
                 $20 <span className="text-ink/35">/</span> #27,500
               </p>
               <p className="mt-5 font-sans text-sm">
-                <span className="mb-3 block">Launch Price: $45 / ₦61,875</span>
+                <span className="mb-3 block">Launch Price: <span className="line-through decoration-rust decoration-2">$45 / ₦61,875</span></span>
                 <span className="text-ink/70">Original Price: </span>
                 <span className="font-medium line-through decoration-rust decoration-2">
                   $109 / ₦150,000
@@ -218,7 +219,7 @@ export default function Fiction() {
             <div className="relative aspect-[4/5] max-w-sm overflow-hidden bg-ink">
               <Image
                 src={site.assets.sogCoach}
-                alt="Esther Uzoamaka Okoloeze, writing instructor"
+                alt="Esther Uzoamaka Okoloeze, course instructor"
                 fill
                 sizes="(max-width: 1024px) 384px, 33vw"
                 className="object-cover"
@@ -226,7 +227,7 @@ export default function Fiction() {
             </div>
           </div>
           <div className="lg:col-span-7 lg:col-start-6">
-            <Eyebrow className="text-rust">Writing Instructor</Eyebrow>
+            <Eyebrow className="text-rust">Course Instructor</Eyebrow>
             <h2 className={cn(heading, "mt-6")}>Esther Uzoamaka Okoloeze</h2>
             <p className={cn(lead, "mt-7 text-ink/85")}>{course.instructor}</p>
           </div>

@@ -19,7 +19,7 @@ export async function GET(request: Request) {
   const client = getPublicClient();
   if (!client)
     return new Response("Preview is not configured", { status: 503 });
-  let destination = "/read-pubs";
+  let destination = "/pubs";
   if (slug) {
     if (!/^[a-z0-9-]{1,96}$/.test(slug))
       return new Response("Invalid slug", { status: 400 });
@@ -32,7 +32,7 @@ export async function GET(request: Request) {
           { cache: "no-store" },
         );
       if (!post) return new Response("Article not found", { status: 404 });
-      destination = `/read-pubs/${post.slug}`;
+      destination = `/pubs/${post.slug}`;
     } catch {
       return new Response("Preview unavailable", { status: 503 });
     }

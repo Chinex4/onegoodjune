@@ -1,5 +1,5 @@
 import { defineQuery } from "next-sanity";
-const fields = `_id,title,"slug":slug.current,excerpt,publishedAt,_updatedAt,mainImage,"text":pt::text(body),author->{_id,name,"slug":slug.current,role,bio,image},category->{_id,title,"slug":slug.current},additionalCategories[]->{_id,title,"slug":slug.current},tags[]->{_id,title,"slug":slug.current}`;
+const fields = `_id,sponsored,title,"slug":slug.current,excerpt,publishedAt,_updatedAt,mainImage,"text":pt::text(body),author->{_id,name,"slug":slug.current,role,bio,image},category->{_id,title,"slug":slug.current},additionalCategories[]->{_id,title,"slug":slug.current},tags[]->{_id,title,"slug":slug.current}`;
 const visible = `_type=="post" && defined(slug.current) && ($preview || (defined(publishedAt) && dateTime(publishedAt)<=dateTime(now())))`;
 // A post belongs to its main category and to any "Also appears in" category.
 const inCategory = (slug: string) =>
@@ -21,13 +21,13 @@ export const MAGAZINE_QUERY = defineQuery(`{
  "posts":select(count(posts)>0=>posts[]->{${fields}}, *[${visible} && (count(coalesce(^.categories,[]))==0 || category._ref in ^.categories[]._ref || count(additionalCategories[@._ref in ^.^.categories[]._ref])>0) && (count(coalesce(^.tags,[]))==0 || count(tags[@._ref in ^.^.tags[]._ref])>0)]|order(publishedAt desc)[0...4]{${fields}})}
 }`);
 export const POST_QUERY = defineQuery(
-  `*[${visible} && slug.current==$slug][0]{${fields},body,author->{_id,name,"slug":slug.current,role,bio,image,links}}`,
+  `*[${visible} && slug.current==$slug][0]{${fields},body,author->{_id,name,"slug":slug.current,role,bio,profileHeading,worksHeading,image,links}}`,
 );
 export const RELATED_QUERY = defineQuery(
   `*[${visible} && slug.current!=$slug && (category._ref==$categoryId || count(tags[@._ref in $tagIds])>0)]|order(publishedAt desc)[0...3]{${fields}}`,
 );
 export const AUTHOR_QUERY = defineQuery(
-  `*[_type=="author" && slug.current==$slug][0]{_id,name,"slug":slug.current,role,bio,image,links,"posts":*[${visible} && author._ref==^._id]|order(publishedAt desc){${fields}}}`,
+  `*[_type=="author" && slug.current==$slug][0]{_id,name,"slug":slug.current,role,bio,profileHeading,worksHeading,image,links,"posts":*[${visible} && author._ref==^._id]|order(publishedAt desc){${fields}}}`,
 );
 export const AUTHORS_SITEMAP_QUERY = defineQuery(
   `*[_type=="author" && defined(slug.current) && count(*[${visible} && author._ref==^._id])>0]{"slug":slug.current,_updatedAt}`,

@@ -56,7 +56,7 @@ async function Booking({ searchParams }: { searchParams: Params }) {
           reference and we&apos;ll send your booking link.
         </p>
         <Link
-          href="/author-consultation"
+          href="/consult"
           className={buttonStyles("ink", "mt-8")}
         >
           About the consultation

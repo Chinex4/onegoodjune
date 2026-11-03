@@ -1,5 +1,8 @@
 # Website video review — October 31, 2026
 
+Current completion status and remaining inputs: see [CLIENT-HANDOFF.md](./CLIENT-HANDOFF.md). Earlier outstanding-input lists below record the state at the time of that review.
+
+
 The user supplied five WhatsApp screen recordings and requested implementation of the spoken website corrections. After an initial privacy review rejected external upload, the user explicitly approved Descript. Only compressed audio tracks were uploaded; frames were reviewed locally. The original videos were not uploaded or published.
 
 Review project: https://web.descript.com/60c344b7-c2ea-4b67-a45b-aac46954a1ab

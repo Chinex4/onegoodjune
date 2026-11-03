@@ -3,8 +3,8 @@
 This covers every paid flow:
 - "Get instant access" on School of Growth.
 - "Join the Waitlist" on Write Fiction Like Great Movies.
-- "Book your author business consultation" on `/author-consultation`.
-- "Feature My Book" on `/launch-spotlight`.
+- "Book your author business consultation" on `/consult`.
+- "Feature My Book" on `/spotlight`.
 
 It also covers free event registrations on `/events`.
 
@@ -27,7 +27,7 @@ Prices live in `src/lib/programs.ts`:
 | Author Business Consultation | ₦101,250 | one-time, 60-minute session |
 | Launch Spotlight — Basic / Standard / Elite | ₦25,000 / ₦35,000 / ₦52,000 | one-time; the form also asks for the book title and release date |
 
-**Consultation booking.** After a paid consultation, the confirmation page shows "Choose your session time". That goes to `/author-consultation/book?reference=…`, a branded page that only unlocks for a paid consultation reference. It links to the Zoom Scheduler, which opens on its own page because Zoom won't render inside another site.
+**Consultation booking.** After a paid consultation, the confirmation page shows "Choose your session time". That goes to `/consult/book?reference=…`, a branded page that only unlocks for a paid consultation reference. It links to the client-provided Calendly booking page.
 
 Safety measures:
 - The secret key is used only on the server.
@@ -86,7 +86,7 @@ By default each checkout charges once for the current period. To bill Riser and 
 
 Checkout then creates a subscription. Paystack sends each renewal to the webhook, and it's recorded in `payments`, linked to the learner by email and plan.
 
-Builder's "pay in 2–4 installments" isn't automated yet. Learners currently pay the yearly amount in one go. Installment plans can be added as separate Paystack plans.
+Builder quarterly installments are available only after setting both `SOG_BUILDER_QUARTERLY_AMOUNT_NAIRA` and `PAYSTACK_PLAN_SOG_BUILDER_QUARTERLY`. The amount is in naira; the matching Paystack plan must use NGN and a quarterly interval. Checkout caps this option at four payments. Leave both unset until the client confirms the price. Rebuild/redeploy after configuring it. The original full-payment Builder option remains available.
 
 ### Going live
 

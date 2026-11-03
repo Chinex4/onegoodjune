@@ -66,7 +66,7 @@ const body = defineType({
 });
 const author = defineType({
   name: "author",
-  title: "Authors",
+  title: "Contributors",
   type: "document",
   fields: [
     defineField({
@@ -87,7 +87,9 @@ const author = defineType({
       type: "string",
     }),
     defineField({ name: "image", type: "editorialImage" }),
-    defineField({ name: "bio", type: "text", rows: 6 }),
+    defineField({ name: "bio", title: "Biography", type: "text", rows: 6 }),
+    defineField({ name: "profileHeading", title: "Profile section heading", type: "string", initialValue: "About the contributor" }),
+    defineField({ name: "worksHeading", title: "Published works heading", type: "string", initialValue: "Other published works" }),
     defineField({
       name: "links",
       title: "Website and social links",
@@ -147,6 +149,7 @@ const post = defineType({
   title: "Posts",
   type: "document",
   fields: [
+    defineField({ name: "sponsored", title: "Sponsored post", type: "boolean", initialValue: false, description: "Adds a disclosure. Spotlight posts are always labelled automatically, even when this is off." }),
     defineField({
       name: "title",
       type: "string",

@@ -1,3 +1,5 @@
+import { SponsoredLabel } from "@/components/editorial/sponsored-label";
+import { ArticleStart } from "@/components/editorial/article-start";
 import { Suspense } from "react";
 import { NewsletterSection } from "@/components/site/newsletter";
 import Image from "next/image";
@@ -33,7 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ...pageMetadata(
       post.title,
       post.excerpt || "A ONEGOODJUNE literary publication.",
-      `/read-pubs/${post.slug}`,
+      `/pubs/${post.slug}`,
     ),
     twitter: {
       card: "summary_large_image",
@@ -45,7 +47,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: "article",
       title: post.title,
       description: post.excerpt,
-      url: `/read-pubs/${post.slug}`,
+      url: `/pubs/${post.slug}`,
       publishedTime: post.publishedAt,
       modifiedTime: post._updatedAt,
       authors: post.author ? [post.author.name] : [],
@@ -77,10 +79,11 @@ async function Article({ params }: Props) {
         }
       : undefined,
     publisher: { "@type": "Organization", name: "ONEGOODJUNE" },
-    mainEntityOfPage: `${site.url}/read-pubs/${post.slug}`,
+    mainEntityOfPage: `${site.url}/pubs/${post.slug}`,
   };
   return (
     <>
+      <ArticleStart slug={slug} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -93,8 +96,8 @@ async function Article({ params }: Props) {
           <a
             href={
               post.category
-                ? `/read-pubs?category=${post.category.slug}`
-                : "/read-pubs"
+                ? `/pubs?category=${post.category.slug}`
+                : "/pubs"
             }
             className={cn(
               label,
@@ -103,6 +106,7 @@ async function Article({ params }: Props) {
           >
             {post.category?.title || "Publication"}
           </a>
+          <div><SponsoredLabel post={post} /></div>
           <h1 className="mt-4 font-serif text-[2.5rem] font-semibold leading-[1.08] tracking-[-0.015em] md:text-[4rem]">
             {post.title}
           </h1>

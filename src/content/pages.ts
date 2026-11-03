@@ -21,7 +21,18 @@ export const about = {
 export const submissionLines = between(
   "SUBMISSION PAGE",
   "PRIVACY POLICY PAGE",
-).map((line) =>
+).flatMap((line) => line.startsWith("Formatting:") ? [
+  "FORMATTING",
+  "•Format: Submit all work as a Word document (.docx). PDFs will not be accepted.",
+  "•Font: Crimson Text or Times New Roman, 12 pt",
+  "•Line spacing: 1.5 (set with the line spacing tool, not extra line breaks)",
+  "•Indentation: None, including first-line indents",
+  "•Alignment: Left-aligned (not justified)",
+  "GRAMMAR AND MECHANICS",
+  "•Spelling: Use American English (for example, ‘organize,’ not ‘organise;’ ‘color,’ not ‘colour’).",
+  "•Style guide: Follow The Chicago Manual of Style for grammar, editorial mechanics, and citations.",
+  "•Other style matters: Follow the guidelines on this submission page.",
+] : [line]).map((line) =>
   line
     .replace("Creative Submission", "Submissions")
     .replace(

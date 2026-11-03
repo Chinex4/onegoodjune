@@ -34,11 +34,11 @@ export const site = {
   },
 } as const;
 export const navigation = [
-  { label: "Home", href: "/" },
+  { label: "Home", href: "/home" },
   { label: "About", href: "/about" },
-  { label: "Read Pubs", href: "/read-pubs" },
+  { label: "Read Pubs", href: "/pubs" },
   { label: "Submissions", href: "/submissions" },
-  { label: "School of Growth", href: "/school-of-growth" },
-  { label: "Fiction Course", href: "/fiction-writing" },
+  { label: "School of Growth", href: "/sog" },
+  { label: "Fiction Course", href: "/fiction-course" },
   { label: "Events", href: "/events" },
 ];

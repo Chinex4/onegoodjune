@@ -12,7 +12,6 @@ import {
   heading,
   label,
   lead,
-  prose,
   title,
 } from "@/components/site/primitives";
 import { NewsletterSection } from "@/components/site/newsletter";
@@ -23,7 +22,7 @@ export const metadata: Metadata = {
     absolute:
       "ONEGOODJUNE — A creative studio for faith-based African visionaries",
   },
-  alternates: { canonical: "/" },
+  alternates: { canonical: "/home" },
 };
 // Sunshine marks storytelling, Earthy Green marks growth; straw sits between.
 const serviceAccents = [
@@ -34,7 +33,7 @@ const serviceAccents = [
 const experiences = [
   {
     ...home.fiction,
-    href: "/fiction-writing",
+    href: "/fiction-course",
     image: "/images/home/experience-fiction.jpg",
     kind: "Course · Launching Q1 2027",
     action: "Join the waitlist",
@@ -44,7 +43,7 @@ const experiences = [
   },
   {
     ...home.growth,
-    href: "/school-of-growth",
+    href: "/sog",
     image: "/images/home/experience-growth.jpg",
     kind: "Program · Career & personal brand",
     action: "Enroll today",
@@ -54,7 +53,7 @@ const experiences = [
   },
   {
     ...home.magazine,
-    href: "/read-pubs",
+    href: "/pubs",
     image: "/images/home/experience-magazine.jpg",
     kind: "Read Pubs · Literary magazine",
     action: "Read your first",
@@ -183,16 +182,7 @@ export default function Home() {
                       item.card,
                     )}
                   >
-                    <div className="relative aspect-[852/572] overflow-hidden bg-mist md:col-span-4">
-                      <Image
-                        src={item.image}
-                        alt=""
-                        fill
-                        sizes="(max-width: 768px) 100vw, 30vw"
-                        className="object-cover transition-transform duration-500 ease-out-soft motion-safe:group-hover:scale-[1.03]"
-                      />
-                    </div>
-                    <div className="px-2 pb-2 md:col-span-5 md:p-0">
+                    <div className="px-2 pb-2 md:col-span-9 md:p-0">
                       <p
                         className={cn(
                           label,
@@ -202,12 +192,9 @@ export default function Home() {
                       >
                         {String(i + 1).padStart(2, "0")} — {item.kind}
                       </p>
-                      <h3 className="mt-3 font-serif text-[1.5rem] font-semibold leading-tight md:text-[1.75rem]">
+                      <h3 className="mt-3 font-serif text-[1.25rem] font-semibold leading-snug md:text-[1.5rem]">
                         {item.title}
                       </h3>
-                      <p className={cn(prose, "mt-3 opacity-80")}>
-                        {item.description}
-                      </p>
                     </div>
                     <span
                       className={cn(

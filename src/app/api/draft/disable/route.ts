@@ -5,6 +5,6 @@ export async function POST(request: Request) {
   (await draftMode()).disable();
   return new Response(null, {
     status: 303,
-    headers: { Location: "/read-pubs", "Cache-Control": "no-store" },
+    headers: { Location: "/pubs", "Cache-Control": "no-store" },
   });
 }

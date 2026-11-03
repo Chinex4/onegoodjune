@@ -22,7 +22,7 @@ import { cn } from "@/lib/utils";
 export const metadata = pageMetadata(
   "Author Business Consultation",
   c.subtitle,
-  "/author-consultation",
+  "/consult",
 );
 function Terms({ className = "" }: { className?: string }) {
   return (

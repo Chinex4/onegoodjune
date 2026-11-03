@@ -15,8 +15,8 @@ test("the confirmed design-only event stays private until explicitly confirmed a
   assert(!isExampleEvent({ title, isExample: false }));
   assert(!isExampleEvent({ title: "A genuine future gathering" }));
 });
-test("hero dates use uppercase abbreviated American dates without inventing missing dates", () => {
-  assert.equal(heroDate("2026-10-30T10:00:00Z"), "OCT 30, 2026");
+test("hero dates use abbreviated American dates without inventing missing dates", () => {
+  assert.equal(heroDate("2026-10-30T10:00:00Z"), "Oct 30, 2026");
   assert.equal(heroDate(undefined), "Date to be confirmed");
   assert.equal(heroDate("invalid"), "Date to be confirmed");
 });
@@ -108,4 +108,35 @@ test("quarterly checkout checks the provider's interval/price and caps charges a
     if (key === undefined) delete process.env.PAYSTACK_SECRET_KEY;
     else process.env.PAYSTACK_SECRET_KEY = key;
   }
+});
+
+test("client dates include a two-digit day and remain in Lagos time", () => {
+  assert.equal(heroDate("2026-11-03T09:30:00Z"), "Nov 03, 2026");
+  assert.equal(heroDate("2026-11-02T23:30:00Z"), "Nov 03, 2026");
+});
+
+test("Spotlight disclosures follow both main and additional categories", async () => {
+  const { isSponsored } = await import("../src/lib/sponsored");
+  const spotlight = { _id: "spotlight", title: "Spotlight", slug: "spotlight" };
+  assert(isSponsored({ category: spotlight }));
+  assert(isSponsored({ additionalCategories: [spotlight], sponsored: false }));
+  assert(isSponsored({ sponsored: true }));
+  assert(!isSponsored({ category: { ...spotlight, slug: "craft" } }));
+});
+
+test("updated submission rules preserve submission details and all eighteen supplied terms", async () => {
+  const { spotlightTerms } = await import("../src/content/spotlight-terms");
+  assert.equal(spotlightTerms.length, 18);
+  assert(submissionLines.some(line => line.includes("PDFs will not be accepted")));
+  assert(submissionLines.some(line => line.includes("Times New Roman, 12 pt")));
+  assert(submissionLines.some(line => line.includes("Chicago Manual of Style")));
+  assert(submissionLines.some(line => line.includes("title-byline-year")));
+});
+
+test("the supplied creed preserves all four principles", async () => {
+  const { reviewContent } = await import("../src/content/pending-review");
+  assert.equal(reviewContent.creed.title, "Our Creed");
+  assert.equal(reviewContent.creed.subtitle, "Guiding Philosophies");
+  assert.equal(reviewContent.creed.principles.length, 4);
+  assert.equal(reviewContent.creed.principles[1], "Embrace joyful stewardship rooted in personal consecration, agency, accountability, and consistent action.");
 });

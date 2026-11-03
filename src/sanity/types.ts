@@ -20,10 +20,13 @@ export type Author = {
   slug?: string;
   role?: string;
   bio?: string;
+  profileHeading?: string;
+  worksHeading?: string;
   image?: EditorialImage;
   links?: { label: string; url: string }[];
 };
 export type Post = {
+  sponsored?: boolean;
   _id: string;
   title: string;
   slug: string;

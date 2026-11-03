@@ -5,8 +5,8 @@ import {
   listEventRegistrations,
 } from "@/lib/event-registrations";
 import { AdminHeader } from "./admin-header";
-const dateFormat = new Intl.DateTimeFormat("en-GB", {
-  day: "numeric",
+const dateFormat = new Intl.DateTimeFormat("en-US", {
+  day: "2-digit",
   month: "short",
   year: "numeric",
   hour: "2-digit",

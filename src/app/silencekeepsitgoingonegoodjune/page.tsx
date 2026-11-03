@@ -32,8 +32,8 @@ const statusStyle: Record<PaymentStatus, string> = {
   abandoned: "bg-mist text-ink/75",
   failed: "bg-rust/15 text-rust",
 };
-const dateFormat = new Intl.DateTimeFormat("en-GB", {
-  day: "numeric",
+const dateFormat = new Intl.DateTimeFormat("en-US", {
+  day: "2-digit",
   month: "short",
   year: "numeric",
   hour: "2-digit",

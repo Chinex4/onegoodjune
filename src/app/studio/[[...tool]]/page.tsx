@@ -22,7 +22,7 @@ export default function StudioPage() {
         Sanity has not been connected yet. Add your project ID and dataset to
         the environment configuration, then restart the application.
       </p>
-      <Link className="mt-8 inline-block underline" href="/read-pubs">
+      <Link className="mt-8 inline-block underline" href="/pubs">
         Return to the magazine
       </Link>
     </main>

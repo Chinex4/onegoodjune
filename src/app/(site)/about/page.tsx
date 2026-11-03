@@ -40,7 +40,7 @@ export default function About() {
           eyebrow="Our story"
           eyebrowSwatch="none"
           // Reading font, sized so each statement holds one line on phones.
-          titleClassName="font-serif text-[1.375rem] font-semibold leading-[1.3] min-[360px]:text-[1.5rem] sm:text-[2.125rem] lg:text-[2.625rem]"
+          titleClassName="font-serif text-[1.125rem] font-normal leading-[1.5] min-[360px]:text-[1.25rem] sm:text-[1.5rem] lg:text-[1.75rem]"
           title={about.opening.slice(0, 3).map((line, i) => (
             <span key={line} className="block whitespace-nowrap">
               {line.replace(/\.$/, "")}
@@ -81,20 +81,25 @@ export default function About() {
           </Reveal>
         </Container>
       </section>
-      {reviewContent.creed && (
-        <section className="py-8 md:py-12">
-          <Container>
-            <h2 className={heading}>Our creed</h2>
-            <div className="mt-6 space-y-4">
-              {reviewContent.creed.map((p) => (
-                <p key={p} className={prose}>
-                  {p}
-                </p>
-              ))}
-            </div>
-          </Container>
-        </section>
-      )}
+      <section aria-labelledby="creed-title" className="bg-paper py-10 md:py-14">
+        <Container className="grid gap-8 lg:grid-cols-12 lg:gap-10">
+          <Reveal className="lg:col-span-4">
+            <Eyebrow className="text-forest" swatch="none">{reviewContent.creed.title}</Eyebrow>
+            <h2 id="creed-title" className={cn(heading, "mt-5 max-w-xs")}>{reviewContent.creed.subtitle}</h2>
+            <p className={cn(prose, "mt-5 max-w-sm text-ink/75")}>{reviewContent.creed.introduction}</p>
+          </Reveal>
+          <ul className="lg:col-span-7 lg:col-start-6">
+            {reviewContent.creed.principles.map((principle, i) => (
+              <li key={principle} className="border-t border-ink/15 py-5 first:border-forest md:py-6">
+                <Reveal delay={i * 0.04} className="flex items-start gap-5 md:gap-7">
+                  <span aria-hidden="true" className={cn(label, "mt-1.5 shrink-0 text-forest")}>{String(i + 1).padStart(2, "0")}</span>
+                  <p className="max-w-2xl font-serif text-lg leading-normal md:text-xl">{principle}</p>
+                </Reveal>
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </section>
       <Container className={sectionSpace}>
         <div className="grid gap-6 lg:grid-cols-12 lg:items-end lg:gap-10">
           <div className="lg:col-span-6">
@@ -168,8 +173,8 @@ export default function About() {
             </p>
           </div>
           <div className="flex flex-wrap gap-3 lg:col-span-5 lg:justify-end">
-            <ActionLink href="/read-pubs">Read OGJ Stacks</ActionLink>
-            <ActionLink href="/school-of-growth" variant="outline">
+            <ActionLink href="/pubs">Read OGJ Stacks</ActionLink>
+            <ActionLink href="/sog" variant="outline">
               Join SOG
             </ActionLink>
           </div>

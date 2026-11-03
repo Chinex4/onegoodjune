@@ -26,7 +26,7 @@ import { cn } from "@/lib/utils";
 export const metadata = pageMetadata(
   "School of Growth",
   sog.introduction,
-  "/school-of-growth",
+  "/sog",
 );
 const planIds = ["sog-riser", "sog-builder", "sog-visionary"];
 // Opens the registration form; payment happens on Paystack afterwards.
@@ -443,6 +443,12 @@ export default function Growth() {
                         {price.period}
                       </span>
                     </p>
+                    {planIds[i] === "sog-builder" && (
+                      <p className="mt-5 border-t border-current/20 pt-4 font-sans text-sm leading-normal">
+                        Or $14 / ₦18,750 per quarter<br />
+                        <span className="opacity-75">4 quarterly payments · ₦75,000 total</span>
+                      </p>
+                    )}
                     <p className="mt-6 font-serif text-lg leading-[1.5] opacity-90">
                       {plan.description}
                     </p>

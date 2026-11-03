@@ -1,12 +1,7 @@
+import { heroDate } from "./editorial-format";
 // Events are scheduled in Lagos time (WAT); show them that way everywhere.
 const zone = { timeZone: "Africa/Lagos" } as const;
-export const eventDate = (iso: string) =>
-  new Intl.DateTimeFormat("en-US", {
-    ...zone,
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  }).format(new Date(iso));
+export const eventDate = heroDate;
 export const eventTime = (iso: string) =>
   new Intl.DateTimeFormat("en-US", {
     ...zone,

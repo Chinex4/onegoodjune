@@ -1,3 +1,4 @@
+import { SponsoredLabel } from "@/components/editorial/sponsored-label";
 import { heroDate } from "@/lib/editorial-format";
 import { Suspense } from "react";
 import Link from "next/link";
@@ -26,14 +27,14 @@ import { cn } from "@/lib/utils";
 export const metadata = pageMetadata(
   "Read Pubs",
   "Fiction, poetry, essays, creative nonfiction and moving pieces on industry shifts by contemporary faith-based voices in Africa.",
-  "/read-pubs",
+  "/pubs",
 );
 type Params = Promise<{ category?: string; page?: string }>;
 function magazineLink(category: string, page = 1) {
   const params = new URLSearchParams();
   if (category) params.set("category", category);
   if (page > 1) params.set("page", String(page));
-  return `/read-pubs${params.size ? `?${params}` : ""}`;
+  return `/pubs${params.size ? `?${params}` : ""}`;
 }
 function HeroSlide({ post, first }: { post: Post; first: boolean }) {
   return (
@@ -46,16 +47,17 @@ function HeroSlide({ post, first }: { post: Post; first: boolean }) {
         className="absolute inset-0 [&_span]:hidden"
       />
       <div className="relative flex min-h-[280px] flex-col items-center justify-end bg-black/55 px-6 py-8 md:min-h-[480px] md:px-12 md:py-12">
-        <p className="font-sans text-xs font-medium uppercase tracking-wide">
+        <SponsoredLabel post={post} dark />
+        <p className="font-sans text-xs font-medium tracking-wide">
           {post.author?.name ?? "ONEGOODJUNE"} · {heroDate(post.publishedAt)}
         </p>
         <h2 className="mt-4 max-w-4xl font-serif text-2xl font-semibold leading-tight md:text-5xl">
-          <Link href={`/read-pubs/${post.slug}`} className="hover:underline">
+          <Link href={`/pubs/${post.slug}`} className="hover:underline">
             {post.title}
           </Link>
         </h2>
         <Link
-          href={`/read-pubs/${post.slug}`}
+          href={`/pubs/${post.slug}`}
           className={buttonStyles("white", "mt-6")}
         >
           Read story
@@ -134,7 +136,7 @@ async function Magazine({ searchParams }: { searchParams: Params }) {
             className="-mx-5 flex gap-x-5 overflow-x-auto px-5 pb-1 sm:mx-0 sm:flex-wrap sm:px-0"
           >
             <Link
-              href="/read-pubs"
+              href="/pubs"
               aria-current={!category ? "page" : undefined}
               className="inline-flex min-h-11 shrink-0 items-center font-heading text-[1.125rem] tracking-[-0.01em] text-ink/70 transition-colors hover:text-ink aria-[current=page]:text-rust md:text-[1.25rem]"
             >
@@ -326,7 +328,7 @@ export default function Publications({
             </p>
           </div>
           <Link
-            href="/launch-spotlight"
+            href="/spotlight"
             className={buttonStyles("ink", "shrink-0")}
           >
             Feature My Book

@@ -59,7 +59,7 @@ export function SourceSections({
         <section
           key={section.title}
           id={`section-${i + 1}`}
-          className="scroll-mt-28 border-t border-ink/15 py-10 first:border-t-0 first:pt-0 md:py-12"
+          className="scroll-mt-28 border-t border-ink/15 py-6 first:border-t-0 first:pt-0 md:py-8"
         >
           {numbered && (
             <p className={cn(label, "mb-3 text-rust")}>

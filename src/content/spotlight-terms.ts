@@ -1,0 +1,21 @@
+// Client-supplied November 3, 2026. Preserve the approved wording.
+export const spotlightTerms = [
+  ["The service.", "Launch Spotlight is a paid, sponsored feature page on OneGoodJune Pubs promoting an author's book, with the extras listed in the package the author chooses."],
+  ["Eligibility and editorial discretion.", "We feature faith-based books that fit our values and standards. We may decline any submission, and if we decline before work begins, the author receives a full refund."],
+  ["Payment.", "Payment is made in full, in naira, before work begins. Prices are those shown in the package list at the time of payment."],
+  ["Refunds.", "An author who cancels before we start drafting or editing is refunded. Once drafting, editing, or publishing has started, payment is non-refundable."],
+  ["Content and rights.", "The author keeps ownership of their book and materials. The author confirms they own, or have permission to use, every text, image and link they submit, and gives us permission to publish them on our website, newsletter and social media, and in the yearly ‘wrapped’ series."],
+  ["Features we write.", "When we write the feature, the author may reuse the text for their own promotion, with credit to OneGoodJune Pubs."],
+  ["Sponsored label.", "Every feature is clearly marked as a sponsored launch announcement."],
+  ["Revisions.", "Basic includes one light edit. Standard and Premium include two rounds of revisions. Further changes may be charged."],
+  ["Timelines.", "The author must send all materials and approvals by the deadlines we give. If they are late, the publish date and any newsletter or social slots may move or be lost without refund."],
+  ["Release date changes.", "The author must tell us at once if the release date changes. We will move the feature once at no cost, and further moves may be charged."],
+  ["Duration.", "The page stays live for 12 months from its publish date. The feature is not renewable, and after 12 months it will be removed or archived."],
+  ["Link accuracy.", "The author is responsible for the accuracy of their links. We will fix broken links or wrong dates free of charge during the 12 months if the author tells us."],
+  ["Yearly ‘wrapped’.", "Featured books are included in our yearly ‘wrapped’ series. We may use the cover, title, author name and overall figures as part of the wrapped series which are publicized to our social media and newsletter community."],
+  ["Our commitment.", "We will place the book in front of our community of faith-based readers, and give them a clear path to the author's sales page. Because purchases and readership depend on factors beyond our control, such as pricing, timing, and reader choice, we cannot guarantee specific sales or results."],
+  ["Removal.", "We may remove a feature at any time if the content breaks these terms, is misleading, or no longer fits our values. A refund is not owed in that case."],
+  ["Limit of liability.", "Our responsibility is limited to the amount the author paid for the feature."],
+  ["Governing law.", "These terms are governed by the laws of the Federal Republic of Nigeria."],
+  ["Changes.", "We may update these terms for future clients. The version in use at the time of payment applies to that feature."],
+] as const;

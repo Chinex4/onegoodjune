@@ -29,7 +29,7 @@ export const programs: Program[] = [
     price: "₦12,500",
     period: "every quarter",
     planEnv: "PAYSTACK_PLAN_SOG_RISER",
-    returnPath: "/school-of-growth",
+    returnPath: "/sog",
   },
   {
     id: "sog-builder",
@@ -39,7 +39,7 @@ export const programs: Program[] = [
     price: "₦75,000",
     period: "per year",
     planEnv: "PAYSTACK_PLAN_SOG_BUILDER",
-    returnPath: "/school-of-growth",
+    returnPath: "/sog",
   },
   {
     id: "sog-visionary",
@@ -49,7 +49,7 @@ export const programs: Program[] = [
     price: "₦55,000",
     period: "every quarter (founding price)",
     planEnv: "PAYSTACK_PLAN_SOG_VISIONARY",
-    returnPath: "/school-of-growth",
+    returnPath: "/sog",
   },
   {
     id: "fiction-waitlist",
@@ -58,7 +58,7 @@ export const programs: Program[] = [
     amount: 27_500_00,
     price: "₦27,500",
     period: "one-time waitlist price",
-    returnPath: "/fiction-writing",
+    returnPath: "/fiction-course",
   },
   {
     id: "author-consultation",
@@ -67,8 +67,8 @@ export const programs: Program[] = [
     amount: 101_250_00,
     price: "₦101,250",
     period: "60 minutes · one-on-one · online",
-    returnPath: "/author-consultation",
-    successPath: "/author-consultation/book",
+    returnPath: "/consult",
+    successPath: "/consult/book",
   },
   ...(
     [
@@ -83,7 +83,7 @@ export const programs: Program[] = [
     amount,
     price,
     period: "12 months live",
-    returnPath: "/launch-spotlight",
+    returnPath: "/spotlight",
     requiresBook: true,
   })),
 ];
@@ -114,7 +114,7 @@ export function builderQuarterly(): Program | undefined {
     period: "every quarter · 4 payments",
     planEnv: "PAYSTACK_PLAN_SOG_BUILDER_QUARTERLY",
     billingCycles: 4,
-    returnPath: "/school-of-growth",
+    returnPath: "/sog",
   };
 }
 export function enrollmentPrograms() {

@@ -18,7 +18,7 @@ function ActiveLink({ item, className, onClick, children }: NavProps) {
   const pathname = usePathname();
   const current =
     pathname === item.href ||
-    (item.href !== "/" && pathname.startsWith(item.href + "/"));
+    (item.href !== "/home" && pathname.startsWith(item.href + "/"));
   return (
     <Link
       href={item.href}
@@ -29,6 +29,14 @@ function ActiveLink({ item, className, onClick, children }: NavProps) {
       {children ?? item.label}
     </Link>
   );
+}
+function HomePrograms() {
+  const pathname = usePathname();
+  if (pathname !== "/home" && pathname !== "/") return null;
+  return <nav aria-label="Explore our programs" className="grid grid-cols-2 font-sans text-xs font-medium sm:text-sm">
+    <Link href="/sog" className="group flex min-h-14 items-center justify-between gap-2 bg-lime px-4 py-3 text-ink hover:bg-sage sm:px-8"><span><span className="block text-[0.625rem] uppercase tracking-wide opacity-70">Enrol now</span>School of Growth</span><ArrowIcon /></Link>
+    <Link href="/fiction-course" className="group flex min-h-14 items-center justify-between gap-2 bg-ink px-4 py-3 text-white hover:bg-forest sm:px-8"><span><span className="block text-[0.625rem] uppercase tracking-wide text-sunshine">Join the waitlist</span>Fiction Course</span><ArrowIcon /></Link>
+  </nav>;
 }
 function NavItem(props: NavProps) {
   return (
@@ -66,25 +74,10 @@ export function Header() {
   };
   return (
     <header className="sticky top-0 z-40 border-b border-ink/10 bg-white/90 backdrop-blur-md supports-[backdrop-filter]:bg-white/80">
-      <div className="bg-lime px-3 py-2 text-center font-sans text-xs text-ink">
-        <span>Enrol: </span>
-        <Link
-          href="/school-of-growth"
-          className="inline-flex min-h-8 items-center px-2 underline-offset-4 hover:underline"
-        >
-          School of Growth
-        </Link>
-        <span aria-hidden="true"> | </span>
-        <Link
-          href="/fiction-writing"
-          className="inline-flex min-h-8 items-center px-2 underline-offset-4 hover:underline"
-        >
-          Fiction Course
-        </Link>
-      </div>
+      <Suspense><HomePrograms /></Suspense>
       <div className={cn(shell, "flex h-[4.5rem] items-center gap-8 md:h-20")}>
         <Link
-          href="/"
+          href="/home"
           aria-label="ONEGOODJUNE home"
           className="font-heading text-[1.5rem] leading-none tracking-[-0.03em] md:text-[1.75rem]"
         >
@@ -95,7 +88,7 @@ export function Header() {
           className="ml-auto hidden items-center gap-7 lg:flex xl:gap-9"
         >
           {navigation
-            .filter((item) => item.href !== "/")
+            .filter((item) => item.href !== "/home")
             .map((item) => (
               <NavItem key={item.href} item={item} className={desktopLink} />
             ))}
@@ -123,8 +116,8 @@ export function Header() {
           className="group -mr-2 ml-auto grid size-12 place-items-center lg:hidden"
         >
           <span aria-hidden="true" className="flex w-12 flex-col gap-[6px]">
-            <span className="h-[2px] w-8 bg-current motion-safe:transition-transform motion-safe:group-hover:translate-x-1" />
-            <span className="h-[2px] w-8 bg-current motion-safe:transition-transform motion-safe:group-hover:-translate-x-1" />
+            <span className="h-[2px] w-12 bg-current motion-safe:transition-transform motion-safe:group-hover:translate-x-1" />
+            <span className="h-[2px] w-12 bg-current motion-safe:transition-transform motion-safe:group-hover:-translate-x-1" />
           </span>
         </button>
       </div>
@@ -138,7 +131,7 @@ export function Header() {
         <div className={cn(shell, "flex min-h-full flex-col pb-10")}>
           <div className="flex h-[4.5rem] items-center justify-between md:h-20">
             <Link
-              href="/"
+              href="/home"
               onClick={close}
               className="font-heading text-[1.5rem] leading-none tracking-[-0.03em] md:text-[1.75rem]"
             >

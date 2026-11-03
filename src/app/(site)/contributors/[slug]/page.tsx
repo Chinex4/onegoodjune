@@ -33,7 +33,7 @@ async function Contributor({ params }: Props) {
   const { slug } = await params;
   const author = await getAuthor(slug);
   if (!author) notFound();
-  const photo = imageUrl(author.image, 600);
+  const photo = imageUrl(author.image, 1800) || (author.name.trim().toLowerCase() === "chidinma nnalue" ? "/images/chidinma-nnalue.jpg" : null);
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -65,7 +65,7 @@ async function Contributor({ params }: Props) {
             </div>
           )}
           <div className="mt-6 max-w-3xl">
-            <p className={cn(label, "text-rust")}>About the contributor</p>
+            <p className={cn(label, "text-rust")}>{author.profileHeading || "About the contributor"}</p>
             <h1 className="mt-3 font-serif text-[1.75rem] font-semibold leading-tight tracking-[-0.01em] md:text-[2.25rem]">
               {author.name}
             </h1>
@@ -100,7 +100,7 @@ async function Contributor({ params }: Props) {
         </header>
         <ColorBar className="mt-px h-1" />
         <section className="py-12 md:py-16">
-          <h2 className={cn(subheading, "mb-8")}>Other published works</h2>
+          <h2 className={cn(subheading, "mb-8")}>{author.worksHeading || "Other published works"}</h2>
           <div className="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
             {author.posts.map((post) => (
               <ArticleCard key={post._id} post={post} />

@@ -27,8 +27,8 @@ export function Countdown({ className = "" }: { className?: string }) {
     );
   return (
     <div className={className}>
-      <p className={cn(label, "opacity-70")}>
-        Launching February 5, 2027 · Lagos time
+      <p className={cn(label, "normal-case whitespace-nowrap text-[0.55rem] tracking-[0.03em] opacity-70 min-[360px]:text-[0.625rem] sm:text-[0.6875rem]")}>
+        Launching Feb 05, 2027 · Lagos time
       </p>
       <div
         role="timer"

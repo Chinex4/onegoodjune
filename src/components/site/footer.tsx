@@ -56,7 +56,7 @@ const columns = [
     title: "Studio",
     links: [
       ...navigation.filter((item) =>
-        ["/about", "/read-pubs", "/submissions"].includes(item.href),
+        ["/about", "/pubs", "/submissions"].includes(item.href),
       ),
       { label: "Events", href: "/events" },
     ],
@@ -65,10 +65,10 @@ const columns = [
     title: "Programs",
     links: [
       ...navigation.filter((item) =>
-        ["/school-of-growth", "/fiction-writing"].includes(item.href),
+        ["/sog", "/fiction-course"].includes(item.href),
       ),
-      { label: "Author Consultation", href: "/author-consultation" },
-      { label: "Launch Spotlight", href: "/launch-spotlight" },
+      { label: "Author Consultation", href: "/consult" },
+      { label: "Launch Spotlight", href: "/spotlight" },
     ],
   },
 ];
@@ -128,7 +128,7 @@ export function Footer() {
         {/* Sized in container units so the wordmark always spans the column. */}
         <div className="@container mt-16 md:mt-24">
           <Link
-            href="/"
+            href="/home"
             aria-label="ONEGOODJUNE home"
             className="block whitespace-nowrap font-heading text-[1.75rem] md:text-[2.5rem] leading-[0.95] tracking-[-0.035em] transition-colors hover:text-lime"
           >

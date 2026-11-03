@@ -48,3 +48,11 @@ No code change, deployment, shared password, or API write token is required just
 - **Studio says Sanity is not connected:** configure `NEXT_PUBLIC_SANITY_PROJECT_ID` and `NEXT_PUBLIC_SANITY_DATASET` in the environment serving the app, then restart locally or redeploy. The dataset defaults to `production` in this project.
 
 Keep your own administrator access until the client's access has been verified. Adding a member does not transfer project ownership or billing responsibility.
+
+## Editing contributor pages (November 3 update)
+
+Open `/studio` → **Contributors** (the existing author documents). Select the contributor and edit their name, short description, biography, portrait, image alternative text, website/social links, **Profile section heading**, and **Published works heading**. Publish when ready. The public page reads the published document; draft preview remains separate. You do not need the payments dashboard to edit these pages.
+
+Chidinma's supplied biography, links and November 3 portrait are available as initial fallbacks. A portrait uploaded to her Sanity record takes priority. To change it, upload the new portrait there, set its hotspot/crop and alternative text, then publish. Her supplied local portrait is `/images/chidinma-nnalue.jpg`. Other contributors use their own Sanity records, with no substituted photograph.
+
+Posts in the Spotlight main category **or** “Also appears in” category automatically display “Sponsored launch announcement” on their cards and article pages. The **Sponsored post** switch lets an editor disclose sponsored posts in other categories too; it cannot suppress a Spotlight disclosure.
