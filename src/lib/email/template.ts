@@ -55,6 +55,9 @@ export function welcomeEmail(programId: string, name: string) {
       : program.group === "launch-spotlight"
         ? { label: "Open the Launch Spotlight form", url: spotlightFormUrl }
         : null;
+  const actionHeading = program.group === "consultation"
+    ? "In case you haven't scheduled your session, use the button below to do so now."
+    : null;
   // Only literal, client-supplied URLs become links. All personalized text is escaped.
   const paragraph = (value: string) =>
     escapeHtml(value)
@@ -75,6 +78,7 @@ export function welcomeEmail(programId: string, name: string) {
 <tr><td height="5" style="background:#b6e266;font-size:0;line-height:0">&nbsp;</td></tr>
 <tr><td style="padding:30px 28px 12px"><p style="margin:0 0 14px;font:14px Arial,sans-serif;color:#2d6e0b">${escapeHtml(d.title)}</p><h1 style="margin:0;font:normal 28px/1.3 Georgia,serif">${escapeHtml(subject.replace(/^Special: /, ""))}</h1></td></tr>
 <tr><td style="padding:12px 28px 28px;font:17px/1.75 Georgia,serif"><p style="margin:0 0 20px">${escapeHtml(greeting)}</p>${paragraphs.map((p) => `<p style="margin:0 0 20px">${paragraph(p)}</p>`).join("")}
+${actionHeading ? `<h2 style="margin:24px 0 16px;font:600 18px/1.5 Georgia,serif">${escapeHtml(actionHeading)}</h2>` : ""}
 ${action ? `<table role="presentation" cellspacing="0" cellpadding="0"><tr><td bgcolor="#2d6e0b" style="padding:15px 20px"><a href="${escapeHtml(action.url)}" style="display:inline-block;color:#ffffff;font:14px/1.5 Arial,sans-serif;text-decoration:none">${action.label}</a></td></tr></table><p style="margin:16px 0 0;font:13px/1.6 Arial,sans-serif;word-break:break-word">Or open: <a href="${escapeHtml(action.url)}" style="color:#2d6e0b">${escapeHtml(action.url)}</a></p>` : ""}</td></tr>
 <tr><td style="padding:24px 28px;background:#000000;color:#ffffff"><p style="margin:0 0 12px;font:bold 16px Georgia,serif">ONEGOODJUNE</p><p style="margin:0 0 14px;font:14px/1.6 Georgia,serif">Raising the bar in faith-based African storytelling. Helping creative minds flourish.</p><a href="mailto:sayhi@onegoodjune.com" style="font:13px Arial,sans-serif;color:#b6e266">sayhi@onegoodjune.com</a><p style="margin:14px 0 0;font:12px/1.6 Arial,sans-serif">Sent in response to your ${escapeHtml(program.name)} registration.</p></td></tr>
 </table></td></tr></table></body></html>`;
@@ -84,6 +88,7 @@ ${action ? `<table role="presentation" cellspacing="0" cellpadding="0"><tr><td b
     text: [
       greeting,
       ...paragraphs,
+      ...(actionHeading ? [actionHeading] : []),
       ...(action ? [`${action.label}: ${action.url}`] : []),
     ].join("\n\n"),
   };
