@@ -26,6 +26,7 @@ export type Author = {
   links?: { label: string; url: string }[];
 };
 export type Post = {
+  seo?: { title?: string; description?: string; image?: EditorialImage };
   sponsored?: boolean;
   _id: string;
   title: string;

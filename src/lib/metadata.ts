@@ -1,3 +1,4 @@
+import type { Post } from "@/sanity/types";
 import type { Metadata } from "next";
 export function pageMetadata(
   title: string,
@@ -21,5 +22,12 @@ export function pageMetadata(
       description,
       images: ["/opengraph-image"],
     },
+  };
+}
+
+export function articleSearchCopy(post: Post) {
+  return {
+    title: post.seo?.title?.trim() || post.title,
+    description: post.seo?.description?.trim() || post.excerpt || "A ONEGOODJUNE literary publication.",
   };
 }

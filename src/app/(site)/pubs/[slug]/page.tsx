@@ -21,7 +21,7 @@ import {
   subheading,
 } from "@/components/site/primitives";
 import { cn } from "@/lib/utils";
-import { pageMetadata } from "@/lib/metadata";
+import { articleSearchCopy, pageMetadata } from "@/lib/metadata";
 import { site } from "@/lib/site-config";
 import type { Metadata } from "next";
 type Props = { params: Promise<{ slug: string }> };
@@ -30,23 +30,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = await getPost(slug);
   if (!post)
     return { title: "Publication not found", robots: { index: false } };
-  const image = imageUrl(post.mainImage, 1200);
+  const image = imageUrl(post.seo?.image, 1200) || imageUrl(post.mainImage, 1200);
+  const { title: searchTitle, description: searchDescription } = articleSearchCopy(post);
   return {
     ...pageMetadata(
-      post.title,
-      post.excerpt || "A ONEGOODJUNE literary publication.",
+      searchTitle,
+      searchDescription,
       `/pubs/${post.slug}`,
     ),
     twitter: {
       card: "summary_large_image",
-      title: post.title,
-      description: post.excerpt,
+      title: searchTitle,
+      description: searchDescription,
       images: [image || "/opengraph-image"],
     },
     openGraph: {
       type: "article",
-      title: post.title,
-      description: post.excerpt,
+      title: searchTitle,
+      description: searchDescription,
       url: `/pubs/${post.slug}`,
       publishedTime: post.publishedAt,
       modifiedTime: post._updatedAt,

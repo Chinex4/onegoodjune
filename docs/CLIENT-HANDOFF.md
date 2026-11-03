@@ -118,3 +118,8 @@ Creed, Spotlight terms, Chidinma portrait, submission style wording and requeste
 Experience images and descriptions restored on desktop and mobile at the user’s request. Builder enrollment choices are labelled Builder (Pay Once) and Builder (Pay x4), grouped before Visionary; quarterly cadence reads every quarter without repeating the payment count. The four-payment billing cap is unchanged. Email-footer tagline has no forced line break. Consultation confirmation uses the supplied confirmed-payment wording and Schedule Your Session CTA. Magazine masthead reads ONEGOODJUNE Pubs.
 
 Featured-image master recommendation: **1800 × 1200 px, 3:2 landscape** (1200 × 800 px minimum recommended). Standard cards use 3:2; featured cards may crop to 4:3; hero crops vary with viewport and article headers use 2:1 desktop / 16:10 mobile. Keep key faces/details central and avoid embedded titles/text near edges. The website renders the article title separately. Use a compressed JPEG or WebP where practical, and provide image alternative text. This is a recommended source size, not a fixed upload constraint.
+
+
+## Analytics and Sanity SEO update
+
+GA4 ID G-88EXS6ZTJH is integrated with analytics preferences and explicit page-view measurement. Activate with NEXT_PUBLIC_GA_ENABLED=true in Vercel Production only after turning off the stream’s Enhanced measurement. Sanity Posts now include Search & sharing (SEO) overrides for title, description and sharing image. See [SEO-AND-ANALYTICS.md](./SEO-AND-ANALYTICS.md) for the complete account setup, verification, sitemap and editor guide.

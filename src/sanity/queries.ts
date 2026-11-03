@@ -21,7 +21,7 @@ export const MAGAZINE_QUERY = defineQuery(`{
  "posts":select(count(posts)>0=>posts[]->{${fields}}, *[${visible} && (count(coalesce(^.categories,[]))==0 || category._ref in ^.categories[]._ref || count(additionalCategories[@._ref in ^.^.categories[]._ref])>0) && (count(coalesce(^.tags,[]))==0 || count(tags[@._ref in ^.^.tags[]._ref])>0)]|order(publishedAt desc)[0...4]{${fields}})}
 }`);
 export const POST_QUERY = defineQuery(
-  `*[${visible} && slug.current==$slug][0]{${fields},body,author->{_id,name,"slug":slug.current,role,bio,profileHeading,worksHeading,image,links}}`,
+  `*[${visible} && slug.current==$slug][0]{${fields},body,seo,author->{_id,name,"slug":slug.current,role,bio,profileHeading,worksHeading,image,links}}`,
 );
 export const RELATED_QUERY = defineQuery(
   `*[${visible} && slug.current!=$slug && (category._ref==$categoryId || count(tags[@._ref in $tagIds])>0)]|order(publishedAt desc)[0...3]{${fields}}`,

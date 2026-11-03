@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+import { GoogleAnalytics } from "@/components/analytics/google-analytics";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Crimson_Text, Zalando_Sans } from "next/font/google";
@@ -59,6 +61,7 @@ export default function RootLayout({
     >
       <body id="top">
         <MotionProvider>{children}</MotionProvider>
+        <Suspense fallback={null}><GoogleAnalytics enabled={process.env.NEXT_PUBLIC_GA_ENABLED === "true" && process.env.NODE_ENV === "production" && process.env.VERCEL_ENV !== "preview"} /></Suspense>
       </body>
     </html>
   );

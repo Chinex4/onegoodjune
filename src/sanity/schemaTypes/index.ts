@@ -149,6 +149,15 @@ const post = defineType({
   title: "Posts",
   type: "document",
   fields: [
+    defineField({
+      name: "seo", title: "Search & sharing (SEO)", type: "object", options: { collapsible: true, collapsed: true },
+      description: "Optional overrides. Leave blank to use the article title, excerpt and featured image. These settings do not change the article itself.",
+      fields: [
+        defineField({ name: "title", title: "Search title", type: "string", description: "Aim for a clear, specific title around 50–60 characters. ONEGOODJUNE is added automatically.", validation: rule => rule.max(70).warning() }),
+        defineField({ name: "description", title: "Search description", type: "text", rows: 3, description: "Summarise this particular article naturally, usually around 140–160 characters. Google may show a different snippet.", validation: rule => rule.max(170).warning() }),
+        defineField({ name: "image", title: "Sharing image", type: "editorialImage", description: "Optional social-preview image, recommended 1200 × 630 px. Does not replace the article featured image." }),
+      ],
+    }),
     defineField({ name: "sponsored", title: "Sponsored post", type: "boolean", initialValue: false, description: "Adds a disclosure. Spotlight posts are always labelled automatically, even when this is off." }),
     defineField({
       name: "title",
