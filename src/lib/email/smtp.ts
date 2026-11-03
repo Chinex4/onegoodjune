@@ -48,7 +48,7 @@ export async function sendWelcomeMail(input: {
   const transport = nodemailer.createTransport(options);
   const result = await transport.sendMail({
     ...input,
-    from: { name: "ONEGOODJUNE", address: from },
+    from: { name: "OneGoodJune", address: from },
     replyTo,
   });
   if (!result.accepted?.length || result.rejected?.length)
