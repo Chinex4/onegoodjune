@@ -1,3 +1,4 @@
+import { AnalyticsPreferencesLink } from "@/components/analytics/preferences-link";
 import Link from "next/link";
 import { ArrowUp } from "lucide-react";
 import { navigation, site } from "@/lib/site-config";
@@ -147,6 +148,7 @@ export function Footer() {
           >
             Privacy Policy
           </Link>
+          <AnalyticsPreferencesLink enabled={process.env.NEXT_PUBLIC_GA_ENABLED === "true" && process.env.NODE_ENV === "production" && process.env.VERCEL_ENV !== "preview"} />
           <a
             href="#top"
             className="group inline-flex min-h-10 items-center gap-2 justify-self-end hover:text-lime"

@@ -3,7 +3,7 @@ import Script from "next/script";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { analyticsLocation, analyticsReferrer, GA_ID, trackablePath } from "@/lib/analytics";
+import { analyticsLocation, analyticsPromptPath, analyticsReferrer, GA_ID, trackablePath } from "@/lib/analytics";
 
 type Consent = "accepted" | "declined" | "unset";
 const storageKey = "ogj-analytics-consent";
@@ -51,6 +51,11 @@ export function GoogleAnalytics({ enabled }: { enabled: boolean }) {
   const path = usePathname();
   const consent = useSyncExternalStore(subscribe, snapshot, serverSnapshot);
   const [preferences, setPreferences] = useState(false);
+  useEffect(() => {
+    const open = () => setPreferences(true);
+    window.addEventListener("ogj-open-analytics-preferences", open);
+    return () => window.removeEventListener("ogj-open-analytics-preferences", open);
+  }, []);
   const [ready, setReady] = useState(false);
   const initialized = useRef(false);
   const previous = useRef<string | null>(null);
@@ -96,13 +101,13 @@ export function GoogleAnalytics({ enabled }: { enabled: boolean }) {
         }
         setReady(true);
       }} />}
-    {consent === "unset" || preferences ? <aside aria-label="Analytics preferences" className="fixed inset-x-4 bottom-4 z-[80] mx-auto max-w-xl border border-ink/20 bg-white p-5 text-ink shadow-lg sm:p-6">
-      <p className="font-sans text-sm font-semibold">Analytics preferences</p>
-      <p className="mt-2 font-serif text-base leading-normal">We use Google Analytics to understand how visitors use our website. You can accept or decline analytics cookies. <Link href="/privacy-policy" className="underline underline-offset-4">Privacy Policy</Link></p>
-      <div className="mt-4 flex flex-wrap gap-3">
-        <button type="button" onClick={() => select("accepted")} className="min-h-11 bg-ink px-5 font-sans text-sm text-white hover:bg-forest">Accept analytics</button>
-        <button type="button" onClick={() => select("declined")} className="min-h-11 border border-ink px-5 font-sans text-sm hover:bg-paper">Decline analytics</button>
+    {analyticsPromptPath(path) && (consent === "unset" || preferences) ? <aside aria-label="Analytics preferences" className="fixed inset-x-4 bottom-4 z-[80] mx-auto max-w-sm border border-ink/20 bg-white p-3 text-ink shadow-lg sm:p-4">
+      <p className="font-sans text-xs font-semibold">Analytics preferences</p>
+      <p className="mt-1.5 font-serif text-sm leading-normal">Allow Google Analytics to help us understand how this website is used? <Link href="/privacy-policy" className="underline underline-offset-4">Privacy Policy</Link></p>
+      <div className="mt-3 flex gap-2">
+        <button type="button" onClick={() => select("accepted")} className="min-h-11 bg-ink px-3 font-sans text-xs text-white hover:bg-forest">Accept analytics</button>
+        <button type="button" onClick={() => select("declined")} className="min-h-11 border border-ink px-3 font-sans text-xs hover:bg-paper">Decline analytics</button>
       </div>
-    </aside> : <button type="button" onClick={() => setPreferences(true)} className="fixed bottom-2 left-2 z-[70] min-h-10 border border-ink/15 bg-white px-3 font-sans text-xs text-ink hover:bg-paper">Analytics preferences</button>}
+    </aside> : null}
   </>;
 }

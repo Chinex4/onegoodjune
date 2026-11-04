@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { analyticsLocation, analyticsReferrer, trackablePath } from "../src/lib/analytics";
+import { analyticsLocation, analyticsPromptPath, analyticsReferrer, trackablePath } from "../src/lib/analytics";
 import { articleSearchCopy } from "../src/lib/metadata";
 
 test("analytics excludes private routes and strips query strings/fragments", () => {
@@ -27,4 +27,12 @@ test("published article query returns the optional Sanity SEO overrides", async 
     params: { slug: "seo-test", preview: false },
   });
   assert.deepEqual((await result.get()).seo, seo);
+});
+
+test("analytics prompts stay off sales pages while existing consent still permits public page views", () => {
+  for (const path of ["/sog", "/fiction-course", "/consult", "/spotlight"]) {
+    assert(!analyticsPromptPath(path));
+    assert(trackablePath(path));
+  }
+  for (const path of ["/home", "/about", "/pubs/a-story"]) assert(analyticsPromptPath(path));
 });

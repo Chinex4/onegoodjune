@@ -14,3 +14,7 @@ export function analyticsLocation(origin: string, path: string) {
 export function analyticsReferrer(value: string) {
   try { return new URL(value).origin + "/"; } catch { return ""; }
 }
+
+export function analyticsPromptPath(path: string) {
+  return trackablePath(path) && !["/sog", "/fiction-course", "/consult", "/spotlight"].some(prefix => path === prefix || path.startsWith(prefix + "/"));
+}
