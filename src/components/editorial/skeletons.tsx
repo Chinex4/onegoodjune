@@ -108,3 +108,49 @@ export function ContributorSkeleton() {
     </>
   );
 }
+export function EventListSkeleton() {
+  return (
+    <section className="py-14 md:py-20">
+      <Loading>Loading events</Loading>
+      <Shimmer className="mb-8 h-6 w-32" />
+      <div className="grid gap-12 md:grid-cols-2">
+        {[0, 1].map((i) => (
+          <div key={i}>
+            <Shimmer className="aspect-[3/2]" />
+            <Shimmer className="mt-5 h-2.5 w-44" />
+            <Shimmer className="mt-4 h-6 w-3/4" />
+            <Shimmer className="mt-3 h-3.5 w-1/2" />
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+export function EventSkeleton() {
+  return (
+    <Container className="pb-16 pt-10 md:pb-24 md:pt-14">
+      <Loading>Loading event</Loading>
+      <Shimmer className="h-4 w-24" />
+      <Shimmer className="mx-auto mt-6 aspect-[3/2] max-w-5xl" />
+      <div className="mt-10 grid gap-12 lg:grid-cols-12 lg:gap-10">
+        <div className="lg:col-span-7">
+          <Shimmer className="h-2.5 w-36" />
+          <Shimmer className="mt-4 h-9 w-5/6" />
+          <Shimmer className="mt-3 h-4 w-2/3" />
+          <div className="mt-6 grid gap-3 border-y border-ink/15 py-5 sm:grid-cols-2">
+            {[0, 1, 2, 3].map((i) => (
+              <Shimmer key={i} className="h-4 w-3/5" />
+            ))}
+          </div>
+          <TextLines className="mt-8" widths={["w-full", "w-11/12", "w-full", "w-2/3"]} />
+        </div>
+        <div className="space-y-5 bg-paper p-6 sm:p-8 lg:col-span-5">
+          <Shimmer className="h-6 w-2/3" />
+          {[0, 1, 2].map((i) => (
+            <Shimmer key={i} className="h-11" />
+          ))}
+        </div>
+      </div>
+    </Container>
+  );
+}

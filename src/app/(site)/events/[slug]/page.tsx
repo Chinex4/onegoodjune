@@ -6,6 +6,7 @@ import { CalendarDays, Clock, MapPin, Ticket } from "lucide-react";
 import { getEvent } from "@/sanity/client";
 import { EventFlyer } from "@/components/editorial/event-flyer";
 import { RichText } from "@/components/editorial/rich-text";
+import { EventSkeleton } from "@/components/editorial/skeletons";
 import { EventForm } from "@/components/site/event-form";
 import { NewsletterSection } from "@/components/site/newsletter";
 import { Container, label, lead } from "@/components/site/primitives";
@@ -139,13 +140,7 @@ export default function EventPage(props: Props) {
   return (
     <main id="main-content">
       <Suspense
-        fallback={
-          <Container className="py-24">
-            <p role="status" className={cn(lead, "text-ink/70")}>
-              Loading event…
-            </p>
-          </Container>
-        }
+        fallback={<EventSkeleton />}
       >
         <EventDetail {...props} />
       </Suspense>

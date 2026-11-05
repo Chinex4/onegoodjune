@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { getEvents } from "@/sanity/client";
 import type { Event } from "@/sanity/types";
 import { EventFlyer } from "@/components/editorial/event-flyer";
+import { EventListSkeleton } from "@/components/editorial/skeletons";
 import { NewsletterSection } from "@/components/site/newsletter";
 import {
   Container,
@@ -95,13 +96,7 @@ export default function Events() {
           title="Events"
           description="From virtual sessions and conversations to in-person events, we create spaces for connection, knowledge exchange, and collaboration for our growing community of writers and creative visionaries."
         />
-        <Suspense
-          fallback={
-            <p role="status" className={cn(lead, "py-20 text-ink/70")}>
-              Loading events…
-            </p>
-          }
-        >
+        <Suspense fallback={<EventListSkeleton />}>
           <EventList />
         </Suspense>
       </Container>
