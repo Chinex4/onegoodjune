@@ -5,11 +5,12 @@ import { notFound } from "next/navigation";
 import { CalendarDays, Clock, MapPin, Ticket } from "lucide-react";
 import { getEvent } from "@/sanity/client";
 import { EventFlyer } from "@/components/editorial/event-flyer";
+import { RichText } from "@/components/editorial/rich-text";
 import { EventForm } from "@/components/site/event-form";
 import { NewsletterSection } from "@/components/site/newsletter";
 import { Container, label, lead } from "@/components/site/primitives";
 import { registrationIsOpen } from "@/lib/event-registrations";
-import { eventDate, eventTime } from "@/lib/event-format";
+import { eventDates, eventSummary, eventTime } from "@/lib/event-format";
 import { pageMetadata } from "@/lib/metadata";
 import { site } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
@@ -20,7 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!event) return { title: "Event not found", robots: { index: false } };
   return pageMetadata(
     event.title,
-    event.description.slice(0, 160),
+    (event.subtitle || eventSummary(event)).slice(0, 160),
     `/events/${slug}`,
   );
 }
@@ -30,7 +31,7 @@ async function EventDetail({ params }: Props) {
   if (!event) notFound();
   const open = registrationIsOpen(event);
   const facts = [
-    { Icon: CalendarDays, text: eventDate(event.startsAt) },
+    { Icon: CalendarDays, text: eventDates(event) },
     { Icon: Clock, text: eventTime(event.startsAt) },
     { Icon: MapPin, text: event.location },
     ...(event.admission ? [{ Icon: Ticket, text: event.admission }] : []),
@@ -39,8 +40,9 @@ async function EventDetail({ params }: Props) {
     "@context": "https://schema.org",
     "@type": "Event",
     name: event.title,
-    description: event.description,
+    description: eventSummary(event),
     startDate: event.startsAt,
+    ...(event.endsAt && { endDate: event.endsAt }),
     eventAttendanceMode: /virtual|zoom|online/i.test(event.location)
       ? "https://schema.org/OnlineEventAttendanceMode"
       : "https://schema.org/OfflineEventAttendanceMode",
@@ -65,15 +67,20 @@ async function EventDetail({ params }: Props) {
         <EventFlyer
           event={event}
           priority
-          sizes="(max-width: 1280px) 100vw, 1280px"
-          className="mt-4"
+          sizes="(max-width: 1024px) 100vw, 1024px"
+          className="mx-auto mt-4 max-w-5xl"
         />
         <div className="mt-10 grid gap-12 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-7">
             <p className={cn(label, "text-forest")}>ONEGOODJUNE Events</p>
-            <h1 className="mt-4 font-serif text-[2rem] font-semibold leading-[1.12] tracking-[-0.01em] md:text-[2.75rem]">
+            <h1 className="mt-3 font-serif text-[2rem] font-bold leading-[1.05] tracking-[-0.02em] md:text-[2.75rem]">
               {event.title}
             </h1>
+            {event.subtitle && (
+              <p className="mt-3 font-serif text-[1.1875rem] italic leading-[1.15] text-ink/80 md:text-[1.3125rem]">
+                {event.subtitle}
+              </p>
+            )}
             <ul className="mt-6 grid gap-3 border-y border-ink/15 py-5 sm:grid-cols-2">
               {facts.map(({ Icon, text }) => (
                 <li
@@ -89,9 +96,15 @@ async function EventDetail({ params }: Props) {
                 </li>
               ))}
             </ul>
-            <p className={cn(lead, "mt-8 whitespace-pre-line text-ink/85")}>
-              {event.description}
-            </p>
+            {event.details?.length ? (
+              <div className="mt-6">
+                <RichText body={event.details} />
+              </div>
+            ) : (
+              <p className={cn(lead, "mt-8 whitespace-pre-line text-ink/85")}>
+                {event.description}
+              </p>
+            )}
           </div>
           <aside
             aria-label="Register"

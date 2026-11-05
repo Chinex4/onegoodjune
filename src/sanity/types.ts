@@ -34,6 +34,7 @@ export type Post = {
   excerpt?: string;
   body?: (PortableTextBlock | EditorialImage)[];
   author?: Author;
+  additionalAuthors?: Pick<Author, "_id" | "name" | "slug">[] | null;
   publishedAt?: string;
   _updatedAt?: string;
   mainImage?: EditorialImage;
@@ -52,12 +53,15 @@ export type Event = {
   isExample?: boolean | null;
   _id: string;
   title: string;
+  subtitle?: string | null;
   slug: string;
   startsAt: string;
+  endsAt?: string | null;
   location: string;
   admission?: string;
   flyer?: EditorialImage;
-  description: string;
+  details?: Post["body"] | null;
+  description?: string | null;
   question?: string;
   registrationOpen?: boolean;
 };

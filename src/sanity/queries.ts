@@ -1,9 +1,11 @@
 import { defineQuery } from "next-sanity";
-const fields = `_id,sponsored,title,"slug":slug.current,excerpt,publishedAt,_updatedAt,mainImage,"text":pt::text(body),author->{_id,name,"slug":slug.current,role,bio,image},category->{_id,title,"slug":slug.current},additionalCategories[]->{_id,title,"slug":slug.current},tags[]->{_id,title,"slug":slug.current}`;
+const fields = `_id,sponsored,title,"slug":slug.current,excerpt,publishedAt,_updatedAt,mainImage,"text":pt::text(body),author->{_id,name,"slug":slug.current,role,bio,image},additionalAuthors[]->{_id,name,"slug":slug.current},category->{_id,title,"slug":slug.current},additionalCategories[]->{_id,title,"slug":slug.current},tags[]->{_id,title,"slug":slug.current}`;
 const visible = `_type=="post" && defined(slug.current) && ($preview || (defined(publishedAt) && dateTime(publishedAt)<=dateTime(now())))`;
 // A post belongs to its main category and to any "Also appears in" category.
 const inCategory = (slug: string) =>
   `(category->slug.current==${slug} || ${slug} in additionalCategories[]->slug.current)`;
+// Inside a sub-query of an author document: posts crediting that author.
+const byAuthor = `(author._ref==^._id || ^._id in additionalAuthors[]._ref)`;
 const highlight = `(${inCategory(`"newcomer"`)} || ${inCategory(`"spotlight"`)})`;
 export const CATEGORIES_QUERY = defineQuery(
   `*[_type=="category" && defined(slug.current)]|order(order asc,title asc){_id,title,"slug":slug.current,description}`,
@@ -27,15 +29,15 @@ export const RELATED_QUERY = defineQuery(
   `*[${visible} && slug.current!=$slug && (category._ref==$categoryId || count(tags[@._ref in $tagIds])>0)]|order(publishedAt desc)[0...3]{${fields}}`,
 );
 export const AUTHOR_QUERY = defineQuery(
-  `*[_type=="author" && slug.current==$slug][0]{_id,name,"slug":slug.current,role,bio,profileHeading,worksHeading,image,links,"posts":*[${visible} && author._ref==^._id]|order(publishedAt desc){${fields}}}`,
+  `*[_type=="author" && slug.current==$slug][0]{_id,name,"slug":slug.current,role,bio,profileHeading,worksHeading,image,links,"posts":*[${visible} && ${byAuthor}]|order(publishedAt desc){${fields}}}`,
 );
 export const AUTHORS_SITEMAP_QUERY = defineQuery(
-  `*[_type=="author" && defined(slug.current) && count(*[${visible} && author._ref==^._id])>0]{"slug":slug.current,_updatedAt}`,
+  `*[_type=="author" && defined(slug.current) && count(*[${visible} && ${byAuthor}])>0]{"slug":slug.current,_updatedAt}`,
 );
 export const SITEMAP_QUERY = defineQuery(
   `*[${visible}]{"slug":slug.current,_updatedAt}`,
 );
-const eventFields = `_id,isExample,title,"slug":slug.current,startsAt,location,admission,flyer,description,question,registrationOpen`;
+const eventFields = `_id,isExample,title,subtitle,"slug":slug.current,startsAt,endsAt,location,admission,flyer,details,description,question,registrationOpen`;
 export const EVENTS_QUERY = defineQuery(
   `*[_type=="event" && defined(slug.current) && defined(startsAt)]|order(startsAt desc){${eventFields}}`,
 );

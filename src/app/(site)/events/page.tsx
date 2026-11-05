@@ -11,7 +11,7 @@ import {
   lead,
   subheading,
 } from "@/components/site/primitives";
-import { eventDate, eventTime, isUpcoming } from "@/lib/event-format";
+import { eventDates, eventIsUpcoming, eventTime } from "@/lib/event-format";
 import { pageMetadata } from "@/lib/metadata";
 import { cn } from "@/lib/utils";
 export const metadata = pageMetadata(
@@ -29,11 +29,16 @@ function EventCard({ event, past }: { event: Event; past?: boolean }) {
           className={cn(past && "grayscale-[60%]")}
         />
         <p className={cn(label, "mt-5", past ? "text-ink/60" : "text-forest")}>
-          {eventDate(event.startsAt)} · {eventTime(event.startsAt)}
+          {eventDates(event)} · {eventTime(event.startsAt)}
         </p>
         <h3 className="mt-2 font-serif text-[1.5rem] font-semibold leading-tight transition-colors group-hover:text-forest">
           {event.title}
         </h3>
+        {event.subtitle && (
+          <p className="mt-1.5 font-serif text-lg italic leading-[1.2] text-ink/80">
+            {event.subtitle}
+          </p>
+        )}
         <p className="mt-2 font-sans text-sm text-ink/70">
           {event.location}
           {event.admission && ` · ${event.admission}`}
@@ -45,7 +50,7 @@ function EventCard({ event, past }: { event: Event; past?: boolean }) {
 async function EventList() {
   const events = await getEvents();
   // Soonest first for upcoming; most recent first for past.
-  const upcoming = events.filter((e) => isUpcoming(e.startsAt)).reverse();
+  const upcoming = events.filter((e) => eventIsUpcoming(e)).reverse();
   const past = events.filter((e) => !upcoming.includes(e));
   return (
     <>

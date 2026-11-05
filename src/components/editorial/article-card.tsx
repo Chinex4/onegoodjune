@@ -1,4 +1,4 @@
-import { heroDate } from "@/lib/editorial-format";
+import { authorNames, heroDate } from "@/lib/editorial-format";
 import { SponsoredLabel } from "./sponsored-label";
 import Link from "next/link";
 import type { Post } from "@/sanity/types";
@@ -82,7 +82,7 @@ export function ArticleCard({
             )}
           >
             <span className="w-full font-semibold">
-              {post.author?.name || "ONEGOODJUNE"}
+              {authorNames(post)}
             </span>
             {!compact && (
               <span>

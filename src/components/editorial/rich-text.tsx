@@ -20,13 +20,23 @@ export function RichText({ body }: { body: Post["body"] }) {
               {children}
             </p>
           ),
+          large: ({ children }) => (
+            <p className="my-3 font-serif text-[1.375rem] leading-[1.4] md:text-[1.5rem]">
+              {children}
+            </p>
+          ),
+          small: ({ children }) => (
+            <p className="my-3 font-serif text-[1rem] leading-[1.5] md:text-[1.0625rem]">
+              {children}
+            </p>
+          ),
           h2: ({ children }) => (
-            <h2 className="mb-3 mt-7 font-serif text-[1.75rem] font-semibold leading-snug md:text-[2rem]">
+            <h2 className="mb-2 mt-7 font-serif text-[1.5rem] font-bold leading-[1.1] tracking-[-0.01em] md:text-[1.75rem]">
               {children}
             </h2>
           ),
           h3: ({ children }) => (
-            <h3 className="mb-3 mt-6 font-serif text-[1.5rem] font-semibold leading-snug">
+            <h3 className="mb-2 mt-6 font-serif text-[1.3125rem] font-bold leading-[1.1] md:text-[1.4375rem]">
               {children}
             </h3>
           ),

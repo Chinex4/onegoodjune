@@ -1,5 +1,5 @@
 import { SponsoredLabel } from "@/components/editorial/sponsored-label";
-import { heroDate } from "@/lib/editorial-format";
+import { authorNames, heroDate } from "@/lib/editorial-format";
 import { Suspense } from "react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -49,7 +49,7 @@ function HeroSlide({ post, first }: { post: Post; first: boolean }) {
       <div className="relative flex min-h-[280px] flex-col items-center justify-end bg-black/55 px-6 py-8 md:min-h-[480px] md:px-12 md:py-12">
         <SponsoredLabel post={post} dark />
         <p className="font-sans text-xs font-medium tracking-wide">
-          {post.author?.name ?? "ONEGOODJUNE"} · {heroDate(post.publishedAt)}
+          {authorNames(post)} · {heroDate(post.publishedAt)}
         </p>
         <h2 className="mt-4 max-w-4xl font-serif text-2xl font-semibold leading-tight md:text-5xl">
           <Link href={`/pubs/${post.slug}`} className="hover:underline">

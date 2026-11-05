@@ -31,6 +31,8 @@ const body = defineType({
       type: "block",
       styles: [
         { title: "Paragraph", value: "normal" },
+        { title: "Large text", value: "large" },
+        { title: "Small text", value: "small" },
         { title: "Heading 2", value: "h2" },
         { title: "Heading 3", value: "h3" },
         { title: "Quote", value: "blockquote" },
@@ -40,6 +42,7 @@ const body = defineType({
         decorators: [
           { title: "Strong", value: "strong" },
           { title: "Emphasis", value: "em" },
+          { title: "Underline", value: "underline" },
         ],
         annotations: [
           {
@@ -178,9 +181,19 @@ const post = defineType({
     }),
     defineField({
       name: "author",
+      title: "Contributor",
       type: "reference",
       to: [{ type: "author" }],
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "additionalAuthors",
+      title: "Additional contributors",
+      description:
+        "For pieces by more than one writer. They appear beside the main contributor, and the piece is listed on each of their pages.",
+      type: "array",
+      of: [defineArrayMember({ type: "reference", to: [{ type: "author" }] })],
+      validation: (rule) => rule.unique(),
     }),
     defineField({
       name: "publishedAt",
@@ -342,13 +355,33 @@ const event = defineType({
       type: "string",
       validation: (rule) => rule.required().max(180),
     }),
+    defineField({
+      name: "subtitle",
+      description: "Optional line shown under the event title.",
+      type: "string",
+      validation: (rule) => rule.max(240),
+    }),
     slug,
     defineField({
       name: "startsAt",
-      title: "Date and time",
+      title: "Start date and time",
       description: "Registration closes automatically when the event starts.",
       type: "datetime",
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "endsAt",
+      title: "End date and time",
+      description:
+        "Optional, for events that run over several days. Shown as a range, e.g. Dec 12 – 14, 2026.",
+      type: "datetime",
+      validation: (rule) =>
+        rule.custom((value, context) => {
+          const startsAt = (context.document as { startsAt?: string })?.startsAt;
+          return !value || !startsAt || Date.parse(value) > Date.parse(startsAt)
+            ? true
+            : "The end must be after the start.";
+        }),
     }),
     defineField({
       name: "location",
@@ -365,13 +398,32 @@ const event = defineType({
     defineField({
       name: "flyer",
       title: "Flyer (landscape)",
+      description:
+        "Best at 2400 × 1350 px (16:9), as a PNG or high-quality JPG. Other shapes are shown in full rather than cropped.",
       type: "editorialImage",
     }),
     defineField({
+      name: "details",
+      title: "Description",
+      description:
+        "Use the toolbar for bold, italics, underline, links, lists and text sizes.",
+      type: "body",
+      validation: (rule) =>
+        rule.custom<unknown[]>((value, context) =>
+          value?.length ||
+          (context.document as { description?: string })?.description
+            ? true
+            : "Add a description.",
+        ),
+    }),
+    defineField({
       name: "description",
+      title: "Previous plain-text description",
+      description:
+        "Shown only until the Description above is filled in. Clear this once the text has been moved across.",
       type: "text",
       rows: 6,
-      validation: (rule) => rule.required(),
+      hidden: ({ value }) => !value,
     }),
     defineField({
       name: "question",

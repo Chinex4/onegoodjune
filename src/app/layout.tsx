@@ -20,7 +20,7 @@ const songbird = localFont({
 // brief's alternate heading face, used here for navigation, labels and controls.
 const crimson = Crimson_Text({
   subsets: ["latin"],
-  weight: ["400", "600"],
+  weight: ["400", "600", "700"],
   style: ["normal", "italic"],
   variable: "--font-crimson",
   display: "swap",
