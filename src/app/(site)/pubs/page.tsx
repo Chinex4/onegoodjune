@@ -8,6 +8,7 @@ import type { Post } from "@/sanity/types";
 import { ArticleCard } from "@/components/editorial/article-card";
 import { CoverImage } from "@/components/editorial/cover-image";
 import { HeroSlider } from "@/components/editorial/hero-slider";
+import { MagazineSkeleton } from "@/components/editorial/skeletons";
 import { DraftNotice } from "@/components/editorial/draft-notice";
 import { NewsletterSection } from "@/components/site/newsletter";
 import {
@@ -308,13 +309,7 @@ export default function Publications({
         <ColorBar className="mb-3 h-1.5" />
       </Container>
       <Suspense
-        fallback={
-          <Container>
-            <p className={cn(lead, "py-20 text-ink/70")} role="status">
-              Opening the magazine…
-            </p>
-          </Container>
-        }
+        fallback={<MagazineSkeleton />}
       >
         <Magazine searchParams={searchParams} />
       </Suspense>

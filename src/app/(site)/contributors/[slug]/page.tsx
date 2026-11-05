@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { getAuthor } from "@/sanity/client";
 import { imageUrl } from "@/sanity/images";
 import { ArticleCard } from "@/components/editorial/article-card";
+import { ContributorSkeleton } from "@/components/editorial/skeletons";
 import { NewsletterSection } from "@/components/site/newsletter";
 import {
   ArrowIcon,
@@ -115,13 +116,7 @@ export default function ContributorPage(props: Props) {
   return (
     <main id="main-content">
       <Suspense
-        fallback={
-          <Container className="py-24">
-            <p role="status" className="font-serif text-xl text-ink/70">
-              Opening this profile…
-            </p>
-          </Container>
-        }
+        fallback={<ContributorSkeleton />}
       >
         <Contributor {...props} />
       </Suspense>

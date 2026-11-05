@@ -101,8 +101,33 @@
   --focus-ring: var(--color-lime);
 }
 
-/* Large first letter on the paragraph that opens an article. */
+@keyframes shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+
 @layer components {
+  /* Loading placeholder with a band of light passing across it. */
+  .shimmer {
+    position: relative;
+    overflow: hidden;
+    background-color: color-mix(in srgb, var(--color-ink) 8%, white);
+  }
+  .shimmer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.65), transparent);
+    animation: shimmer 1.6s ease-in-out infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .shimmer::after {
+      animation: none;
+    }
+  }
+  /* Large first letter on the paragraph that opens an article. */
   .drop-cap > p:first-child:not([role])::first-letter {
     float: left;
     margin: 0.015em 0.06em 0 0;

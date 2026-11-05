@@ -14,6 +14,7 @@ import {
 } from "@/components/editorial/article-card";
 import { RichText } from "@/components/editorial/rich-text";
 import { ShareLinks } from "@/components/editorial/share-links";
+import { ArticleSkeleton } from "@/components/editorial/skeletons";
 import { DraftNotice } from "@/components/editorial/draft-notice";
 import {
   ColorBar,
@@ -200,13 +201,7 @@ export default function ArticlePage(props: Props) {
   return (
     <main id="main-content">
       <Suspense
-        fallback={
-          <Container className="py-24">
-            <p role="status" className="font-serif text-xl text-ink/70">
-              Opening this story…
-            </p>
-          </Container>
-        }
+        fallback={<ArticleSkeleton />}
       >
         <Article {...props} />
       </Suspense>
