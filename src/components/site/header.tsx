@@ -113,11 +113,11 @@ export function Header() {
             menu.current?.showModal();
             setOpen(true);
           }}
-          className="group -mr-2 ml-auto grid size-12 place-items-center lg:hidden"
+          className="group ml-auto grid size-12 items-center justify-items-end lg:hidden"
         >
-          <span aria-hidden="true" className="flex w-12 flex-col gap-[6px]">
-            <span className="h-[2px] w-12 bg-current motion-safe:transition-transform motion-safe:group-hover:translate-x-1" />
-            <span className="h-[2px] w-12 bg-current motion-safe:transition-transform motion-safe:group-hover:-translate-x-1" />
+          <span aria-hidden="true" className="flex w-10 flex-col gap-[6px]">
+            <span className="h-[2px] w-10 bg-current motion-safe:transition-transform motion-safe:group-hover:translate-x-1" />
+            <span className="h-[2px] w-10 bg-current motion-safe:transition-transform motion-safe:group-hover:-translate-x-1" />
           </span>
         </button>
       </div>
