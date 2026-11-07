@@ -14,7 +14,7 @@ export default function NotFound() {
       className="mx-auto flex min-h-dvh max-w-3xl flex-col justify-center px-6 py-24"
     >
       <Link
-        href="/home"
+        href="/"
         className="font-heading text-[1.75rem] leading-none tracking-[-0.03em]"
       >
         ONEGOODJUNE
@@ -28,7 +28,7 @@ export default function NotFound() {
         The page may have moved, or the publication may not be available yet.
       </p>
       <div className="mt-10 flex flex-wrap gap-3">
-        <Link href="/home" className={buttonStyles("ink")}>
+        <Link href="/" className={buttonStyles("ink")}>
           Return home
           <ArrowIcon />
         </Link>

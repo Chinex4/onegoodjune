@@ -18,7 +18,7 @@ function ActiveLink({ item, className, onClick, children }: NavProps) {
   const pathname = usePathname();
   const current =
     pathname === item.href ||
-    (item.href !== "/home" && pathname.startsWith(item.href + "/"));
+    (item.href !== "/" && pathname.startsWith(item.href + "/"));
   return (
     <Link
       href={item.href}
@@ -32,7 +32,7 @@ function ActiveLink({ item, className, onClick, children }: NavProps) {
 }
 function HomePrograms() {
   const pathname = usePathname();
-  if (pathname !== "/home" && pathname !== "/") return null;
+  if (pathname !== "/") return null;
   return <nav aria-label="Explore our programs" className="grid grid-cols-2 font-sans text-xs font-medium sm:text-sm">
     <Link href="/sog" className="group flex min-h-14 items-center justify-between gap-2 bg-lime px-4 py-3 text-ink hover:bg-sage sm:px-8"><span><span className="block text-[0.625rem] uppercase tracking-wide opacity-70">Enrol now</span>School of Growth</span><ArrowIcon /></Link>
     <Link href="/fiction-course" className="group flex min-h-14 items-center justify-between gap-2 bg-ink px-4 py-3 text-white hover:bg-forest sm:px-8"><span><span className="block text-[0.625rem] uppercase tracking-wide text-sunshine">Join the waitlist</span>Fiction Course</span><ArrowIcon /></Link>
@@ -77,7 +77,7 @@ export function Header() {
       <Suspense><HomePrograms /></Suspense>
       <div className={cn(shell, "flex h-[4.5rem] items-center gap-8 md:h-20")}>
         <Link
-          href="/home"
+          href="/"
           aria-label="ONEGOODJUNE home"
           className="font-heading text-[1.5rem] leading-none tracking-[-0.03em] md:text-[1.75rem]"
         >
@@ -88,7 +88,7 @@ export function Header() {
           className="ml-auto hidden items-center gap-7 lg:flex xl:gap-9"
         >
           {navigation
-            .filter((item) => item.href !== "/home")
+            .filter((item) => item.href !== "/")
             .map((item) => (
               <NavItem key={item.href} item={item} className={desktopLink} />
             ))}
@@ -131,7 +131,7 @@ export function Header() {
         <div className={cn(shell, "flex min-h-full flex-col pb-10")}>
           <div className="flex h-[4.5rem] items-center justify-between md:h-20">
             <Link
-              href="/home"
+              href="/"
               onClick={close}
               className="font-heading text-[1.5rem] leading-none tracking-[-0.03em] md:text-[1.75rem]"
             >

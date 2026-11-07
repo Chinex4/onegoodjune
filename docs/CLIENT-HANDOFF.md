@@ -6,7 +6,7 @@ Updated November 3, 2026. This is the current checklist; it supersedes outstandi
 
 | Page | Current route | What to check |
 | --- | --- | --- |
-| Home | `/home` | Two-part School of Growth/Fiction CTA banner appears only here; compact all-caps wordmark; image-led introduction; white/black sections; numbered services; stacked experience cards with restored images, descriptions and CTAs; newsletter; compact white footer wordmark on black. |
+| Home | `/` | Two-part School of Growth/Fiction CTA banner appears only here; compact all-caps wordmark; image-led introduction; white/black sections; numbered services; stacked experience cards with restored images, descriptions and CTAs; newsletter; compact white footer wordmark on black. |
 | About | `/about` | Smaller/lighter opening statements; mission; **Our Creed / Guiding Philosophies** immediately after mission with all four supplied principles; Adventure Builders; four supplied profiles and portraits; Olabiyi spelling; publications/SOG CTAs. |
 | Magazine | `/pubs` | Literary-magazine header; image-led hero, controls below; categories from Sanity; Newcomer/Spotlight sections; filtering and pagination. |
 | Articles | `/pubs/[slug]` | Opens at the beginning; `Nov 03, 2026` date style; readable 1.5 paragraph line spacing; rich text/images/byline; related articles; no repeated bottom author panel. |
@@ -22,7 +22,7 @@ Updated November 3, 2026. This is the current checklist; it supersedes outstandi
 | Editor | `/studio` | Posts, contributors, categories, tags, editorial selections, images, events; drafts/publishing. |
 | Registration admin | `/silencekeepsitgoingonegoodjune` | Login, paid/pending/failed registration records, filters/search/CSV and event registrations. |
 
-Navigation, footer and payment return paths use the new URLs. `/` redirects to `/home`; old magazine/program URLs and `/blog` redirect permanently to their replacements, preserving article suffixes and query strings.
+Navigation, footer and payment return paths use the new URLs. `/home` redirects to `/`; old magazine/program URLs and `/blog` redirect permanently to their replacements, preserving article suffixes and query strings.
 
 Spotlight main/additional-category posts automatically show **Sponsored launch announcement** on cards, hero slides and article pages. The Sponsored post switch also supports sponsorship outside Spotlight.
 

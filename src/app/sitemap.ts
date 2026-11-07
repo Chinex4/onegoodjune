@@ -3,7 +3,7 @@ import { getSitemapAuthors, getSitemapPosts } from "@/sanity/client";
 import { site } from "@/lib/site-config";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const routes = [
-    "/home",
+    "/",
     "/about",
     "/pubs",
     "/submissions",
@@ -24,7 +24,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${site.url}${route}`,
       changeFrequency:
         route === "/pubs" ? ("weekly" as const) : ("monthly" as const),
-      priority: route === "/home" ? 1 : 0.7,
+      priority: route === "/" ? 1 : 0.7,
     })),
     ...posts.map((post) => ({
       url: `${site.url}/pubs/${post.slug}`,

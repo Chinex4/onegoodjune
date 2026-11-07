@@ -5,7 +5,7 @@ import { articleSearchCopy } from "../src/lib/metadata";
 
 test("analytics excludes private routes and strips query strings/fragments", () => {
   for (const path of ["/studio", "/studio/desk", "/payment/callback", "/consult/book", "/api/register", "/silencekeepsitgoingonegoodjune"]) assert(!trackablePath(path));
-  for (const path of ["/home", "/pubs", "/pubs/a-story", "/consult"]) assert(trackablePath(path));
+  for (const path of ["/", "/pubs", "/pubs/a-story", "/consult"]) assert(trackablePath(path));
   assert.equal(analyticsReferrer("https://www.google.com/search?q=private"), "https://www.google.com/");
   assert.equal(analyticsReferrer(""), "");
   assert.equal(analyticsLocation("https://onegoodjune.com", "/pubs?email=private@example.com#secret"), "https://onegoodjune.com/pubs");
@@ -34,5 +34,11 @@ test("analytics prompts stay off sales pages while existing consent still permit
     assert(!analyticsPromptPath(path));
     assert(trackablePath(path));
   }
-  for (const path of ["/home", "/about", "/pubs/a-story"]) assert(analyticsPromptPath(path));
+  for (const path of ["/", "/about", "/pubs/a-story"]) assert(analyticsPromptPath(path));
+});
+test("the homepage lives at the root and /home redirects there permanently", async () => {
+  const { default: config } = await import("../next.config");
+  const redirects = (await config.redirects?.()) ?? [];
+  assert(redirects.some((r) => r.source === "/home" && r.destination === "/" && r.permanent));
+  assert(!redirects.some((r) => r.source === "/"));
 });

@@ -129,7 +129,7 @@ export function Footer() {
         {/* Sized in container units so the wordmark always spans the column. */}
         <div className="@container mt-16 md:mt-24">
           <Link
-            href="/home"
+            href="/"
             aria-label="ONEGOODJUNE home"
             className="block whitespace-nowrap font-heading text-[1.75rem] md:text-[2.5rem] leading-[0.95] tracking-[-0.035em] transition-colors hover:text-lime"
           >
@@ -148,10 +148,12 @@ export function Footer() {
           >
             Privacy Policy
           </Link>
-          <AnalyticsPreferencesLink enabled={process.env.NEXT_PUBLIC_GA_ENABLED === "true" && process.env.NODE_ENV === "production" && process.env.VERCEL_ENV !== "preview"} />
+          {/* On phones: Privacy Policy and Analytics preferences share a row, and
+              Back to top always sits at the right edge. */}
+          <AnalyticsPreferencesLink className="justify-self-end text-right md:text-left" enabled={process.env.NEXT_PUBLIC_GA_ENABLED === "true" && process.env.NODE_ENV === "production" && process.env.VERCEL_ENV !== "preview"} />
           <a
             href="#top"
-            className="group inline-flex min-h-10 items-center gap-2 justify-self-end hover:text-lime"
+            className="group col-start-2 inline-flex min-h-10 items-center gap-2 justify-self-end hover:text-lime"
           >
             Back to top
             <ArrowUp

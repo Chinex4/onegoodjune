@@ -34,7 +34,7 @@ export const site = {
   },
 } as const;
 export const navigation = [
-  { label: "Home", href: "/home" },
+  { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Read Pubs", href: "/pubs" },
   { label: "Submissions", href: "/submissions" },

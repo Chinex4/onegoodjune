@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     absolute:
       "ONEGOODJUNE — A creative studio for faith-based African visionaries",
   },
-  alternates: { canonical: "/home" },
+  alternates: { canonical: "/" },
 };
 // Sunshine marks storytelling, Earthy Green marks growth; straw sits between.
 const serviceAccents = [
