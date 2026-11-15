@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { LoginForm } from "./login-form";
 import { AdminHeader } from "./admin-header";
 import { EventsView } from "./events-view";
+import { CommentsView } from "./comments-view";
 export const metadata: Metadata = {
   title: "Admin",
   robots: { index: false, follow: false },
@@ -48,7 +49,7 @@ async function Dashboard({ searchParams }: { searchParams: Params }) {
           Admin
         </h1>
         <p className="mt-3 font-serif text-lg text-ink/75">
-          Sign in to see program registrations and payments.
+          Sign in to see registrations, payments and pub comments.
         </p>
         <LoginForm />
       </div>
@@ -61,6 +62,7 @@ async function Dashboard({ searchParams }: { searchParams: Params }) {
     );
   const params = await searchParams;
   if (params.view === "events") return <EventsView params={params} />;
+  if (params.view === "comments") return <CommentsView params={params} />;
   const filters = {
     program: getProgram(params.program || "") ? params.program : undefined,
     status: statuses.includes(params.status as PaymentStatus)

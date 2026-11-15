@@ -19,6 +19,7 @@ import {
   EVENTS_QUERY,
   MAGAZINE_QUERY,
   POST_QUERY,
+  POST_TITLE_QUERY,
   RELATED_QUERY,
   SITEMAP_QUERY,
 } from "./queries";
@@ -191,3 +192,14 @@ export const getEvent = cache(async (slug: string) => {
         .then((event) => (event && !isExampleEvent(event) ? event : null))
     : null;
 });
+// Title of a published post, never a draft; null when it doesn't exist.
+export async function getPublishedPostTitle(slug: string) {
+  const client = getPublicClient();
+  if (!client) return null;
+  const post = await client.fetch<{ title: string } | null>(
+    POST_TITLE_QUERY,
+    { slug, preview: false },
+    { cache: "no-store" },
+  );
+  return post?.title ?? null;
+}

@@ -11,6 +11,11 @@ const tabs = [
     label: "Event registrations",
     href: `${ADMIN_PATH}?view=events`,
   },
+  {
+    view: "comments",
+    label: "Pub comments",
+    href: `${ADMIN_PATH}?view=comments`,
+  },
 ];
 export function AdminHeader({
   title,
@@ -18,8 +23,8 @@ export function AdminHeader({
   exportHref,
 }: {
   title: string;
-  view: "programs" | "events";
-  exportHref: string;
+  view: "programs" | "events" | "comments";
+  exportHref?: string;
 }) {
   return (
     <>
@@ -31,13 +36,15 @@ export function AdminHeader({
           </h1>
         </div>
         <div className="flex gap-3">
-          <a
-            href={exportHref}
-            className={buttonStyles("outline", "min-h-11 gap-3 px-4")}
-          >
-            Export CSV
-            <Download size={16} aria-hidden="true" />
-          </a>
+          {exportHref && (
+            <a
+              href={exportHref}
+              className={buttonStyles("outline", "min-h-11 gap-3 px-4")}
+            >
+              Export CSV
+              <Download size={16} aria-hidden="true" />
+            </a>
+          )}
           <form action={logout}>
             <button className={buttonStyles("ink", "min-h-11 gap-3 px-4")}>
               Sign out
@@ -48,14 +55,14 @@ export function AdminHeader({
       </div>
       <nav
         aria-label="Admin sections"
-        className="mb-8 mt-6 flex gap-6 border-b border-ink/15"
+        className="mb-8 mt-6 flex gap-6 overflow-x-auto border-b border-ink/15"
       >
         {tabs.map((tab) => (
           <Link
             key={tab.view}
             href={tab.href}
             aria-current={tab.view === view ? "page" : undefined}
-            className="-mb-px inline-flex min-h-12 items-center border-b-2 border-transparent font-sans text-sm font-medium text-ink/70 hover:text-ink aria-[current=page]:border-forest aria-[current=page]:text-ink"
+            className="-mb-px inline-flex min-h-12 shrink-0 items-center border-b-2 border-transparent font-sans text-sm font-medium text-ink/70 hover:text-ink aria-[current=page]:border-forest aria-[current=page]:text-ink"
           >
             {tab.label}
           </Link>

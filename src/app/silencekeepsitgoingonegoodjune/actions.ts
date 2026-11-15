@@ -1,7 +1,10 @@
 "use server";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { deleteComment, setCommentHidden } from "@/lib/engagement";
 import { ADMIN_PATH } from "@/lib/admin-path";
 import {
+  isAdmin,
   adminConfigured,
   endSession,
   passwordMatches,
@@ -25,4 +28,13 @@ export async function login(
 export async function logout() {
   await endSession();
   redirect(ADMIN_PATH);
+}
+export async function moderateComment(formData: FormData) {
+  if (!(await isAdmin())) redirect(ADMIN_PATH);
+  const id = String(formData.get("id") || "");
+  const action = String(formData.get("action") || "");
+  if (action === "hide") await setCommentHidden(id, true);
+  else if (action === "show") await setCommentHidden(id, false);
+  else if (action === "delete") await deleteComment(id);
+  revalidatePath(ADMIN_PATH);
 }

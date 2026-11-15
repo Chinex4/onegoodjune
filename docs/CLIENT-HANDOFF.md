@@ -123,3 +123,10 @@ Featured-image master recommendation: **1800 × 1200 px, 3:2 landscape** (1200 �
 ## Analytics and Sanity SEO update
 
 GA4 ID G-88EXS6ZTJH is integrated with analytics preferences and explicit page-view measurement. Activate with NEXT_PUBLIC_GA_ENABLED=true in Vercel Production only after turning off the stream’s Enhanced measurement. Sanity Posts now include Search & sharing (SEO) overrides for title, description and sharing image. See [SEO-AND-ANALYTICS.md](./SEO-AND-ANALYTICS.md) for the complete account setup, verification, sitemap and editor guide.
+
+## Likes and comments on pubs
+
+- Every publication now ends with a Like button and a comments section. Readers don't need an account: one like per browser, and comments ask only for a name.
+- Comments go live straight away. To remove one, open the admin dashboard, go to the **Pub comments** tab, and choose **Hide** (it comes off the site but stays on record; **Show** brings it back) or **Delete** (permanent).
+- To keep spam down, a hidden bot trap is built in, along with a limit of 5 comments and 60 likes per reader every 15 minutes. Likes and comments are stored in the same MongoDB database as registrations, so nothing new is needed in Vercel.
+- Recommended: set `CONTACT_TRUST_PROXY=true` in Vercel (Vercel sets the visitor address itself). The limits then apply per network address rather than per browser cookie, which is harder to get around.

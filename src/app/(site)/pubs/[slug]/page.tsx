@@ -14,6 +14,7 @@ import {
 } from "@/components/editorial/article-card";
 import { RichText } from "@/components/editorial/rich-text";
 import { ShareLinks } from "@/components/editorial/share-links";
+import { PostEngagement } from "@/components/editorial/post-engagement";
 import { ArticleSkeleton } from "@/components/editorial/skeletons";
 import { DraftNotice } from "@/components/editorial/draft-notice";
 import {
@@ -181,6 +182,7 @@ async function Article({ params }: Props) {
             <article className="drop-cap mx-auto max-w-[720px] break-words pb-12 md:pb-16">
               <RichText body={post.body} />
             </article>
+            <PostEngagement slug={post.slug} title={post.title} />
             {related.length > 0 && (
               <section className="border-t border-ink/20 py-16">
                 <h2 className={`${subheading} mb-10`}>Keep reading</h2>

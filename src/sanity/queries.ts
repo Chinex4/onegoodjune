@@ -25,6 +25,10 @@ export const MAGAZINE_QUERY = defineQuery(`{
 export const POST_QUERY = defineQuery(
   `*[${visible} && slug.current==$slug][0]{${fields},body,seo,author->{_id,name,"slug":slug.current,role,bio,profileHeading,worksHeading,image,links}}`,
 );
+// Published title only, for checking a likes/comments target exists.
+export const POST_TITLE_QUERY = defineQuery(
+  `*[${visible} && slug.current==$slug][0]{title}`,
+);
 export const RELATED_QUERY = defineQuery(
   `*[${visible} && slug.current!=$slug && (category._ref==$categoryId || count(tags[@._ref in $tagIds])>0)]|order(publishedAt desc)[0...3]{${fields}}`,
 );
