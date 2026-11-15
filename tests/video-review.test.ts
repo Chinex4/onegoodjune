@@ -28,6 +28,8 @@ test("supplied review copy replaces the old fiction offer and submission instruc
   assert(submissionLines.some((x) => x.includes("Submissions – Your Name")));
   assert(!submissionLines.some((x) => x.includes("Creative Ambassador Award")));
   assert(about.team.some((x) => x.name === "Seun Mary-Ann Olabiyi"));
+  assert(about.team.some((x) => x.name === "Chinenye Akunna"));
+  assert(!about.team.some((x) => x.name.includes("Anaele")));
 });
 test("only the supplied contributor gets the supplied profile; existing photo is retained", () => {
   const author: Author = {

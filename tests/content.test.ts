@@ -4,6 +4,7 @@ import { getCountdown, COURSE_LAUNCH } from "../src/lib/countdown";
 import { contactSchema } from "../src/lib/contact-schema";
 import {
   about,
+  nameCorrections,
   policySections,
   policyLines,
   submissionLines,
@@ -43,7 +44,10 @@ test("all privacy wording is preserved in all 14 sections", () => {
 test("all four supplied team members and course modules are present", () => {
   assert.equal(about.team.length, 4);
   for (const person of about.team) {
-    assert(source.includes(person.name.replace("Olabiyi", "Biyi")));
+    const original = Object.entries(nameCorrections).find(
+      ([, name]) => name === person.name,
+    )?.[0];
+    assert(source.includes(original ?? person.name));
     assert(source.includes(person.description));
   }
   assert.equal(course.modules.length, 17);

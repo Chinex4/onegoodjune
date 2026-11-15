@@ -1,5 +1,10 @@
 import source from "./source-copy.json";
 import revisions from "./client-email-revisions.json";
+// Client name corrections applied on top of the supplied copy.
+export const nameCorrections: Record<string, string> = {
+  "Seun Mary-Ann Biyi": "Seun Mary-Ann Olabiyi",
+  "Akunna Anaele": "Chinenye Akunna",
+};
 export function between(start: string, end: string) {
   return source.slice(source.indexOf(start) + 1, source.indexOf(end));
 }
@@ -9,10 +14,7 @@ export const about = {
   team: Array.from({ length: 4 }, (_, i) => {
     const start = source.indexOf("Esther Uzoamaka Okoloeze") + i * 3;
     return {
-      name: source[start].replace(
-        "Seun Mary-Ann Biyi",
-        "Seun Mary-Ann Olabiyi",
-      ),
+      name: nameCorrections[source[start]] ?? source[start],
       role: source[start + 1],
       description: source[start + 2],
     };
