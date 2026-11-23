@@ -4,7 +4,6 @@ import {
   ArrowIcon,
   ColorBar,
   Container,
-  Eyebrow,
   heading,
   label,
   lead,
@@ -47,23 +46,6 @@ function Access({
     >
       {sog.access}
     </EnrollButton>
-  );
-}
-function Paragraphs({
-  items,
-  className = "",
-}: {
-  items: string[];
-  className?: string;
-}) {
-  return (
-    <div className={cn("space-y-5", className)}>
-      {items.map((item) => (
-        <p key={item} className={cn(prose, "whitespace-pre-line")}>
-          {item}
-        </p>
-      ))}
-    </div>
   );
 }
 // "Title\nBody" → [title, body]
@@ -135,21 +117,19 @@ export default function Growth() {
     <main id="main-content" className="bg-white text-ink">
       <section id="hero" className="ground-dark">
         <Container>
-          <div className="grid items-center gap-12 pb-16 pt-14 md:pb-20 md:pt-20 lg:grid-cols-12 lg:gap-10">
-            <div className="lg:col-span-6">
-              <p className={cn(label, "text-lime")}>{sog.strapline}</p>
-              <h1 className="mt-6 font-heading text-[2.75rem] leading-[0.98] tracking-[-0.03em] sm:text-[3.75rem] lg:text-[4.5rem]">
-                School
-                <br />
-                of Growth
+          {/* Centred, with the introduction video below the text. */}
+          <div className="mx-auto max-w-4xl pb-16 pt-14 text-center md:pb-20 md:pt-20">
+            <div>
+              <h1 className="font-heading text-[2.75rem] leading-[0.98] tracking-[-0.03em] sm:text-[3.75rem] lg:text-[4.5rem]">
+                <span className={cn(label, "mb-6 block text-lime")}>
+                  {sog.welcome}
+                </span>{" "}
+                School of Growth
               </h1>
-              <p className={cn(lead, "mt-8 max-w-xl text-white/85")}>
+              <p className="mx-auto mt-8 max-w-3xl font-sans text-[0.9375rem] font-semibold uppercase leading-[1.45] tracking-[0.01em] text-white/85 font-stretch-semi-expanded md:text-[1.0625rem]">
                 {sog.introduction}
               </p>
-              <p className="mt-5 font-heading text-[1.1875rem] tracking-[-0.01em] text-straw">
-                {sog.promise}
-              </p>
-              <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-4">
+              <div className="mt-9 flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
                 <Access />
                 <a
                   href="#pathways"
@@ -160,7 +140,7 @@ export default function Growth() {
                 </a>
               </div>
             </div>
-            <div className="mx-auto w-full max-w-[34rem] lg:col-span-6 lg:max-w-none">
+            <div className="mx-auto mt-12 w-full max-w-[34rem] md:mt-14 lg:max-w-2xl">
               <div className="bg-lime p-2 sm:p-3">
                 <video
                   controls
@@ -191,130 +171,78 @@ export default function Growth() {
       </section>
 
       <Container>
-        <section className="mx-auto max-w-3xl py-8 md:py-12">
+        <section className="mx-auto max-w-3xl py-14 md:py-24">
           <Reveal>
-            <h2 className={heading}>{sog.goalsTitle}</h2>
+            <h2 className={heading}>{sog.embrace.question}</h2>
           </Reveal>
-          <ol className="mt-8 md:mt-10">
-            {sog.goals.map((goal, i) => (
+          <ul className="mt-8 md:mt-10">
+            {sog.embrace.options.map((item) => (
               <li
-                key={goal}
-                className="flex gap-5 border-b border-ink/15 py-4 first:pt-0 md:py-5"
+                key={item}
+                className="flex gap-4 border-b border-ink/15 py-4 first:pt-0 md:py-5"
               >
-                <span className={cn(label, "mt-1 w-6 shrink-0 text-forest")}>
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span className="font-serif text-lg leading-snug md:text-xl">
-                  {goal}
-                </span>
-              </li>
-            ))}
-          </ol>
-          <p className={cn(prose, "mt-10 border-l-4 border-orange pl-5")}>
-            {sog.invitation[0]}
-          </p>
-          <p className="mt-5 font-heading text-[1.375rem] leading-tight tracking-[-0.015em] text-forest md:text-[1.625rem]">
-            {sog.invitation[1]}
-          </p>
-        </section>
-      </Container>
-
-      <section className="bg-paper py-16 md:py-28">
-        <Container className="grid gap-12 lg:grid-cols-12 lg:gap-10">
-          <div className="lg:col-span-5">
-            <div className="lg:sticky lg:top-10">
-              <h2 className={subheading}>{sog.storyTitle}</h2>
-              <figure className="mt-8 max-w-sm">
-                <div className="relative aspect-[4/5] overflow-hidden bg-ink">
-                  <Image
-                    src={site.assets.sogCoach}
-                    alt="Esther Uzoamaka Okoloeze, founder of School of Growth"
-                    fill
-                    sizes="(max-width: 768px) 100vw, 384px"
-                    className="object-cover"
-                  />
-                </div>
-                <figcaption className="mt-4 flex items-center gap-3">
-                  <span aria-hidden="true" className="h-px w-8 bg-forest" />
-                  <span className={cn(label, "text-ink/70")}>Coach Esther</span>
-                </figcaption>
-              </figure>
-            </div>
-          </div>
-          <Reveal className="lg:col-span-6 lg:col-start-7">
-            <p className="font-heading text-[1.375rem] tracking-[-0.015em]">
-              {sog.story[0]}
-            </p>
-            <Paragraphs items={sog.story.slice(1)} className="mt-6" />
-          </Reveal>
-        </Container>
-      </section>
-
-      {/* Soft lime wash with a forest rule: the full lime field read as loud. */}
-      <section className="border-y-4 border-forest bg-lime/25 py-12 md:py-16">
-        <Container>
-          <Reveal>
-            <h2 className={cn(heading, "max-w-4xl")}>{sog.opportunities[0]}</h2>
-          </Reveal>
-          <div className="mt-12 grid gap-12 md:mt-16 lg:grid-cols-2 lg:gap-16">
-            <Paragraphs items={sog.opportunities.slice(1, 4)} />
-            <div>
-              <p className="font-heading text-[1.375rem] leading-tight tracking-[-0.015em] text-forest">
-                {sog.opportunities[4]}
-              </p>
-              <p className={cn(prose, "mt-5 font-semibold")}>
-                {sog.opportunities[5]}
-              </p>
-              <Paragraphs
-                items={sog.opportunities.slice(6, 8)}
-                className="mt-5"
-              />
-            </div>
-          </div>
-          <p
-            className={cn(
-              lead,
-              "mt-12 max-w-4xl border-t border-ink/20 pt-10 md:mt-16",
-            )}
-          >
-            {sog.opportunities[8]}
-          </p>
-        </Container>
-      </section>
-
-      <Container>
-        <section className="py-16 md:py-28">
-          <Eyebrow className="text-rust">{sog.yourTurn}</Eyebrow>
-          <h2 className={cn(heading, "mt-6")}>{sog.stakesTitle}</h2>
-          <ul className="mt-12 grid gap-4 md:grid-cols-3">
-            {sog.stakes.map((item) => (
-              <li key={item} className="flex gap-4 bg-paper p-6 md:p-7">
                 <span
                   aria-hidden="true"
-                  className="grid size-7 shrink-0 place-items-center bg-rust text-white"
+                  className="mt-1 grid size-6 shrink-0 place-items-center bg-rust text-white"
                 >
-                  <X size={15} strokeWidth={2.5} />
+                  <X size={14} strokeWidth={2.5} />
                 </span>
-                <span className="font-serif text-xl leading-snug">{item}</span>
+                <span className="font-serif text-lg leading-snug md:text-xl">
+                  {item}
+                </span>
               </li>
             ))}
           </ul>
-          <div className="mt-14 grid gap-10 lg:grid-cols-12 lg:gap-10">
-            <Paragraphs
-              items={sog.rationale.slice(0, 3)}
-              className="lg:col-span-6"
-            />
-            <p
-              className={cn(
-                lead,
-                "self-start border-l-4 border-forest pl-6 lg:col-span-5 lg:col-start-8",
-              )}
-            >
-              {sog.rationale[3]}
-            </p>
-          </div>
+          <p className="mt-12 border-l-4 border-forest pl-5 font-heading text-[1.375rem] leading-tight tracking-[-0.015em] text-forest md:text-[1.625rem]">
+            {sog.embrace.answer}
+          </p>
+          <ul className="mt-8 space-y-5">
+            {sog.embrace.commitments.map((item) => (
+              <li key={item} className="flex gap-4">
+                <span
+                  aria-hidden="true"
+                  className="mt-1 grid size-6 shrink-0 place-items-center bg-lime text-ink"
+                >
+                  <Check size={14} strokeWidth={3} />
+                </span>
+                <span className="font-serif text-lg leading-snug md:text-xl">
+                  {item}
+                </span>
+              </li>
+            ))}
+          </ul>
         </section>
       </Container>
+
+      {/* Soft lime wash with a forest rule: the full lime field read as loud. */}
+      <section className="border-y-4 border-forest bg-lime/25 py-14 md:py-20">
+        <Container>
+          <Reveal>
+            <h2 className={cn(subheading, "mx-auto max-w-3xl text-center")}>
+              {sog.destinationsTitle}
+            </h2>
+          </Reveal>
+          <ul className="mt-10 grid gap-4 md:mt-12 md:grid-cols-3">
+            {sog.destinations.map((item, i) => (
+              <li
+                key={item.name}
+                className={cn(
+                  "border-t-4 bg-white p-7 md:p-8",
+                  ["border-forest", "border-ink", "border-earth"][i],
+                )}
+              >
+                <h3 className={title}>{item.name}</h3>
+                <p className={cn(label, "mt-2 text-ink/60")}>
+                  {item.audience}
+                </p>
+                <p className="mt-5 font-serif text-lg leading-snug">
+                  {item.support}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </section>
 
       <section className="ground-dark py-16 md:py-28">
         <Container>
@@ -350,63 +278,123 @@ export default function Growth() {
       </section>
 
       <Container>
-        <section className="grid gap-14 py-16 md:py-28 lg:grid-cols-12 lg:gap-10">
-          <div className="lg:col-span-6">
-            <h2 className={heading}>{sog.audienceTitle}</h2>
+        <section className="py-16 md:py-28">
+          <div className="grid gap-8 lg:grid-cols-12 lg:items-end lg:gap-10">
+            <h2 className={cn(heading, "lg:col-span-6")}>{sog.audienceTitle}</h2>
             <ul
               aria-label="School of Growth is for"
-              className="mt-8 flex flex-wrap gap-2"
+              className="flex flex-wrap gap-2 lg:col-span-6 lg:justify-end"
             >
-              {sog.audience[0]
-                .replace(/\.$/, "")
-                .split(". ")
-                .map((role) => (
-                  <li
-                    key={role}
-                    className="bg-lime/45 px-3.5 py-2 font-sans text-sm font-medium"
-                  >
-                    {role}
-                  </li>
-                ))}
-            </ul>
-            <p className={cn(prose, "mt-8")}>{sog.audience[1]}</p>
-          </div>
-          <div className="self-start bg-paper p-7 md:p-9 lg:col-span-5 lg:col-start-8">
-            <h3 className={title}>{sog.exclusionsTitle}</h3>
-            <ul className="mt-6 space-y-4">
-              {sog.exclusions.map((item) => (
-                <li key={item} className="flex gap-4">
-                  <X
-                    size={18}
-                    aria-hidden="true"
-                    className="mt-1 shrink-0 text-rust"
-                  />
-                  <span className="font-serif text-lg leading-snug">
-                    {item}
-                  </span>
+              {sog.audience.map((role) => (
+                <li
+                  key={role}
+                  className="bg-lime/45 px-4 py-2.5 font-sans text-[0.9375rem] font-medium"
+                >
+                  {role}
                 </li>
               ))}
             </ul>
           </div>
+          <div className="mt-16 border-t border-ink/15 pt-14 md:mt-20 md:pt-20">
+            <h2 className={cn(subheading, "max-w-2xl")}>
+              {sog.experienceTitle}
+            </h2>
+            {/* Per-card borders so the empty slot after five cards stays blank. */}
+            <div className="mt-10 grid border-l border-t border-ink/15 md:grid-cols-2 lg:grid-cols-3">
+              {sog.experience.map((item, i) => (
+                <div
+                  key={item.title}
+                  className="border-b border-r border-ink/15 p-7 md:p-8"
+                >
+                  <span className={cn(label, "text-ink/50")}>
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className={cn(title, "mt-4")}>{item.title}</h3>
+                  {item.note && (
+                    <p className="mt-3 inline-block bg-sunshine/40 px-2.5 py-1 font-sans text-[0.75rem] font-semibold">
+                      {item.note}
+                    </p>
+                  )}
+                  <p className="mt-4 font-serif text-lg leading-[1.5] text-ink/85">
+                    {item.text}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
         </section>
       </Container>
 
+      <section className="bg-paper py-16 md:py-28">
+        <Container className="grid gap-12 lg:grid-cols-12 lg:gap-10">
+          <div className="lg:col-span-5">
+            <div className="lg:sticky lg:top-10">
+              <h2 className={subheading}>{sog.coach.title}</h2>
+              <figure className="mt-8 max-w-sm">
+                <div className="relative aspect-[4/5] overflow-hidden bg-ink">
+                  <Image
+                    src={site.assets.sogCoach}
+                    alt="Esther Uzoamaka Okoloeze, founder of School of Growth"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 384px"
+                    className="object-cover"
+                  />
+                </div>
+                <figcaption className="mt-4 flex items-center gap-3">
+                  <span aria-hidden="true" className="h-px w-8 bg-forest" />
+                  <span className={cn(label, "text-ink/70")}>Coach Esther</span>
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+          <Reveal className="lg:col-span-6 lg:col-start-7">
+            <ul className="space-y-5">
+              {sog.coach.credentials.map((item) => (
+                <li key={item} className="flex gap-4">
+                  <Check
+                    size={18}
+                    aria-hidden="true"
+                    className="mt-1.5 shrink-0 text-forest"
+                  />
+                  <span className={prose}>{item}</span>
+                </li>
+              ))}
+            </ul>
+            <p className={cn(lead, "mt-10 border-l-4 border-orange pl-5")}>
+              {sog.coach.closing}
+            </p>
+          </Reveal>
+        </Container>
+      </section>
+
       <section
         id="pathways"
-        className="scroll-mt-4 border-t border-ink/10 bg-paper py-16 md:py-28"
+        className="scroll-mt-4 border-t border-ink/10 bg-white py-16 md:py-28"
       >
         <Container>
-          <p className="mx-auto max-w-3xl text-center font-heading text-[1.5rem] leading-tight tracking-[-0.015em] text-forest md:text-[1.875rem]">
-            {sog.invitationToGrow}
-          </p>
-          <div className="mt-16 grid gap-6 border-t border-ink/15 pt-16 lg:grid-cols-12 lg:gap-10">
-            <div className="lg:col-span-5">
-              <Eyebrow className="text-forest">{sog.choosePath}</Eyebrow>
-              <h2 className={cn(heading, "mt-6")}>{sog.pathwaysTitle}</h2>
-            </div>
-            <p className={cn(prose, "lg:col-span-6 lg:col-start-7 lg:pt-12")}>
-              {sog.pathwaysIntro}
-            </p>
+          <h2 className={heading}>{sog.pathwaysTitle}</h2>
+          <ol className="mt-10 grid gap-px bg-ink/15 md:grid-cols-3">
+            {sog.pathways.map((item, i) => (
+              <li key={item.name} className="bg-white p-7 md:p-8">
+                <span
+                  className={cn(
+                    "block font-heading text-[2.5rem] leading-none",
+                    ["text-forest", "text-ink", "text-earth"][i],
+                  )}
+                >
+                  {i + 1}
+                </span>
+                <h3 className={cn(label, "mt-5 text-sm text-ink")}>
+                  {item.name}
+                </h3>
+                <p className="mt-3 font-serif text-lg leading-[1.5] text-ink/85">
+                  {item.text}
+                </p>
+              </li>
+            ))}
+          </ol>
+          <div className="mt-16 border-t border-ink/15 pt-16 text-center">
+            <h2 className={heading}>{sog.plansTitle}</h2>
           </div>
           <div className="mt-14 lg:mt-20">
             <PlanSwitcher names={sog.plans.map((p) => p.name)} initial={1}>
@@ -461,11 +449,6 @@ export default function Growth() {
                       <h4 className={cn(label, "opacity-70")}>
                         {sog.whatYouGet}
                       </h4>
-                      {plan.inherited && (
-                        <p className="mt-4 font-serif text-lg font-semibold">
-                          {plan.inherited}
-                        </p>
-                      )}
                       <ul className="mt-5 space-y-5">
                         {plan.benefits.map((benefit) => {
                           const [name, body] = split(benefit);
@@ -498,32 +481,6 @@ export default function Growth() {
                           );
                         })}
                       </ul>
-                      {plan.roadmap && (
-                        <div className={cn("mt-8 border-t pt-7", style.rule)}>
-                          <h4 className={cn(label, "text-lime")}>
-                            {sog.roadmapTitle}
-                          </h4>
-                          <ol className="mt-5 space-y-4 border-l border-white/20 pl-5">
-                            {plan.roadmap.split("\n").map((step) => {
-                              const [period, text] = step.split(": ");
-                              return (
-                                <li key={step} className="relative">
-                                  <span
-                                    aria-hidden="true"
-                                    className="absolute -left-[1.5625rem] top-2 size-2 bg-lime"
-                                  />
-                                  <span className="block font-sans text-sm font-semibold">
-                                    {period}:
-                                  </span>
-                                  <span className="font-serif text-[1.0625rem] leading-snug opacity-85">
-                                    {text}
-                                  </span>
-                                </li>
-                              );
-                            })}
-                          </ol>
-                        </div>
-                      )}
                     </div>
                   </article>
                 );
@@ -620,17 +577,6 @@ export default function Growth() {
               );
             })}
           </ol>
-          <div className="mt-20 grid gap-10 border-t border-white/15 pt-14 lg:grid-cols-12 lg:gap-10">
-            <h3 className={cn(subheading, "lg:col-span-5")}>
-              {sog.advisoryTitle}
-            </h3>
-            <div className="lg:col-span-6 lg:col-start-7">
-              <p className={cn(prose, "text-white/85")}>{sog.advisory[0]}</p>
-              <p className="mt-8 border-l-4 border-lime pl-5 font-heading text-[1.5rem] leading-tight tracking-[-0.01em] text-lime">
-                {sog.advisory[1]}
-              </p>
-            </div>
-          </div>
         </Container>
       </section>
 
